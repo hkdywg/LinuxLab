@@ -1,0 +1,71 @@
+menuconfig UBOOT
+    bool "u-boot"
+    default y
+
+if UBOOT
+
+choice 
+    prompt "Setup uboot source code"
+
+config UBOOT_GITHUB
+    bool "uboot source code from Github"
+
+config UBOOT_DL
+    bool "uboot source code firm External Package"
+
+config UBOOT_WGET
+    bool "uboot souce code from Wget"
+
+endchoice
+
+if UBOOT_GITHUB
+
+config UBOOT_GITHUB_SITE
+    string "uboot Github site"
+    default "https://github.com/u-boot/u-boot.git"
+
+endif #endif UBOOT_GITHUB
+
+if UBOOT_DL
+
+config UBOOT_DL_NAME
+    string "External uboot absolute path"
+
+endif #endif UBOOT_DL
+
+if UBOOT_WGET
+
+config UBOOT_WGET_SITE
+    string "uboot wget site"
+    default "ftp://ftp.denx.de/pub/u-boot/"
+
+endif #endif UBOOT_WGET
+
+config UBOOT_VERSION
+    string "uboot version"
+
+config UBOOT_SRC
+    int
+    default 1 if UBOOT_GITHUB
+    default 2 if UBOOT_DL
+    default 3 if UBOOT_WGET
+
+choice 
+    prompt "Choice CROSS compile"
+
+config UBOOT_CROSS_GNUEABI
+    bool "arm-linux-gnueabi"
+    select TOOL_ARM_GNUEABI
+
+config UBOOT_CROSS_GNUEABIHF
+    bool "arm-linux-gnueabihf"
+    select TOOL_ARM_GNUEABIHF
+
+endchoice
+    
+config UBOOT_CROSS_COMPILE
+    string
+    default "arm-linux-gnueabi" if UBOOT_CROSS_GNUEABI
+    default "arm-linux-gnueabihf" if UBOOT_CROSS_GNUEABIHF
+
+endif #endif UBOOT

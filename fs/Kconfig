@@ -1,0 +1,24 @@
+#
+# Rootfs configure menu
+#
+
+
+menuconfig ROOTFS
+    bool "Root-filesystem"
+    default -y
+    help
+        The rootfs for LinuxLab
+
+if ROOTFS
+
+source fs/Debian/Kconfig
+
+config ROOTFS_SIZE
+    default 150
+    int "The size of Rootfs (MB)"
+
+config FREEZE_SIZE
+    default 512
+    int "The size of Freeze Disk (MB)"
+
+endif # ROOTFS

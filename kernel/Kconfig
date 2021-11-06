@@ -1,0 +1,68 @@
+menu"linux kernel"
+
+choice 
+    prompt "Setup linux kernel source code"
+
+config LINUX_KERNEL_GITHUB
+    bool "linux kernel source code form github"
+
+config LINUX_KERNEL_DL
+    bool "linux kernel source code form external package"
+
+config LINUX_KERNEL_WGET
+    bool "linux kernel source code from wget"
+
+endchoice
+
+
+if LINUX_KERNEL_DL
+
+config LINUX_KERNEL_DL_NAME
+    string "external linux kernel absolute path"
+
+endif #LINUX_KERNEL_DL
+
+if LINUX_KERNEL_GITHUB
+
+config LINUX_KERNEL_GITHUB_SITE
+    string "linux kernel github site"
+
+endif # LINUX_KERNEL_GITHUB
+
+if LINUX_KERNEL_WGET
+
+config LINUX_KERNEL_WGET_SITE
+    string "linux kernel wget site"
+
+endif # LINUX_KERNEL_WGET
+
+
+config LINUX_KERNEL_SRC
+    int 
+    default 1 if LINUX_KERNEL_GITHUB
+    default 2 if LINUX_KERNEL_DL
+    default 3 if LINUX_KERNEL_WGET
+
+
+choice
+    prompt "Choice Cross compile"
+
+config LINUX_KERNEL_CROSS_COMPILE_GNUEABI
+    bool "arm-linux-gnueabi"
+
+config LINUX_KERNEL_CROSS_COMPILE_GNUEABIHF
+    bool "arm-linux-gnueabihf"
+
+config LINUX_KERNEL_CROSS_COMPILE_AARCH64
+    bool "aarch64-linux-gnu"
+
+endchoice
+
+config LINUX_KERNEL_CROSS_COMPILE
+    string
+    default "arm-linux-gnueabi" if LINUX_KERNEL_CROSS_COMPILE_GNUEABI
+    default "arm-linux-gnueabihf" if LINUX_KERNEL_CROSS_COMPILE_GNUEABIHF
+    default "aarch64-linux-gnu" if LINUX_KERNEL_CROSS_COMPILE_AARCH64
+
+endmenu
+

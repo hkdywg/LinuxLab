@@ -1,0 +1,44 @@
+menuconfig TOOL_ARM_GUNEABIHF
+    bool "arm-linux-GUNEABIHF"
+
+if TOOL_ARM_GUNEABIHF
+
+choice
+    prompt "Setup way to get arm-linux-gnu"
+
+config TOOL_ARM_GUNEABIHF_DL
+    bool "arm-linux-gnueabihf from external file"
+
+config TOOL_ARM_GUNEABIHF_WGET
+    bool "arm-linux-gnueabihf from wget"
+
+endchoice
+
+config TOOL_ARM_GUNEABIHF_SRC
+    int 
+    default 1 if TOOL_ARM_GUNEABIHF_DL
+    default 2 if TOOL_ARM_GUNEABIHF_WGET
+
+if TOOL_ARM_GUNEABIHF_WGET
+choice 
+    prompt "Release Version"
+
+config ARM_GUNEABIHF_V7.4-2019.02
+    bool "v7.4-2019.02"
+
+endchoice
+
+config ARM_GUNEABIHF_FULL_NAME
+    string
+    default "7.4-2019.02/arm-linux-gnueabihf/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz" if ARM_GUNEABIHF_V7.4-2019.2
+
+endif   # endif TOOL_ARM_GUNEABIHF_SRC
+
+
+if TOOL_ARM_GUNEABIHF_DL
+config ARM_GUNEABIHF_VERSION
+    string
+    default "v7.4-2019.02"
+endif # endif TOOL_ARM_GUNEABIHF_DL
+
+endif # endif TOOL_ARM_GUNEABIHF

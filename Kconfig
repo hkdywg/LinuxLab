@@ -1,0 +1,24 @@
+#
+# For a description of the synax of this configuration file
+#
+
+
+mainmenu "LinuxLab Configuration"
+
+config MAIN_PROJ_NAME
+    string "Project Name"
+    default "LinuxLab"
+    help
+      Must be indicated project name.
+
+#Bootloader
+source boot/Kconfig
+
+#Filesystem
+source fs/Kconfig
+
+#ToolChain
+source toolchain/Kconfig
+
+# Kernel
+source kernel/Kconfig
