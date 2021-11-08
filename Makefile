@@ -144,13 +144,43 @@ scripts/basic/%: scripts_basic ;
 
 export KBUILD_DEFCONFIG KBUILD_KCONFIG
 
+SUB_TARGET := 
+
+export SUB_TARGET
+
 %config: scripts_basic outputmakefile FORCE
 	$(Q)mkdir -p include/linux include/config
 	$(Q)$(MAKE) $(build)=scripts/kconfig $@
 
+include $(srctree)/$(KCONFIG_CONFIG)
 
+_all:all
+
+
+# Toolchain
+ifdef CONFIG_TOOLCHAIN
+include toolchain/Makefile
+endif
+
+# U-boot
+ifdef CONFIG_UBOOT
+include boot/Makefile
+endif
+
+# Kernel
+include kernel/Makefile
+
+# RootFs
+ifdef CONFIG_ROOTFS
+include fs/Makefile
+endif
+
+# The all:target is the default when no target is given on the command line
+all: $(SUB_TARGET)
+	@echo "build default target: $(SUB_TARGET)"
 
 PHONY += help
+
 help:
 	@echo "srctree is $(srctree)"
 	@echo "CONFIG_SHELL is $(CONFIG_SHELL)"

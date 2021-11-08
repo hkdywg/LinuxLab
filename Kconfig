@@ -11,6 +11,22 @@ config MAIN_PROJ_NAME
     help
       Must be indicated project name.
 
+choice
+    prompt "Setup experiment platform"
+
+config ARCH_ARM
+    bool "config experiment platform on ARM"
+
+config ARCH_ARM64
+    bool "config experiment platform on ARM64"
+
+endchoice
+
+config ARCH
+    string 
+    default "ARM" if ARCH_ARM
+    default "ARM64" if ARCH_ARM64
+
 #Bootloader
 source boot/Kconfig
 
