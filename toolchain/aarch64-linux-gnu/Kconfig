@@ -30,15 +30,13 @@ endchoice
 
 config AARCH64_FULL_NAME
     string
-    default "7.4-2019.02/aarch64-linux-gnu/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu.tar.xz" if AARCH64_V7.4-2019.2
+    default "7.4-2019.02/aarch64-linux-gnu/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu.tar.xz" if AARCH64_V7.4-2019.02
 
 endif   # endif TOOL_AARCH64_SRC
 
 
-if TOOL_AARCH64_DL
 config AARCH64_VERSION
     string
     default "v7.4-2019.02"
-endif # endif TOOL_AARCH64_DL
 
 endif # endif TOOL_AARCH64

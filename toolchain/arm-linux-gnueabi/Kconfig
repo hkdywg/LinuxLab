@@ -30,7 +30,7 @@ endchoice
 
 config ARM_GNUEABI_FULL_NAME
     string
-    default "7.4-2019.02/arm-linux-gnueabi/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabi.tar.xz" if ARM_GNUEABI_V7.4-2019.2
+    default "7.4-2019.02/arm-linux-gnueabi/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabi.tar.xz" if ARM_GNUEABI_V7.4-2019.02
 
 endif   # endif TOOL_ARM_GNUEABI_SRC
 
