@@ -14,15 +14,17 @@ OUTPUT=${ROOT}/output/kernel
 case ${LINUX_KERNEL_SRC} in
     # Get from github
     1)
-        if [ ! -d ${ROOT}/dl/kernel ];then
+        if [ ! -d ${ROOT}/dl/${LINUX_KERNEL_NAME} ];then
             cd ${ROOT}/dl
             git clone ${LINUX_KERNEL_GITHUB} --depth=1 --branch v${LINUX_KERNEL_VERSION}
         else
             git pull
         fi
         mkdir -p ${OUTPUT}/${LINUX_KERNEL_NAME}
-        cp ${ROOT}/dl/kernel ${OUTPUT}/${LINUX_KERNEL_NAME}
-        rm ${ROOT}/dl/kernel -rf
+        cp ${ROOT}/dl/${LINUX_KERNEL_NAME} ${OUTPUT}/${LINUX_KERNEL_NAME} -rf
+        rm ${ROOT}/dl/${LINUX_KERNEL_NAME} -rf
+        echo -e "\033[32m linux kernel download successed!! \033[0m"
+        
         ;;
     2)
         echo -e "\033[31m this method is not support!!!\033[0m"
