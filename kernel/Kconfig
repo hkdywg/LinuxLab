@@ -1,5 +1,4 @@
-menu"linux kernel"
-
+menu"linux kernel" 
 choice 
     prompt "Setup linux kernel source code"
 
@@ -14,6 +13,25 @@ config LINUX_KERNEL_WGET
 
 endchoice
 
+choice 
+    prompt "select linux kernel version"
+
+config LINUX_KERNEL_VERSION-4.14
+    bool "linux kernel 4.14 version"
+
+config LINUX_KERNEL_VERSION-4.19
+    bool "linux kernel 4.19 version"
+
+config LINUX_KERNEL_VERSION-5.4
+    bool "linux kernel 5.4 version"
+
+endchoice
+
+config LINUX_KERNEL_VERSION
+    string 
+    default "4.14" if LINUX_KERNEL_VERSION-4.14
+    default "4.19" if LINUX_KERNEL_VERSION-4.19
+    default "5.4" if LINUX_KERNEL_VERSION-5.4
 
 if LINUX_KERNEL_DL
 
@@ -22,19 +40,20 @@ config LINUX_KERNEL_DL_NAME
 
 endif #LINUX_KERNEL_DL
 
-if LINUX_KERNEL_GITHUB
-
 config LINUX_KERNEL_GITHUB_SITE
-    string "linux kernel github site"
+    string
+    default "https://gitee.com/mirrors/linux.git" if LINUX_KERNEL_GITHUB
 
-endif # LINUX_KERNEL_GITHUB
 
 if LINUX_KERNEL_WGET
 
 config LINUX_KERNEL_WGET_SITE
-    string "linux kernel wget site"
+    string 
+    default "https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x"  if LINUX_KERNEL_VERSION-4.14
+    default "https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x"  if LINUX_KERNEL_VERSION-4.19
+    default "https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x"  if LINUX_KERNEL_VERSION-5.4
 
-endif # LINUX_KERNEL_WGET
+endif #LINUX_KERNEL_WGET
 
 
 config LINUX_KERNEL_SRC
