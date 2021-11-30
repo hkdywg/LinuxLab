@@ -11,6 +11,26 @@ menuconfig ROOTFS
 
 if ROOTFS
 
+choice
+    prompt "Setup busybox source code"
+
+config BUSYBOX_GITHUB
+    bool "busybox source code from Github"
+
+config BUSYBOX_WGET
+    bool "busybox source code from Wget"
+
+endchoice
+
+config BUSYBOX_SRC
+    int
+    default 1 if BUSYBOX_GITHUB
+    default 2 if BUSYBOX_WGET
+
+config BUSYBOX_VERSION
+    string "busybox version"
+    default "1.24.2"
+
 source fs/Debian/Kconfig
 
 config ROOTFS_SIZE

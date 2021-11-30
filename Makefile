@@ -175,6 +175,11 @@ ifdef CONFIG_ROOTFS
 include fs/Makefile
 endif
 
+# Rte
+ifdef CONFIG_RTE
+	include rte/Makefile
+endif
+
 # The all:target is the default when no target is given on the command line
 all: $(SUB_TARGET)
 	@echo "build default target: $(SUB_TARGET)"
