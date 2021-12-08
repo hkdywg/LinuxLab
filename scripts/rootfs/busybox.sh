@@ -63,6 +63,7 @@ case ${BUSYBOX_SRC} in
         rm ${BASE_NAME}
         echo ${BUSYBOX_VERSION} > ${OUTPUT}/${BASE}/version
         echo -e "\033[32m busybox download successed!! \033[0m"
+        ln -s ${OUTPUT}/busybox-${BUSYBOX_VERSION} ${WORKSPACE}/busybox  
         ;;
 esac
 
