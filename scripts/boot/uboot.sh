@@ -17,7 +17,10 @@ OUTPUT=${ROOT}/output/uboot
 ARCH=${7%X}
 UBOOT_TOOLS=${8%X}
 
+WORKSPACE=${ROOT}/workspace
+
 [ ! -d  ${ROOT}/dl/${UBOOT_NAME} ] && mkdir -p ${ROOT}/dl
+[ ! -d ${WORKPACE} ] && mkdir -p ${WORKSPACE}
 
 ## Get from github
 if [ ${UBOOT_SRC} = "1" ];then
@@ -27,12 +30,12 @@ if [ ${UBOOT_SRC} = "1" ];then
         git clone ${UBOOT_GITHUB}
         cd -
     else
-        cd ${ROOT}/dl
+        cd ${ROOT}/dl/${UBOOT_NAME}
         git pull
     fi
 
-    mkdir -p ${OUTPUT}/${UBOOT_NAME}
-    cp -rfa ${ROOT}/dl/${UBOOT_NAME} ${OUTPUT}/${UBOOT_NAME}_github
+    cp -rfa ${ROOT}/dl/${UBOOT_NAME} ${OUTPUT}/${UBOOT_NAME}-${UBOOT_VERSION}
+    ln -s ${OUTPUT}/${UBOOT_NAME} ${WORKSPACE}/uboot
 fi
 
 
@@ -49,13 +52,13 @@ if [ ${UBOOT_SRC} = "3" ];then
         wget ${UBOOT_SITE}/${BASE_NAME}
         [ ! $? ] && echo "Downloading finish"
     fi
-    mkdir -p ${OUTPUT}/${UBOOT_NAME}
-    cp  ${ROOT}/dl/${BASE_NAME} ${OUTPUT}/${UBOOT_NAME}
-    cd ${OUTPUT}/${UBOOT_NAME}
-    tar -xvf ${BASE_NAME}
+    cp  ${ROOT}/dl/${BASE_NAME} ${OUTPUT}/
+    cd ${OUTPUT}/
+    tar -jxvf ${BASE_NAME}
     if [ $? -ne 0 ];then
         echo -e "\033[31m Invalid tar operation for: -xvf \033[0m"
         exit -1
     fi
+    ln -s ${OUTPUT}/${UBOOT_NAME} ${WORKSPACE}/uboot
 fi
 

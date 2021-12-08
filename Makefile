@@ -182,6 +182,7 @@ endif
 
 # The all:target is the default when no target is given on the command line
 all: $(SUB_TARGET)
+	@[ ! -d $(srctree)/dl ] && mkdir -p $(srctree)/dl
 	@echo "build default target: $(SUB_TARGET)"
 
 PHONY += help
