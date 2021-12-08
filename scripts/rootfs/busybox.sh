@@ -17,8 +17,11 @@ BUSYBOX_GITHUB_SITE=${4%X}
 BUSYBOX_WGET_SITE=${5%X}
 
 OUTPUT=${ROOT}/output/busybox
+WORKSPACE=${ROOT}/workspace
 
+[ ! -d ${ROOT}/dl ] && mkdir -p ${ROOT}/dl
 [ ! -d ${OUTPUT} ] && mkdir -p ${OUTPUT}
+[ ! -d ${WORKSPACE} ] && mkdir -p ${WORKSPACE}
 
 case ${BUSYBOX_SRC} in
     # Get from github
@@ -33,12 +36,13 @@ case ${BUSYBOX_SRC} in
         else
             git pull
         fi
-        cp -rfa ${ROOT}/dl/busybox ${OUTPUT}/busybox-v${BUSYBOX_VERSION} 
-        cd ${OUTPUT}/busybox-v${BUSYBOX_VERSION}
+        cp -rfa ${ROOT}/dl/busybox ${OUTPUT}/busybox-${BUSYBOX_VERSION} 
+        cd ${OUTPUT}/busybox-${BUSYBOX_VERSION}
         git checkout ${major}_${minor}_${sub} 
-        echo ${BUSYBOX_VERSION} > ${OUTPUT}/busybox-v${BUSYBOX_VERSION}/version
+        echo ${BUSYBOX_VERSION} > ${OUTPUT}/busybox-${BUSYBOX_VERSION}/version
         rm ${ROOT}/dl/busybox -rf
         echo -e "\033[32m busybox download successed!! \033[0m"
+        ln -s ${OUTPUT}/busybox-${BUSYBOX_VERSION} ${WORKSPACE}/busybox  
         ;;
 
     2)
