@@ -27,14 +27,17 @@ config ARCH
     default "ARM" if ARCH_ARM
     default "ARM64" if ARCH_ARM64
 
-#Bootloader
+# Bootloader
 source boot/Kconfig
 
-#Filesystem
+# Filesystem
 source fs/Kconfig
 
-#ToolChain
+# ToolChain
 source toolchain/Kconfig
 
 # Kernel
 source kernel/Kconfig
+
+# Qemu
+source rte/Kconfig

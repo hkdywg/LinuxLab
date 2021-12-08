@@ -1,0 +1,28 @@
+menuconfig RTE
+    bool "RTE"
+    default y
+
+if RTE
+
+
+choice 
+    prompt "Setup RTE qemu source code"
+
+config QEMU_GITHUB
+    bool "qemu source code from Github"
+
+config QEMU_WGET
+    bool "qemu source code from wget"
+
+endchoice
+
+config QEMU_SRC
+    int
+    default 1 if QEMU_GITHUB
+    default 2 if QEMU_WGET
+
+config QEMU_VERSION
+    string "qemu version"
+    default "3.1.0"
+
+endif #endif RTE
