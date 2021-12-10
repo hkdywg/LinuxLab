@@ -14,6 +14,7 @@ TOOLCHAIN_PATH=${ROOT_PATH}/output/toolchain
 ROOTFS_SIZE=150
 ROOTFS_TYPE=ext4
 ROOTFS_TOOL=mkfs.${ROOTFS_TYPE}
+RAM_SIZE=512
 
 target=(${2//_/ })
 master_target=${target[0]}
@@ -109,7 +110,7 @@ build_rootfs()
         sudo mount -t ${ROOTFS_TYPE} ${ROOTFS_PATH}/ramdisk ${ROOTFS_PATH}/tmpfs -o loop
         sudo cp -raf ${ROOTFS_PATH}/${ROOTFS_TYPE}/* ${ROOTFS_PATH}/tmpfs
         sudo umount ${ROOTFS_PATH}/tmpfs
-        mv ${ROOTFS_PATH}/ramdisk ${ROOTFS_PATH}/rootfs.disk
+        mv ${ROOTFS_PATH}/ramdisk ${ROOTFS_PATH}/rootfs.img
     fi
 }
 
@@ -119,6 +120,9 @@ build_qemu()
     EMULATER=aarch64-softmmu,arm-linux-user
     CONFIG="--enable-kvm --enable-virtfs"
 
+    QEMU=${ROOT_PATH}/workspace/qemu/aarch64-softmmu/qemu-system-aarch64
+    CMDLINE="earlycon root=/dev/vda rw rootfstype=${ROOTFS_TYPE} console=ttyAMA0 init=/linuxrc loglevel=8"
+
     case ${sub_target} in
         "build")
             cd ${QEMU_PATH}
@@ -126,7 +130,16 @@ build_qemu()
             make -j${cpu_core}
             ;;
         "run")
-
+            sudo ${QEMU} \
+                -M virt \
+                -m ${RAM_SIZE}M \
+                -cpu cortex-a53 \
+                -smp 2 \
+                -kernel ${ROOT_PATH}/workspace/kernel/build_output/arch/arm64/boot/Image \
+                -device virtio-blk-device,drive=hd0 \
+                -drive if=none,file=${ROOT_PATH}/workspace/rootfs/BiscuitOS.img,format=raw,id=hd0 \
+                -nographic \
+                -append "${CMDLINE}"
             ;;
     esac
 }
