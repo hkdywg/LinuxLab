@@ -22,9 +22,12 @@ uboot_%:
 	@echo "start build uboot"
 	@$(BUILD_SCRIPTS) $(top_dir)X $@
 
-
 busybox_%:
 	@echo "start build busybox"
 	@$(BUILD_SCRIPTS) $(top_dir)X $@
-	
+
+rootfs_%:
+	@echo "start build $@"
+	@$(BUILD_SCRIPTS) $(top_dir)X $@
+
 

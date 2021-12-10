@@ -57,3 +57,4 @@ modules.builtin
 #
 /dl
 /output
+/workspace/rootfs

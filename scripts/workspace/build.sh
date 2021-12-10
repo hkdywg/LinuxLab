@@ -11,11 +11,43 @@
 ROOT_PATH=${1%X}
 TOOLCHAIN_PATH=${ROOT_PATH}/output/toolchain
 
-cpu_core=`cat /proc/cpuinfo | grep process | wc -l`
+ROOTFS_SIZE=150
+ROOTFS_TYPE=ext4
+ROOTFS_TOOL=mkfs.${ROOTFS_TYPE}
 
 target=(${2//_/ })
 master_target=${target[0]}
 sub_target=${target[1]}
+
+cpu_core=`cat /proc/cpuinfo | grep process | wc -l`
+
+check_root()
+{
+    current_per=`echo ${EUID}`
+    return ${current_per}
+}
+
+build_uboot()
+{
+    BUILD_PATH=build_output
+    cd ${ROOT_PATH}/workspace/uboot
+    [ ! -d ${BUILD_PATH} ] && mkdir -p ${BUILD_PATH}
+    case ${sub_target} in
+        "defconfig")
+	        make O=${BUILD_PATH} ARCH=arm defconfig
+            ;;
+        "clean")
+	        make O=${BUILD_PATH} clean
+            ;;
+        "image")
+            make O=${BUILD_PATH} ARCH=arm CROSS_COMPILE=${TOOLCHAIN_PATH}/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabi/bin/arm-linux-gnueabi- -j${cpu_core}
+            ;;
+        *)
+            echo -e "\033[31m target ${sub_target} is not exited!!! \033[0m"
+
+    esac
+     
+}
 
 build_kernel()
 {
@@ -60,11 +92,38 @@ build_busybox()
     esac
 }
 
+build_rootfs()
+{
+    check_root
+    if [ $? -ne 0 ];then
+        echo -e "\033[31m this operation need root permission!!! \033[0m"
+        exit
+    else
+        ROOTFS_PATH=${ROOT_PATH}/workspace/rootfs
+        [ ! -d ${ROOTFS_PATH} ] && mkdir -p ${ROOTFS_PATH}
+        cp ${ROOT_PATH}/workspace/busybox/build_output/_install/ ${ROOTFS_PATH}/${ROOTFS_TYPE} -raf 
+        sudo chown root.root ${ROOTFS_PATH}/${ROOTFS_TYPE} -R
+        dd if=/dev/zero of=${ROOTFS_PATH}/ramdisk bs=1M count=${ROOTFS_SIZE}
+        ${ROOTFS_TOOL} -E lazy_itable_init=1,lazy_journal_init=1 -F ${ROOTFS_PATH}/ramdisk
+        mkdir -p ${ROOTFS_PATH}/tmpfs
+        sudo mount -t ${ROOTFS_TYPE} ${ROOTFS_PATH}/ramdisk ${ROOTFS_PATH}/tmpfs -o loop
+        sudo cp -raf ${ROOTFS_PATH}/${ROOTFS_TYPE}/* ${ROOTFS_PATH}/tmpfs
+        sudo umount ${ROOTFS_PATH}/tmpfs
+        mv ${ROOTFS_PATH}/ramdisk ${ROOTFS_PATH}/rootfs.disk
+    fi
+}
+
 case ${master_target} in
+    "uboot")
+        build_uboot
+        ;;
     "kernel")
         build_kernel
         ;;
     "busybox")
         build_busybox
+        ;;
+    "rootfs")
+        build_rootfs
         ;;
 esac
