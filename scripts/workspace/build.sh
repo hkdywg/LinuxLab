@@ -113,6 +113,24 @@ build_rootfs()
     fi
 }
 
+build_qemu()
+{
+    QEMU_PATH=${ROOT_PATH}/workspace/qemu
+    EMULATER=aarch64-softmmu,arm-linux-user
+    CONFIG="--enable-kvm --enable-virtfs"
+
+    case ${sub_target} in
+        "build")
+            cd ${QEMU_PATH}
+            ./configure --target-list=${EMULATER} ${CONFIG}
+            make -j${cpu_core}
+            ;;
+        "run")
+
+            ;;
+    esac
+}
+
 case ${master_target} in
     "uboot")
         build_uboot
@@ -125,5 +143,8 @@ case ${master_target} in
         ;;
     "rootfs")
         build_rootfs
+        ;;
+    "qemu")
+        build_qemu
         ;;
 esac

@@ -30,4 +30,7 @@ rootfs_%:
 	@echo "start build $@"
 	@$(BUILD_SCRIPTS) $(top_dir)X $@
 
+qemu_%:
+	@echo "start build $@"
+	@$(BUILD_SCRIPTS) $(top_dir)X $@
 
