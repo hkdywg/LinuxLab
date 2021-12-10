@@ -52,6 +52,7 @@ case ${BUSYBOX_SRC} in
             cd ${ROOT}/dl
             wget ${BUSYBOX_WGET_SITE}/${BASE_NAME}
         fi
+        cd ${ROOT}/dl
         cp ${BASE_NAME} ${OUTPUT}
         cd ${OUTPUT}
         tar -xjvf ${BASE_NAME}
