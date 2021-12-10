@@ -39,7 +39,32 @@ build_kernel()
      
 }
 
+build_busybox()
+{
+    BUILD_PATH=build_output
+    cd ${ROOT_PATH}/workspace/busybox
+    [ ! -d ${BUILD_PATH} ] && mkdir -p ${BUILD_PATH}
+    case ${sub_target} in
+        "defconfig")
+	        make O=${BUILD_PATH} ARCH=arm64 defconfig
+            ;;
+        "clean")
+	        make O=${BUILD_PATH} clean
+            ;;
+        "install")
+            make O=${BUILD_PATH} ARCH=arm64 CROSS_COMPILE=${TOOLCHAIN_PATH}/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- -j${cpu_core}
+            make O=${BUILD_PATH} ARCH=arm64 CROSS_COMPILE=${TOOLCHAIN_PATH}/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- install -j${cpu_core}
+            ;;
+        *)
+            echo -e "\033[31m target ${sub_target} is not exited!!! \033[0m"
+    esac
+}
+
 case ${master_target} in
-    kernel)
+    "kernel")
         build_kernel
+        ;;
+    "busybox")
+        build_busybox
+        ;;
 esac
