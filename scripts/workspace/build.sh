@@ -93,6 +93,24 @@ build_busybox()
     esac
 }
 
+rootfs_prepare()
+{
+    BUSYBOX_PATH=${ROOT_PATH}/workspace/busybox
+    ROOTFS_PATH=${ROOT_PATH}/workspace/rootfs/
+    LIB_PATH=${ROOT_PATH}/output/toolchain
+    cd ${ROOTFS_PATH}/${ROOTFS_TYPE}
+    mkdir -p dev  etc  lib  usr  var  proc  tmp  home  root  mnt   sys
+    cp ${BUSYBOX_PATH}/examples/bootfloppy/etc/* ${ROOTFS_PATH}/${ROOTFS_TYPE}/etc -raf
+    touch etc/passwd etc/group
+    echo "root::0:0:root:/:/bin/sh" > etc/passwd
+    echo "root::0:root" > etc/group
+    echo "tmpfs /tmp tmpfs defaults 0 0" >> etc/fstab
+    echo "sysfs /sys sysfs defaults 0 0" >> etc/fstab
+    echo "tmpfs /dev tmpfs defaults 0 0" >> etc/fstab
+    echo "debugfs /sys/kernel/debug debugfs defaults 0 0" >> etc/fstab
+    cp ${LIB_PATH}/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/libc/lib/*.so* ${ROOTFS_PATH}/${ROOTFS_TYPE}/lib -ra
+}
+
 build_rootfs()
 {
     check_root
@@ -101,8 +119,9 @@ build_rootfs()
         exit
     else
         ROOTFS_PATH=${ROOT_PATH}/workspace/rootfs
-        [ ! -d ${ROOTFS_PATH} ] && mkdir -p ${ROOTFS_PATH}
-        cp ${ROOT_PATH}/workspace/busybox/build_output/_install/ ${ROOTFS_PATH}/${ROOTFS_TYPE} -raf 
+        [ ! -d ${ROOTFS_PATH}/${ROOTFS_TYPE} ] && mkdir -p ${ROOTFS_PATH}/${ROOTFS_TYPE}
+        rootfs_prepare
+        cp ${ROOT_PATH}/workspace/busybox/build_output/_install/* ${ROOTFS_PATH}/${ROOTFS_TYPE} -raf 
         sudo chown root.root ${ROOTFS_PATH}/${ROOTFS_TYPE} -R
         dd if=/dev/zero of=${ROOTFS_PATH}/ramdisk bs=1M count=${ROOTFS_SIZE}
         ${ROOTFS_TOOL} -E lazy_itable_init=1,lazy_journal_init=1 -F ${ROOTFS_PATH}/ramdisk
@@ -137,7 +156,7 @@ build_qemu()
                 -smp 2 \
                 -kernel ${ROOT_PATH}/workspace/kernel/build_output/arch/arm64/boot/Image \
                 -device virtio-blk-device,drive=hd0 \
-                -drive if=none,file=${ROOT_PATH}/workspace/rootfs/BiscuitOS.img,format=raw,id=hd0 \
+                -drive if=none,file=${ROOT_PATH}/workspace/rootfs/rootfs.img,format=raw,id=hd0 \
                 -nographic \
                 -append "${CMDLINE}"
             ;;
