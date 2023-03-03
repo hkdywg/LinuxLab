@@ -25,7 +25,7 @@ fi
 [ ! -d ${ROOT}/dl/gnu_toolchain ] && mkdir -p ${ROOT}/dl/gnu_toolchain
 
 # Get from github
-if [ ${GNU_TOOLCHAIN_SRC} = "3" ];then
+if [ "${GNU_TOOLCHAIN_SRC}" = "3" ];then
     cd ${ROOT}/dl/gnu_toolchain
     git clone ${GNU_TOOLCHAIN_GITHUB)}
     git tag > GNU_TOOLCAHIN_TAG
@@ -43,7 +43,7 @@ fi
 
 
 # Get from wget
-if [ ${GNU_TOOLCHAIN_SRC} = "2" ];then
+if [ "${GNU_TOOLCHAIN_SRC}" = "2" ];then
     BASE_NAME=${GNU_TOOLCHAIN_WGETNAME}
     if [ ! -f ${ROOT}/dl/gnu_toolchain/${GNU_TOOLCHAIN_WGETNAME} ];then
         cd ${ROOT}/dl/gnu_toolchain
@@ -59,7 +59,7 @@ if [ ${GNU_TOOLCHAIN_SRC} = "2" ];then
             exit -1
         fi
         rm -rf tmp_md5sum.asc
-        tar -xvf ${GNU_TOOLCHAIN_WGETNAME} -C ${OUTPUT}
+        tar -xf ${GNU_TOOLCHAIN_WGETNAME} -C ${OUTPUT}
     else
         # MD5 Check
         cd ${ROOT}/dl/gnu_toolchain

@@ -21,6 +21,7 @@ WORKSPACE=${ROOT}/workspace
 
 [ ! -d  ${ROOT}/dl/${UBOOT_NAME} ] && mkdir -p ${ROOT}/dl
 [ ! -d ${WORKPACE} ] && mkdir -p ${WORKSPACE}
+[ ! -d ${OUTPUT} ] && mkdir -p ${OUTPUT}
 
 ## Get from github
 if [ ${UBOOT_SRC} = "1" ];then
@@ -35,6 +36,7 @@ if [ ${UBOOT_SRC} = "1" ];then
     fi
 
     cp -rfa ${ROOT}/dl/${UBOOT_NAME} ${OUTPUT}/${UBOOT_NAME}-${UBOOT_VERSION}
+    [ -L ${WORKSPACE}/uboot ] && rm ${WORKSPACE}/uboot -rf
     ln -s ${OUTPUT}/${UBOOT_NAME} ${WORKSPACE}/uboot
 fi
 
@@ -54,11 +56,12 @@ if [ ${UBOOT_SRC} = "3" ];then
     fi
     cp  ${ROOT}/dl/${BASE_NAME} ${OUTPUT}/
     cd ${OUTPUT}/
-    tar -jxvf ${BASE_NAME}
+    tar -jxf ${BASE_NAME}
     if [ $? -ne 0 ];then
         echo -e "\033[31m Invalid tar operation for: -xvf \033[0m"
         exit -1
     fi
-    ln -s ${OUTPUT}/${UBOOT_NAME} ${WORKSPACE}/uboot
+    [ -L ${WORKSPACE}/uboot ] && rm ${WORKSPACE}/uboot -rf
+    ln -s ${OUTPUT}/${UBOOT_NAME}-${UBOOT_VERSION} ${WORKSPACE}/uboot
 fi
 

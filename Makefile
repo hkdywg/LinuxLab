@@ -170,24 +170,34 @@ endif
 # Kernel
 include kernel/Makefile
 
-# RootFs
+## RootFs
 ifdef CONFIG_ROOTFS
 include fs/Makefile
 endif
 
-# Rte
+## Rte
 ifdef CONFIG_RTE
-	include rte/Makefile
+include rte/Makefile
 endif
 
 
 # The all:target is the default when no target is given on the command line
 all: $(SUB_TARGET)
-	@[ ! -d $(srctree)/dl ] && mkdir -p $(srctree)/dl
+	@[ -d $(srctree)/dl ] || mkdir -p $(srctree)/dl
 	@echo "build default target: $(SUB_TARGET)"
+
+dist_clean:
+	@rm dl/ -rf
+	@rm output/ -rf
+	@rm workspace/ -rf
+
+clean:
+	@rm workspace/ -rf
 
 PHONY += help
 
 help:
 	@echo "srctree is $(srctree)"
 	@echo "CONFIG_SHELL is $(CONFIG_SHELL)"
+
+

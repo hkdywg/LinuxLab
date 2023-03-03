@@ -25,18 +25,20 @@ if [ ${QEMU_SRC} = "1" ]; then
       echo "\033[31m qemu only support obove version \033[0m"
       exit -1
   fi
+   [ -L ${WORKSPACE}/qemu ] && rm ${WORKSPACE}/qemu
   ln -s ${OUTPUT}/qemu ${WORKSPACE}/qemu
 fi
 
 if [ ${QEMU_SRC} = "2" ];then
     QEMU_WGET_NAME=qemu-${QEMU_VERSION}.tar.xz
-    if [ ! -f ${QEMU_WGET_NAME} ]; then
+    if [ ! -f ${ROOT}/dl/${QEMU_WGET_NAME} ]; then
         cd ${ROOT}/dl/
         wget ${QEMU_WGET_SITE}/${QEMU_WGET_NAME}
     fi
-    cp ${QEMU_WGET_NAME} ${OUTPUT}
+    cp ${ROOT}/dl/${QEMU_WGET_NAME} ${OUTPUT}
     cd ${OUTPUT}
     tar -xJf ${QEMU_WGET_NAME}
     rm ${QEMU_WGET_NAME}
+    [ -L ${WORKSPACE}/qemu ] && rm ${WORKSPACE}/qemu
     ln -s ${OUTPUT}/qemu-${QEMU_VERSION} ${WORKSPACE}/qemu
 fi

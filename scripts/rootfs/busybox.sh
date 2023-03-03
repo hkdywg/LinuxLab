@@ -42,6 +42,7 @@ case ${BUSYBOX_SRC} in
         echo ${BUSYBOX_VERSION} > ${OUTPUT}/busybox-${BUSYBOX_VERSION}/version
         rm ${ROOT}/dl/busybox -rf
         echo -e "\033[32m busybox download successed!! \033[0m"
+        [ -L ${WORKSPACE}/busybox ] && rm ${WORKSPACE}/busybox
         ln -s ${OUTPUT}/busybox-${BUSYBOX_VERSION} ${WORKSPACE}/busybox  
         ;;
 
@@ -55,7 +56,7 @@ case ${BUSYBOX_SRC} in
         cd ${ROOT}/dl
         cp ${BASE_NAME} ${OUTPUT}
         cd ${OUTPUT}
-        tar -xjvf ${BASE_NAME}
+        tar -xjf ${BASE_NAME}
         if [ $? -ne 0 ] ;then
             rm ${ROOT}/dl/${BASE_NAME}
             echo -e "\033[31m tar operation failed\033[0m"
@@ -64,6 +65,7 @@ case ${BUSYBOX_SRC} in
         rm ${BASE_NAME}
         echo ${BUSYBOX_VERSION} > ${OUTPUT}/${BASE}/version
         echo -e "\033[32m busybox download successed!! \033[0m"
+        [ -L ${WORKSPACE}/busybox ] && rm ${WORKSPACE}/busybox
         ln -s ${OUTPUT}/busybox-${BUSYBOX_VERSION} ${WORKSPACE}/busybox  
         ;;
 esac

@@ -15,7 +15,6 @@ SUB_TARGET 				+= qemu_download
 QEMU_SH 				= $(CONFIG_SHELL) $(QEMU_DOWNLOAD_SCRIPTS) $(1)X $(QEMU_VERSION)X $(QEMU_SRC)X \
 						  $(QEMU_WGET_SITE)X $(QEMU_GITHUB_SITE)X 
 
-$(warning $(QEMU_SH))
 qemu_download:
 	$(Q)$(call QEMU_SH, $(srctree))
 #	$(QEMU_SH) $(srctree)

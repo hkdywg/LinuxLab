@@ -19,8 +19,6 @@ UBOOT_SH = $(CONFIG_SHELL) $(UBOOT_SCRIPTS) \
 		   ${1}X ${UBOOT_NAME}X ${UBOOT_VERSION} ${UBOOT_SITE}X \
 		   ${UBOOT_GITHUB}X ${CONFIG_UBOOT_SRC}X ${CONFIG_ARCH}X ${UBOOT_CROSS_COMPILE}X 
 
-$(warning $(UBOOT_SH))
-
 uboot-download: 
 	${Q}$(call UBOOT_SH,${srctree})
 

@@ -43,6 +43,7 @@ endif #endif UBOOT_WGET
 
 config UBOOT_VERSION
     string "uboot version"
+    default "u-boot-2021.07"
 
 config UBOOT_SRC
     int

@@ -23,6 +23,7 @@ case ${LINUX_KERNEL_SRC} in
         cp ${ROOT}/dl/${LINUX_KERNEL_NAME} ${OUTPUT}/ -rf
         rm ${ROOT}/dl/${LINUX_KERNEL_NAME} -rf
         echo -e "\033[32m linux kernel download successed!! \033[0m"
+        [ -L ${WORKSPACE}/kernel ] && rm ${WORKSPACE}/kernel -rf
         ln -s ${OUTPUT}/${LINUX_KERNEL_NAME} ${WORKSPACE}/kernel
         ;;
     2)
@@ -46,6 +47,7 @@ case ${LINUX_KERNEL_SRC} in
             exit -1
         fi
         echo -e "\033[32m linux kernel download successed!! \033[0m"
+        [ -L ${WORKSPACE}/kernel ] && rm ${WORKSPACE}/kernel -rf
         ln -s ${OUTPUT}/${BASE} ${WORKSPACE}/kernel
         ;;
 esac
