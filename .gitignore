@@ -57,4 +57,10 @@ modules.builtin
 #
 /dl
 /output
-/workspace/rootfs
+/workspace
+
+#
+# Tmp file
+#
+/scripts/basic
+/scripts/kconfig
