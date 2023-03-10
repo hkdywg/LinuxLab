@@ -57,7 +57,8 @@ modules.builtin
 #
 /dl
 /output
-/workspace
+/workspace/**/
+/workspace/*
 
 #
 # Tmp file
