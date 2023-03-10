@@ -1,5 +1,5 @@
 menuconfig TOOL_ARM_GNUEABIHF
-    bool "arm-linux-GUNEABIHF"
+    bool "arm-linux-gnueabihf"
 
 if TOOL_ARM_GNUEABIHF
 

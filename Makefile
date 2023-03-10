@@ -115,7 +115,7 @@ endif
 export quiet Q KBUILD_VERBOSE
 
 # Look for make include files relative to root fo kernel src
-MAKEFLAGS += --include-dir=$(srctree)
+#MAKEFLAGS += --include-dir=$(srctree)
 
 -include include/config/auto.conf
 
@@ -179,7 +179,6 @@ endif
 ifdef CONFIG_RTE
 include rte/Makefile
 endif
-
 
 # The all:target is the default when no target is given on the command line
 all: $(SUB_TARGET)
