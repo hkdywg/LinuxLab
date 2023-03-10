@@ -23,6 +23,8 @@ sudo apt-get install -y libelf-dev gcc-multilib g++-multilib
 sudo apt-get install -y libcap-ng-dev
 sudo apt-get install -y libmount-dev libselinux1-dev libffi-dev libpulse-dev
 sudo apt-get install -y liblzma-dev python-serial
+sudo apt-get install -y gtk+-2.0 glib-2.0 libglade2-dev
+
 
 On 64-Bit Machine:
 
