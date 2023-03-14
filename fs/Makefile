@@ -12,6 +12,8 @@ BUSYBOX_SCRIPTS 		:= $(srctree)/scripts/rootfs/busybox.sh
 
 SUB_TARGET 				+= busybox_download
 
+$(warning $(CONFIG_BUSYBOX_SRC))
+
 BUSYBOX_SH 	= $(CONFIG_SHELL) $(BUSYBOX_SCRIPTS) $(1)X $(BUSYBOX_VERSION)X $(BUSYBOX_SRC)X	\
 				$(BUSYBOX_GITHUB_SITE)X $(BUSYBOX_WGET_SITE)X 
 

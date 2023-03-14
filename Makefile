@@ -41,10 +41,12 @@ VPATH := $(srctree)
 
 export srctree objtree VPATH
 
+-include include/config/auto.conf
+
 KCONFIG_CONFIG ?= .config
 export KCONFIG_CONFIG
 
-include $(srctree)/$(KCONFIG_CONFIG)
+-include $(srctree)/$(KCONFIG_CONFIG)
 
 # SHELL used by kbuild
 CONFIG_SHELL := $(shell if [ -x "$$BASH" ];then echo $$BASH;\
@@ -121,7 +123,6 @@ export quiet Q KBUILD_VERBOSE
 # Look for make include files relative to root fo kernel src
 #MAKEFLAGS += --include-dir=$(srctree)
 
--include include/config/auto.conf
 
 include $(srctree)/scripts/Kbuild.include
 
