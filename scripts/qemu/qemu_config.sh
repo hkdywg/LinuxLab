@@ -22,11 +22,11 @@ MF=${WORKSPACE}/run_qemu.sh
 CPU_CORE=`cat /proc/cpuinfo | grep processor | wc -l`
 
 
-if [ ${ARCH_CONFIG} = "ARM64" ];then
+if [ ${ARCH_CONFIG} = "arm64" ];then
     # ARM 64-bit
     EMULATER=aarch64-softmmu,aarch64-linux-user
     CONFIG="--enable-kvm --enable-virtfs"
-elif [ ${ARCH_CONFIG} = "ARM32" ];then
+elif [ ${ARCH_CONFIG} = "arm" ];then
     # ARM 32-bit
     EMULATER=arm-softmmu,arm-linux-user
     CONFIG="--enable-virtfs --enable-kvm"
