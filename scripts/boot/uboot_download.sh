@@ -20,7 +20,7 @@ UBOOT_TOOLS=${8%X}
 WORKSPACE=${ROOT}/workspace
 
 [ ! -d  ${ROOT}/dl/${UBOOT_NAME} ] && mkdir -p ${ROOT}/dl
-[ ! -d ${WORKPACE} ] && mkdir -p ${WORKSPACE}
+[ ! -d ${WORKSPACE} ] && mkdir -p ${WORKSPACE}
 [ ! -d ${OUTPUT} ] && mkdir -p ${OUTPUT}
 
 ## Get from github
