@@ -31,6 +31,10 @@ config BUSYBOX_VERSION
     string "busybox version"
     default "1.24.2"
 
+config BUSYBOX_DEFCONFIG
+    string "busyxbox default config"
+    default "TEST_rh9_defconfig"
+
 source fs/Debian/Kconfig
 
 config ROOTFS_SIZE
