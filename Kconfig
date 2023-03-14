@@ -24,8 +24,8 @@ endchoice
 
 config ARCH
     string 
-    default "ARM" if ARCH_ARM
-    default "ARM64" if ARCH_ARM64
+    default "arm" if ARCH_ARM
+    default "arm64" if ARCH_ARM64
 
 # Bootloader
 source boot/Kconfig

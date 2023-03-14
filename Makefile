@@ -44,6 +44,8 @@ export srctree objtree VPATH
 KCONFIG_CONFIG ?= .config
 export KCONFIG_CONFIG
 
+include $(srctree)/$(KCONFIG_CONFIG)
+
 # SHELL used by kbuild
 CONFIG_SHELL := $(shell if [ -x "$$BASH" ];then echo $$BASH;\
 	else if [ -x /bin/bash ];then echo /bin/bash; \
@@ -92,6 +94,8 @@ KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS := -D_ASSEMBLY__
 
 KBUILD_DEFCONFIG = defconfig
+
+ARCH := $(subst ",,$(CONFIG_ARCH))
 
 export ARCH SRCARCH CONFIG_SHELL HOSTCC HOSTCFLAGS CROSS_COMPILE AS LD CC
 export CPP AR NM STRIP OBJCOPY OBJDUMP
@@ -152,7 +156,6 @@ export SUB_TARGET
 	$(Q)mkdir -p include/linux include/config
 	$(Q)$(MAKE) $(build)=scripts/kconfig $@
 
-include $(srctree)/$(KCONFIG_CONFIG)
 
 _all:all
 

@@ -83,5 +83,9 @@ config LINUX_KERNEL_CROSS_COMPILE
     default "arm-linux-gnueabihf" if LINUX_KERNEL_CROSS_COMPILE_GNUEABIHF
     default "aarch64-linux-gnu" if LINUX_KERNEL_CROSS_COMPILE_AARCH64
 
+config KERNEL_DEFCONFIG
+    string "kernel default defconfig"
+    default "defconfig"
+
 endmenu
 
