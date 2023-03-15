@@ -14,6 +14,11 @@ BUSYBOX_WORKSPACE 		:= $(srctree)/workspace/busybox
 BUSYBOX_BUILD_OUTPATH 	:= $(BUSYBOX_WORKSPACE)/build_out
 BUSYBOX_KCONFIG_FILE 	:= $(BUSYBOX_BUILD_OUTPATH)/.config
 
+MKROOTFS_SCRIPTS 		:= $(srctree)/scripts/rootfs/rootfs.sh
+ROOTFS_WORKSPACE 		:= $(srctree)/workspace/rootfs
+ROOTFS_NAME 			:= rootfs
+ROOTFS_VERSION 			:= 1.0
+
 SUB_TARGET 				+= busybox_download
 
 BUSYBOX_SH 	= $(CONFIG_SHELL) $(BUSYBOX_SCRIPTS) $(1)X $(BUSYBOX_VERSION)X $(BUSYBOX_SRC)X	\
@@ -35,15 +40,17 @@ busybox-clean:
 
 CPU_CORE=$(shell cat /proc/cpuinfo | grep processor | wc -l)
 
-ifeq ($(CONFIG_KERNEL_CROSS_COMPILE),"arm-linux-gnueabi")
+COMPILE_TYPE := $(subst ",,$(CONFIG_LINUX_KERNEL_CROSS_COMPILE))
+
+ifeq ($(CONFIG_LINUX_KERNEL_CROSS_COMPILE),"arm-linux-gnueabi")
 TOOL_CHAIN_NAME := $(basename $(basename $(notdir $(CONFIG_ARM_GNUEABI_FULL_NAME))))
 CROSS_COMPILE_CONFIG := $(srctree)/output/toolchain/$(TOOL_CHAIN_NAME)/bin/arm-linux-gnueabi-
 endif
-ifeq ($(CONFIG_KERNEL_CROSS_COMPILE),"arm-linux-gnueabihf")
+ifeq ($(CONFIG_LINUX_KERNEL_CROSS_COMPILE),"arm-linux-gnueabihf")
 TOOL_CHAIN_NAME := $(basename $(basename $(notdir $(CONFIG_ARM_GNUEABIHF_FULL_NAME))))
 CROSS_COMPILE_CONFIG := $(srctree)/output/toolchain/$(TOOL_CHAIN_NAME)/bin/arm-linux-gnueabihf-
 endif
-ifeq ($(CONFIG_KERNEL_CROSS_COMPILE),"aarch64-linux-gnu")
+ifeq ($(CONFIG_LINUX_KERNEL_CROSS_COMPILE),"aarch64-linux-gnu")
 TOOL_CHAIN_NAME := $(basename $(basename $(notdir $(CONFIG_AARCH64_FULL_NAME))))
 CROSS_COMPILE_CONFIG := $(srctree)/output/toolchain/$(TOOL_CHAIN_NAME)/bin/aarch64-linux-gnu-
 endif
@@ -60,3 +67,14 @@ $(BUSYBOX_KCONFIG_FILE):
 	@echo >&2 "\033[31m*** please run some configurator(e.g. "make busybox-menuconfig")\033[0m"
 	@echo >&2 "\033[31m***\033[0m"
 	@/bin/false
+
+
+MKROOTFS_SH = $(CONFIG_SHELL) $(MKROOTFS_SCRIPTS) $(ROOTFS_WORKSPACE)X $(ROOTFS_NAME)X $(ROOTFS_VERSION)X $(CONFIG_ROOTFS_SIZE)X \
+			  	$(srctree)/output/toolchain/$(TOOL_CHAIN_NAME)/$(COMPILE_TYPE)X	$(BUSYBOX_BUILD_OUTPATH)/_installX
+
+
+rootfs-mk:
+	$(Q)$(call MKROOTFS_SH)
+
+
+
