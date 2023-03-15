@@ -13,7 +13,7 @@ KERNEL_WORKSPACE 			:= $(srctree)/workspace/kernel
 KERNEL_BUILD_OUTPATH 		:= $(KERNEL_WORKSPACE)/build_out
 KERNEL_KCONFIG_FILE 		:= $(KERNEL_BUILD_OUTPATH)/.config
 
-SUB_TARGET 					+= kernel-download
+SUB_TARGET 					+= kernel-download kernel-defconfig kernel-build
 
 LINUX_KERNEL_SH 	= $(CONFIG_SHELL) ${LINUX_KERNEL_SCRIPTS} $(1)X $(LINUX_KERNEL_NAME)X \
 					  $(LINUX_KERNEL_VERSION)X	$(LINUX_KERNEL_SITE)X ${LINUX_KERNEL_GITHUB}X $(CONFIG_LINUX_KERNEL_SRC)X

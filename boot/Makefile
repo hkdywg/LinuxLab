@@ -16,7 +16,7 @@ UBOOT_DOWNLOAD_SCRIPTS	:= $(srctree)/scripts/boot/uboot_download.sh
 UBOOT_BUILD_OUTPATH 	:= $(srctree)/workspace/uboot/build_out
 UBOOT_KCONFIG_FILE 		:= $(UBOOT_BUILD_OUTPATH)/.config
 
-SUB_TARGET 	+= uboot-download uboot-build 
+SUB_TARGET 	+= uboot-download uboot-defconfig uboot-build 
 
 UBOOT_DOWNLOAD_SH = $(CONFIG_SHELL) $(UBOOT_DOWNLOAD_SCRIPTS) \
 		   ${1}X ${UBOOT_NAME}X ${UBOOT_VERSION} ${UBOOT_SITE}X \

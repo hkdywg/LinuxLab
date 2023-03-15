@@ -19,12 +19,12 @@ ROOTFS_WORKSPACE 		:= $(srctree)/workspace/rootfs
 ROOTFS_NAME 			:= rootfs
 ROOTFS_VERSION 			:= 1.0
 
-SUB_TARGET 				+= busybox_download
+SUB_TARGET 				+= busybox-download busybox-defconfig busybox-build rootfs-mk
 
 BUSYBOX_SH 	= $(CONFIG_SHELL) $(BUSYBOX_SCRIPTS) $(1)X $(BUSYBOX_VERSION)X $(BUSYBOX_SRC)X	\
 				$(BUSYBOX_GITHUB_SITE)X $(BUSYBOX_WGET_SITE)X 
 
-busybox_download:
+busybox-download:
 	$(Q)$(call BUSYBOX_SH, $(srctree))
 
 busybox-defconfig:
