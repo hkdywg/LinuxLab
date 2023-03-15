@@ -18,8 +18,7 @@ sudo apt-get install -y python2.7-dev python-dev bridge-utils
 sudo apt-get install -y uml-utilities net-tools
 sudo apt-get install -y libattr1-dev libcap-dev
 sudo apt-get install -y kpartx libsdl2-dev libsdl1.2-dev
-sudo apt-get install -y debootstrap bsdtar
-sudo apt-get install -y libelf-dev gcc-multilib g++-multilib
+sudo apt-get install -y debootstrap bsdtar sudo apt-get install -y libelf-dev gcc-multilib g++-multilib
 sudo apt-get install -y libcap-ng-dev
 sudo apt-get install -y libmount-dev libselinux1-dev libffi-dev libpulse-dev
 sudo apt-get install -y liblzma-dev python-serial
@@ -57,6 +56,8 @@ So utilise command on your terminal:
 cd */LinuxLab
 make defconfig
 make
+cd workspace
+./run_qemu.sh
 ```
 
 Then, the LinuxLab will auto-compile and generate a Distro-Linux, more userful information will be generate.
