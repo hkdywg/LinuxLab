@@ -41,12 +41,5 @@ cd ${QEMU_WORKSPACE}
 ./configure --target-list=${EMULATER} ${CONFIG}
 make -j${CPU_CORE}
 
-echo -e '#!/bin/bash' > ${MF}
-echo -e '#' >> ${MF}
-echo -e '# Qemu system debug' >> ${MF}
-echo -e '#' >> ${MF}
-echo -e 'ROOT=${OUTPUT}' >> ${MF}
-echo -e 'QEMU_DIR=' >> ${MF}
-echo -e '' >> ${MF}
 
 

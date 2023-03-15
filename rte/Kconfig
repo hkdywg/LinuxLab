@@ -25,4 +25,16 @@ config QEMU_VERSION
     string "qemu version"
     default "3.1.0"
 
+config RAM_SIZE
+    default 256
+    int "The ram size of system(MB)"
+
+config CPU_CORE
+    string "cpu core type"
+    default "cortex-a53"
+
+config CPU_CORE_NUM
+    int "cput core number"
+    default 2
+
 endif #endif RTE
