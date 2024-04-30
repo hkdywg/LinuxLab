@@ -34,7 +34,7 @@ EOF
 
 if [ ${ARCH_CONFIG} = "arm64" ];then
     # ARM 64-bit
-    echo -e "QEMU=${QEMU_WORKSPACE}/aarch64-softmmu/qemu-system-aarch64" >> ${MF}
+    echo -e "QEMU=${QEMU_WORKSPACE}/build/aarch64-softmmu/qemu-system-aarch64" >> ${MF}
     echo -e "KERNEL_IMAGE=${WORKSPACE}/kernel/build_out/arch/arm64/boot/Image" >> ${MF}
 elif [ ${ARCH_CONFIG} = "arm" ];then
     # ARM 32-bit

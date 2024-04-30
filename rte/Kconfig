@@ -23,7 +23,7 @@ config QEMU_SRC
 
 config QEMU_VERSION
     string "qemu version"
-    default "3.1.0"
+    default "7.1.0"
 
 config RAM_SIZE
     default 256
