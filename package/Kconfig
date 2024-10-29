@@ -1,0 +1,12 @@
+menuconfig PACKAGE
+    bool "PACKAGE"
+    default y
+
+if PACKAGE
+
+config PACKAGE_KDUMP
+    default true
+    bool "Linux kernel kdump experiment"
+
+
+endif #endif PACKAGE

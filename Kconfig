@@ -41,3 +41,6 @@ source kernel/Kconfig
 
 # Qemu
 source rte/Kconfig
+
+# Package
+source package/Kconfig
