@@ -42,6 +42,11 @@ OBJDUMP := $(CROSS_COMPILE_CONFIG)objdumo
 AR 		:= $(CROSS_COMPILE_CONFIG)ar
 NM 		:= $(CROSS_COMPILE_CONFIG)nm
 
+
+HOST_DIR 		:= $(srctree)/out/toolchain/$(TOOL_CHAIN_NAME)
+LOCAL_CFLAGS 	:= -I$(HOST_DIR)/include
+LOCAL_LDFLAGS 	:= -L$(HOST_DIR)/lib -WL,-rpath,$(HOST_DIR)/lib
+
 ifndef CC
 $(error Can not find cross compile toolchain, please source ENV File)
 endif
