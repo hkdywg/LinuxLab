@@ -9,24 +9,19 @@
 ##  published by the Free Software Foundation.
 ##
 
-.PHONY: all
-all:
-
-BUILD_TOPDIR := $(shell pwd)
+BUILD_TOPDIR := $(srctree)/package
 
 include $(BUILD_TOPDIR)/build_core/definition.mk
 include $(BUILD_TOPDIR)/build_core/configure.mk
 
 # Find all of make.inc
-#include $(BUILD_TOPDIR)/make.inc
-include $(call all-subdir-makefiles)
+include $(BUILD_TOPDIR)/make.inc
 
-all: $(ALL_TARGETS)
-    @echo $(MAKEFILE_LIST)
-    @echo $(ALL_TARGETS)
-    @echo "Build Done"
+package_all: $(ALL_TARGETS)
+	@echo $(ALL_TARGETS)
+	@echo "Build Done"
 
 .PHONY: clean
 
-clean:
-    @rm -rf $(PACKAGE_BUILD_OUTPATH)/*
+package_clean:
+	@rm -rf $(PACKAGE_BUILD_OUTPATH)/*

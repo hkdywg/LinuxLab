@@ -57,7 +57,7 @@ BUILD_APP := $(BUILD_TOPDIR)/build_core/build_app.mk
 ###################################################
 # BUILD OUT DIRECTORY
 ###################################################
-PACKAGE_WORKSPACE 			:= $(srctree)/workspace/kernel
+PACKAGE_WORKSPACE 			:= $(srctree)/workspace/package
 PACKAGE_BUILD_OUTPATH 		:= $(PACKAGE_WORKSPACE)/build_out
 
 export PACKAGE_BUILD_OUTPATH
