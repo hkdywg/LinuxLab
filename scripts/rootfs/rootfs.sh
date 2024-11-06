@@ -159,6 +159,7 @@ ${FS_TYPE_TOOL} -F ${ROOTFS_WORK_DIR}/rootfs.img
 mkdir -p ${ROOTFS_WORK_DIR}/tmpfs
 sudo mount -t ${FS_TYPE} ${ROOTFS_WORK_DIR}/rootfs.img ${ROOTFS_WORK_DIR}/tmpfs -o loop
 sudo cp -raf ${ROOTFS_PATH}/* ${ROOTFS_WORK_DIR}/tmpfs
+sudo cp -raf ${ROOTFS_WORK_DIR}/user_install/* ${ROOTFS_WORK_DIR}/tmpfs/
 sync
 sudo umount ${ROOTFS_WORK_DIR}/tmpfs
 

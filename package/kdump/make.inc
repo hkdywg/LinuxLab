@@ -14,7 +14,6 @@ KEXEC_BUILD_OUTPATH	    := $(KEXEC_WORKSPACE)/build_out/
 
 SUB_TARGET 				+= kexec kexec-download kexec-config kexec-pack kexec-build
 
-
 # This is a -R option in MAKEFLAGS in the top-level Makefile
 # The -R option affects the use of COMPILE.c variables in kexec compile
 MAKEFLAGS := 
@@ -38,7 +37,8 @@ kexec-build:
 	make && make install 
 
 kexec-pack:
-	sudo cp -rf $(KEXEC_BUILD_OUTPATH)/sbin/*  $(srctree)/workspace/rootfs/rootfs/sbin/
+	mkdir -p $(USER_FILE_INSTALL_DIR)
+	sudo cp -rf $(KEXEC_BUILD_OUTPATH)/*  $(USER_FILE_INSTALL_DIR)/
 
 kexec-check-dir:
 	@if [ ! -d "$(KEXEC_WORKSPACE)" ];then \

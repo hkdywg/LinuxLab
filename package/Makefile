@@ -10,6 +10,7 @@
 ##
 
 BUILD_TOPDIR := $(srctree)/package
+USER_FILE_INSTALL_DIR := $(srctree)/workspace/rootfs/user_install
 
 include $(BUILD_TOPDIR)/build_core/definition.mk
 include $(BUILD_TOPDIR)/build_core/configure.mk
