@@ -16,20 +16,23 @@ MAKE_PARA := -s
 # TOOLCHAIN CONFIG
 ###################################################
 
-ifeq ($(CONFIG_KERNEL_CROSS_COMPILE),"arm-linux-gnueabi")
+ifeq ($(CONFIG_LINUX_KERNEL_CROSS_COMPILE),"arm-linux-gnueabi")
 TOOL_CHAIN_NAME := $(basename $(basename $(notdir $(CONFIG_ARM_GNUEABI_FULL_NAME))))
 CROSS_COMPILE_CONFIG := $(srctree)/output/toolchain/$(TOOL_CHAIN_NAME)/bin/arm-linux-gnueabi-
 ARCH := arm
+CONFIGURE_FLAGS := --target=arm-linux-gnueabi --host=arm-linux-gnueabi --build=x86_64-linux
 endif
-ifeq ($(CONFIG_KERNEL_CROSS_COMPILE),"arm-linux-gnueabihf")
+ifeq ($(CONFIG_LINUX_KERNEL_CROSS_COMPILE),"arm-linux-gnueabihf")
 TOOL_CHAIN_NAME := $(basename $(basename $(notdir $(CONFIG_ARM_GNUEABIHF_FULL_NAME))))
 CROSS_COMPILE_CONFIG := $(srctree)/output/toolchain/$(TOOL_CHAIN_NAME)/bin/arm-linux-gnueabihf-
 ARCH := arm
+CONFIGURE_FLAGS := --target=arm-linux-gnueabihf --host=arm-linux-gnueabihf --build=x86_64-linux
 endif
-ifeq ($(CONFIG_KERNEL_CROSS_COMPILE),"aarch64-linux-gnu")
+ifeq ($(CONFIG_LINUX_KERNEL_CROSS_COMPILE),"aarch64-linux-gnu")
 TOOL_CHAIN_NAME := $(basename $(basename $(notdir $(CONFIG_AARCH64_FULL_NAME))))
 CROSS_COMPILE_CONFIG := $(srctree)/output/toolchain/$(TOOL_CHAIN_NAME)/bin/aarch64-linux-gnu-
 ARCH := arm64
+CONFIGURE_FLAGS := --target=aarch64-linux-gnu --host=aarch64-linux-gnu --build=x86_64-linux
 endif
 
 CC 		:= $(CROSS_COMPILE_CONFIG)gcc
