@@ -12,6 +12,10 @@ LINUX_KERNEL_SCRIPTS 		:= $(srctree)/scripts/kernel/linux.sh
 KERNEL_WORKSPACE 			:= $(srctree)/workspace/kernel
 KERNEL_BUILD_OUTPATH 		:= $(KERNEL_WORKSPACE)/build_out
 KERNEL_KCONFIG_FILE 		:= $(KERNEL_BUILD_OUTPATH)/.config
+KERNEL_IMAGE 				:= $(KERNEL_BUILD_OUTPATH)/arch/arm64/boot/Image
+
+export KERNEL_KCONFIG_FILE
+export KERNEL_IMAGE
 
 SUB_TARGET 					+= kernel-download kernel-defconfig kernel-build
 
