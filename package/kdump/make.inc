@@ -34,11 +34,16 @@ kexec-config:
 
 kexec-build:
 	cd $(KEXEC_WORKSPACE)/kexec-tools-$(KEXEC_VERSION); \
-	make && make install 
+	make && make install ; \
+	cd - ; \
+	cat $(srctree)/package/kdump/config >> $(KERNEL_KCONFIG_FILE); \
+	make kernel-build
 
 kexec-pack:
 	mkdir -p $(USER_FILE_INSTALL_DIR)
-	sudo cp -rf $(KEXEC_BUILD_OUTPATH)/*  $(USER_FILE_INSTALL_DIR)/
+	sudo cp -rf $(KEXEC_BUILD_OUTPATH)/*  $(USER_FILE_INSTALL_DIR)/ 
+	sudo cp $(KERNEL_IMAGE) $(USER_FILE_INSTALL_DIR)/
+
 
 kexec-check-dir:
 	@if [ ! -d "$(KEXEC_WORKSPACE)" ];then \
@@ -46,7 +51,6 @@ kexec-check-dir:
 	fi
 
 kexec: kexec-download kexec-config kexec-build kexec-pack
-
 
 
 

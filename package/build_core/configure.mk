@@ -59,8 +59,9 @@ endif
 # BUILD COMMAND
 ###################################################
 
-CLEAR_VARS := $(BUILD_TOPDIR)/build_core/clear_vars.mk
-BUILD_APP := $(BUILD_TOPDIR)/build_core/build_app.mk
+CLEAR_VARS := $(PACKAGE_BUILD_TOPDIR)/build_core/clear_vars.mk
+BUILD_APP := $(PACKAGE_BUILD_TOPDIR)/build_core/build_app.mk
+BUILD_DRIVER := $(PACKAGE_BUILD_TOPDIR)/build_core/build_driver.mk
 
 ###################################################
 # BUILD OUT DIRECTORY

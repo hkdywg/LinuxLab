@@ -9,14 +9,14 @@
 ##  published by the Free Software Foundation.
 ##
 
-BUILD_TOPDIR := $(srctree)/package
+PACKAGE_BUILD_TOPDIR := $(srctree)/package
 USER_FILE_INSTALL_DIR := $(srctree)/workspace/rootfs/user_install
 
-include $(BUILD_TOPDIR)/build_core/definition.mk
-include $(BUILD_TOPDIR)/build_core/configure.mk
+include $(PACKAGE_BUILD_TOPDIR)/build_core/definition.mk
+include $(PACKAGE_BUILD_TOPDIR)/build_core/configure.mk
 
 # Find all of make.inc
-include $(BUILD_TOPDIR)/make.inc
+include $(PACKAGE_BUILD_TOPDIR)/make.inc
 
 package_all: $(ALL_TARGETS)
 	@echo $(ALL_TARGETS)
