@@ -52,6 +52,7 @@ kexec-check-dir:
 
 kexec: kexec-download kexec-config kexec-build kexec-pack
 
-
+LOCAL_PATH := $(call my-dir)
+include $(LOCAL_PATH)/sample/Makefile
 
 
