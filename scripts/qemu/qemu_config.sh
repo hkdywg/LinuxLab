@@ -34,7 +34,8 @@ else
     echo -e "\033[31m Invalid arch config, not support yet! \033[0m"
     exit -1
 fi
-   
+
+CC=
 
 # config qemu and make makefile
 cd ${QEMU_WORKSPACE}
