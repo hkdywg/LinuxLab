@@ -66,8 +66,7 @@ BUILD_DRIVER := $(PACKAGE_BUILD_TOPDIR)/build_core/build_driver.mk
 ###################################################
 # BUILD OUT DIRECTORY
 ###################################################
-PACKAGE_WORKSPACE 			:= $(srctree)/workspace/package
-PACKAGE_BUILD_OUTPATH 		:= $(PACKAGE_WORKSPACE)/build_out
+PACKAGE_BUILD_OUTPATH 		:= $(srctree)/output/package
 
 export PACKAGE_BUILD_OUTPATH
 
