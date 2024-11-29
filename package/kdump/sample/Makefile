@@ -1,21 +1,27 @@
+##
+## Makefile
+##
+## Brief: Makefie for build simple kdump driver
+##
+## History:
+##    2024/11/29 - [yinwg] Created file
+##
+## 	This program is free software; you can redistribute it and/r modify
+##  it under the terms of the GNU General Public License version 2 as
+##  published by the Free Software Foundation.
+##
 
-LOCAL_DRIVER_DIR := $(call my-dir)
+LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-
 
 obj-m = simple_kdump.o
 
 LOCAL_DRIVER_TARGET := simple_kdump
 
-SUB_TARGET += $(LOCAL_DRIVER_TARGET)
-
 include $(BUILD_DRIVER)
-$(warning $(MAKEFILE_LIST))
 
+$(LOCAL_DRIVER_TARGET): $(LOCAL_DRIVER_MODULE)
+	@echo "--Build $@ done"
 
-#MODULE_SRC := $(call my-dir)
-
-#simple_kdump:
-#	make -C $(KERNEL_BUILD_OUTPATH)  CROSS_COMPILE=$(CROSS_COMPILE_CONFIG) ARCH=$(ARCH)  O=$(KERNEL_BUILD_OUTPATH) M=$(MODULE_SRC) modules
-
+$(call add-target-into-build, $(LOCAL_DRIVER_TARGET))
