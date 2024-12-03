@@ -21,7 +21,7 @@ int curr_count = 0;
 static struct inode_operations tinyfs_inode_ops;
 const struct file_operations tinyfs_dir_operations;
 const struct file_operations tinyfs_file_operations;
-static int tinyfs_readdir(struct file *filp, void *dirent, filldir_t filldir);
+static int tinyfs_readdir(struct file *file, struct dir_context *ctx);
 
 static int get_block(void)
 {
@@ -47,7 +47,6 @@ static int tinyfs_do_create(struct inode *dir, struct dentry *dentry, umode_t mo
     int idx;
 
     sb = dir->i_sb;
-
     if(curr_count >= MAX_FILES)
         return -ENOSPC;
 
@@ -108,7 +107,6 @@ static struct inode *tinyfs_iget(struct super_block *sb, int idx)
     inode->i_op = &tinyfs_inode_ops;
 
     blk = &block[idx];
-
     if(S_ISDIR(blk->mode))
         inode->i_fop = &tinyfs_dir_operations;
     else if(S_ISREG(blk->mode))
@@ -223,30 +221,35 @@ ssize_t tinyfs_write(struct file *filp, const char __user *buf, size_t len, loff
 }
 
 
-static int tinyfs_readdir(struct file *filp, void *dirent, filldir_t filldir)
+static int tinyfs_readdir(struct file *file, struct dir_context *ctx)
 {
     loff_t pos;
     struct file_blk *blk;
     struct dir_entry *entry;
     int i;
 
-    pos = filp->f_pos;
+    pos = file->f_pos;
     if(pos)
         return 0;
 
-    //blk = (struct file_blk *)filp->f_dentry->d_inode->i_private;
-    blk = (struct file_blk *)filp->f_inode->i_private;
+    blk = (struct file_blk *)file->f_path.dentry->d_inode->i_private;
     if(!S_ISDIR(blk->mode))
         return -ENOTDIR;
 
     entry = (struct dir_entry *)&blk->data[0];
     for(i = 0; i < blk->dir_child; i++) {
-        filldir(dirent, entry[i].filename, MAXLEN, pos, entry[i].idx, DT_UNKNOWN);
-        filp->f_pos += sizeof(struct dir_entry);
+		dir_emit(ctx, entry[i].filename, MAXLEN, entry[i].idx, DT_UNKNOWN);
+        file->f_pos += sizeof(struct dir_entry);
         pos += sizeof(struct dir_entry);
+		ctx->pos = pos;
     }
 
     return 0;
+}
+
+ssize_t tinyfs_generic_read_dir(struct file *filp, char __user *buf, size_t siz, loff_t *ppos)
+{
+	return -EISDIR;
 }
 
 static struct inode_operations tinyfs_inode_ops = {
@@ -264,8 +267,9 @@ const struct file_operations tinyfs_file_operations = {
 
 const struct file_operations tinyfs_dir_operations = {
     .owner = THIS_MODULE,
-    .read = generic_read_dir,
+    .read = tinyfs_generic_read_dir,
     //.readdir = tinyfs_readdir,
+    .iterate_shared = tinyfs_readdir,
 };
 
 
