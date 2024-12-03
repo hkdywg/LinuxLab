@@ -13,8 +13,12 @@
 #include <linux/fs.h>
 #include <linux/time.h>
 #include <linux/uaccess.h>
+#include <linux/mm.h>
+#include <linux/seq_file.h>
+#include <linux/slab.h>
 
 #include "tinyfs.h"
+
 
 struct file_blk block[MAX_FILES + 1];
 int curr_count = 0;
@@ -252,6 +256,16 @@ ssize_t tinyfs_generic_read_dir(struct file *filp, char __user *buf, size_t siz,
 	return -EISDIR;
 }
 
+static int tinyfs_show_options(struct seq_file *m, struct dentry *root)
+{
+	struct tinyfs_fs_info *fsi = root->d_sb->s_fs_info; 
+
+	if(fsi->mount_opts.mode == TINYFS_DEFAULT_MODE)
+		seq_printf(m, ",mode=%o", fsi->mount_opts.mode);
+
+	return 0;
+}
+
 static struct inode_operations tinyfs_inode_ops = {
     .create = tinyfs_create,
     .lookup = tinyfs_lookup,
@@ -272,28 +286,62 @@ const struct file_operations tinyfs_dir_operations = {
     .iterate_shared = tinyfs_readdir,
 };
 
+static const struct super_operations tinyfs_ops = {
+	.statfs = simple_statfs,
+	.drop_inode = generic_delete_inode,
+	.show_options = tinyfs_show_options,
+};
+
+struct inode *tinyfs_get_inode(struct super_block *sb,
+							   const struct inode *dir, umode_t mode, dev_t dev)
+{
+	struct inode *inode = new_inode(sb);
+
+	if(inode) {
+		inode->i_ino = get_next_ino();
+		inode_init_owner(inode, dir, mode);
+		inode->i_atime = inode->i_mtime = inode->i_ctime = current_time(inode);
+		switch(mode & S_IFMT) {
+			case S_IFREG:
+				inode->i_op = &tinyfs_inode_ops;
+				inode->i_fop = &tinyfs_dir_operations;
+				break;
+			case S_IFDIR:
+				inode->i_op = &tinyfs_inode_ops;
+				inode->i_fop = &tinyfs_dir_operations;
+				break;
+			default:
+				break;
+		}
+	}
+
+	return inode;
+}
 
 int tinyfs_fill_super(struct super_block *sb, void *data, int silent)
 {
-    struct inode *root_inode;
-    int mode = S_IFDIR;
+	struct tinyfs_fs_info *fsi;
+	struct inode *inode;
 
-    root_inode = new_inode(sb);
-    root_inode->i_ino = 1;
-    inode_init_owner(root_inode, NULL, mode);
-    root_inode->i_sb = sb;
-    root_inode->i_op = &tinyfs_inode_ops;
-    root_inode->i_fop = &tinyfs_dir_operations;
-    root_inode->i_atime = root_inode->i_mtime = root_inode->i_ctime = current_time(root_inode);
+	fsi = kzalloc(sizeof(struct tinyfs_fs_info), GFP_KERNEL);
+	sb->s_fs_info = fsi;
+	if(!fsi)
+		return -ENOMEM;
+	sb->s_maxbytes = MAX_LFS_FILESIZE;
+	sb->s_blocksize = PAGE_SIZE;
+	sb->s_blocksize_bits = PAGE_SHIFT;
+	sb->s_magic = TINYFS_MAGIC;
+	sb->s_op = &tinyfs_ops;
+	sb->s_time_gran = 1;
 
-    block[1].mode = mode;
+	inode = tinyfs_get_inode(sb, NULL, S_IFDIR | TINYFS_DEFAULT_MODE, 0);
+    block[1].mode = S_IFDIR | TINYFS_DEFAULT_MODE;
     block[1].dir_child = 0;
     block[1].idx = 1;
     block[1].busy = 1;
-    root_inode->i_private = &block[1];
+    inode->i_private = &block[1];
 
-    sb->s_root = d_make_root(root_inode);
-    curr_count++;
+	sb->s_root = d_make_root(inode);
 
     return 0;
 }

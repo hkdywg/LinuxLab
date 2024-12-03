@@ -14,6 +14,8 @@
 #define MAXLEN  64
 #define MAX_FILES    65536
 #define MAX_BLOCKSIZE   512
+#define TINYFS_DEFAULT_MODE 	0755
+#define TINYFS_MAGIC 			(0x19930326)
 
 struct dir_entry {
     char filename[MAXLEN];
@@ -31,6 +33,14 @@ struct file_blk {
     };
 
     char data[0];
+};
+
+struct tinyfs_mount_opts {
+	umode_t mode;
+};
+
+struct tinyfs_fs_info {
+	struct tinyfs_mount_opts mount_opts;
 };
 
 #endif
