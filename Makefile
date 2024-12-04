@@ -174,6 +174,9 @@ endif
 # Kernel
 include kernel/Makefile
 
+# Device tree
+include device_tree/Makefile
+
 ## RootFs
 ifdef CONFIG_ROOTFS
 include fs/Makefile
