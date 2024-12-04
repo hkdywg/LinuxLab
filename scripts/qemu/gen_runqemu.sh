@@ -45,22 +45,27 @@ else
     exit -1
 fi
 
+echo -e "DEVICE_TREE_FILE=${ROOT}/output/device_tree/virtual_device.dtb" >> ${MF}
 echo -e "ROOT_DIR=${WORKSPACE}/rootfs" >> ${MF}
 echo -e "RAM_SIZE=${SYS_RAM_SIZE}" >> ${MF}
 echo -e "CORE_TYPE=${CORE_TYPE}" >> ${MF}
 echo -e "CORE_NUM=${CORE_NUM}" >> ${MF}
+echo -e "SHARE_DIR=${WORKSPACE}/share_dir" >> ${MF}
+
 
 cat << EOF >> ${MF}
-CMDLINE="earlycon root=/dev/vda rw rootfstype=ext4 console=ttyAMA0 init=/linuxrc loglevel=8"
+CMDLINE="earlycon root=/dev/vda rw rootfstype=ext4 console=ttyAMA0 init=/linuxrc loglevel=8 crashkernel=256M"
 sudo \${QEMU} \\
     -M virt \\
     -m \${RAM_SIZE} \\
     -cpu \${CORE_TYPE} \\
     -smp \${CORE_NUM} \\
     -kernel \${KERNEL_IMAGE} \\
+	-dtb \${DEVICE_TREE_FILE} \\
     -device virtio-blk-device,drive=hd0 \\
     -drive if=none,file=\${ROOT_DIR}/rootfs.img,format=raw,id=hd0 \\
     -nographic \\
+	-virtfs local,path=\${SHARE_DIR},mount_tag=hostshare,security_model=none,id=hostshare \\
     -append "\${CMDLINE}"
 EOF
 
