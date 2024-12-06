@@ -1,0 +1,20 @@
+/*
+ *  gpio.dts
+ *  
+ *  (C) 2024.12.04 <hkdywg@163.com>
+ *
+ *  This program is free software; you can redistribute it and/r modify
+ *  it under the terms of the GNU General Public License version 2 as
+ *  published by the Free Software Foundation.
+ * */
+
+/ {
+    gpio_demo {
+    	compatible = "LinuxLab, GPIO";
+    	status = "okay";
+    	//test-gpio = <&gpio 25 1>;
+    	//gpios = <&gpio 0 0>;
+		gpios = <0x8005 0x02 0x02>;
+    	test-pro = <8>;
+    };  
+};
