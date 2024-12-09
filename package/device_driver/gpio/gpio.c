@@ -15,19 +15,62 @@
 #include <linux/interrupt.h>
 #include <linux/of_gpio.h>
 #include <linux/of_platform.h>
+#include <linux/delay.h>
+#include <linux/timer.h>
+#include <linux/workqueue.h>
 
 #define DEVICE_NAME "test_gpio"
+//#define IRQ_USE_TASKLET
+#define IRQ_USE_WORKQUE
+
 
 struct gpio_demo_priv
 {
 	int irq;
 	int gpio;
+#ifdef IRQ_USE_WORKQUE
+	struct work_struct wq;
+	struct timer_list timer;
+#endif
 };
+static void tasklet_process_func(unsigned long data);
+DECLARE_TASKLET(gpio_tasklet, tasklet_process_func, 0);
 
+/* gpio irq handler */
 static irqreturn_t gpio_demo_handle(int irq, void *dev_id)
 {
+	struct gpio_demo_priv *pdata;
 	printk("irq %d handle\n", irq);
+#ifdef IRQ_USE_TASKLET
+	tasklet_schedule(&gpio_tasklet);
+#endif
+#ifdef IRQ_USE_WORKQUE
+	pdata = (struct gpio_demo_priv*)dev_id;	
+	/* set timeout*/
+	pdata->timer.expires = jiffies + msecs_to_jiffies(1000);
+	add_timer(&pdata->timer);
+#endif
 	return IRQ_HANDLED;
+}
+
+/* tasklet handler */
+static void tasklet_process_func(unsigned long data)
+{
+	printk("tasklet executed.\n");
+}
+
+static void irq_work_queue(struct work_struct *work)
+{
+	printk("work queue executed\n");
+}
+
+static void timer_isr(struct timer_list *unused)
+{
+	struct gpio_demo_priv *pdata;
+
+	pdata = container_of(unused, struct gpio_demo_priv, timer);
+	/* wakeup work queue task */
+	schedule_work(&pdata->wq);
 }
 
 static int gpio_demo_probe(struct platform_device *pdev)
@@ -65,7 +108,19 @@ static int gpio_demo_probe(struct platform_device *pdev)
 
 	irq = gpio_to_irq(gpio);
 
-	ret = request_irq(irq, gpio_demo_handle, IRQF_TRIGGER_FALLING, DEVICE_NAME, NULL);
+#ifdef IRQ_USE_WORKQUE
+	/* Init work queue */
+	INIT_WORK(&priv->wq, irq_work_queue);
+
+	/* Emulate interrupt via timer */
+	timer_setup(&priv->timer, timer_isr, 0);
+#endif
+
+	priv->irq = irq;
+	priv->gpio = gpio;
+
+	/* register irq function and pass priv data as paramter to isr func */
+	ret = request_irq(irq, gpio_demo_handle, IRQF_TRIGGER_HIGH, DEVICE_NAME, priv);
 	if(ret < 0) {
 		printk("Can't request irq %d\n", irq);
 		ret = -EINVAL;
@@ -73,8 +128,6 @@ static int gpio_demo_probe(struct platform_device *pdev)
 	}
 	printk("gpio-%d irq: %d\n", gpio, irq);
 
-	priv->irq = irq;
-	priv->gpio = gpio;
 	platform_set_drvdata(pdev, priv);
 
 	return 0;
@@ -93,6 +146,14 @@ static int gpio_demo_remove(struct platform_device *pdev)
 	struct gpio_demo_priv *priv = platform_get_drvdata(pdev);
 
 	free_irq(priv->irq, NULL);
+#ifdef IRQ_USE_TASKLET
+	tasklet_kill(&gpio_tasklet);
+#endif
+#ifdef IRQ_USE_WORKQUE
+	del_timer(&priv->timer);
+#endif
+
+	kfree(priv);
 
 	return 0;
 }
