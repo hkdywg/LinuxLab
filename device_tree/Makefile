@@ -12,13 +12,15 @@
 
 SUB_DTS_TOPDIR := $(srctree)/package/device_driver
 DTB_INSTALL_DIR := $(srctree)/output/device_tree
+newline := $(shell echo)
+
 
 # 主设备树文件
 MAIN_DTS := $(DTB_INSTALL_DIR)/build_main.dts
 TOP_SOURCE_DTS := $(srctree)/device_tree/virtual_device.dts
 
 # 自动搜索所有子目录下的 .dts 文件
-DTS_FILES = $(shell find $(SUB_DTS_TOPDIR) -type f -name "*.dts")
+DTS_FILES = $(shell find $(SUB_DTS_TOPDIR) -type f -name "*.dts" | tr ' ' '\n')
 
 # 将所有 .dts 文件包含到主设备树文件中
 INCLUDE_DTS = $(foreach dts_file, $(DTS_FILES), \#include "$(dts_file)")
@@ -43,6 +45,7 @@ DTB_TARGET := $(shell basename $(patsubst %.dts,%.dtb,$(TOP_SOURCE_DTS)))
 $(MAIN_DTS): $(DTS_FILES)
 	@cp $(srctree)/device_tree/virtual_device.dts $(DTB_INSTALL_DIR)/
 	@sed '/\/dts-v1\/;/a $(INCLUDE_DTS)' $(TOP_SOURCE_DTS) > $@
+	@sed -i 's/  #/\n#/g' $@
 
 # 编译设备树源文件为二进制文件（.dtb）
 dtc: $(MAIN_DTS)
