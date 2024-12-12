@@ -20,11 +20,13 @@
 #include <linux/delay.h>
 #include <linux/cma.h>
 #include <linux/miscdevice.h>
+#include <linux/platform_device.h>
 #include <linux/mutex.h>
 #include <linux/list.h>
 #include <linux/uaccess.h>
 #include <linux/dma-mapping.h>
 #include <linux/cdev.h>
+#include <linux/of_platform.h>
 
 #define DEVICE_NAME 	"cma_demo"
 
@@ -50,6 +52,7 @@ struct cma_demo_region {
 
 /* CMA manager information */
 struct cma_demo_manager {
+	struct platform_device *pdev;
 	struct miscdevice misc;
 	struct mutex lock;
 	struct list_head head;
@@ -84,9 +87,10 @@ static long cma_demo_ioctl(struct file *filp, unsigned int cmd,
 		}
 
 		/* allocate memory from CMA */
-		cma_addr = dma_alloc_coherent(cma_manager->misc.this_device, info.length, &region->dma_handle, GFP_KERNEL | __GFP_COMP);
+		cma_addr = dma_alloc_coherent(&cma_manager->pdev->dev, info.length, &region->dma_handle, GFP_KERNEL | __GFP_COMP);
 		if(!cma_addr) {
 			printk("ALLOCATE: DMA allocate error\n");
+			mutex_unlock(&cma_manager->lock);
 			ret = -ENOMEM;
 			goto err_dma;
 		}
@@ -118,12 +122,12 @@ static long cma_demo_ioctl(struct file *filp, unsigned int cmd,
 		}
 		if(!found) {
 			printk("RELEASE: Can't find specical region\n");
+			mutex_unlock(&cma_manager->lock);
 			ret = -EINVAL;
 			goto err_alloc;
 		}
 		/* free contiguous memory */
-		cma_addr = phys_to_virt(info.phys);
-		dma_free_coherent(cma_manager->misc.this_device, info.length, cma_addr, region->dma_handle);
+		dma_free_coherent(&cma_manager->pdev->dev, info.length, (void *)region->info.virt, region->dma_handle);
 		list_del(&region->list);
 		kfree(region);
 		mutex_unlock(&cma_manager->lock);
@@ -170,8 +174,9 @@ static struct file_operations cma_demo_fops = {
 	.mmap = cma_demo_mmap,
 };
 
-static int __init cma_demo_init(void)
+static int cma_demo_probe(struct platform_device *pdev)
 {
+	struct device_node *np = pdev->dev.of_node;
 	int ret;
 
 	cma_manager = kzalloc(sizeof(struct cma_demo_manager), GFP_KERNEL);
@@ -188,6 +193,7 @@ static int __init cma_demo_init(void)
 	cma_manager->misc.name = DEVICE_NAME;
 	cma_manager->misc.minor = MISC_DYNAMIC_MINOR;
 	cma_manager->misc.fops = &cma_demo_fops;
+	cma_manager->pdev = pdev;
 
 	/* manager list initilize */
 	INIT_LIST_HEAD(&cma_manager->head);
@@ -201,7 +207,7 @@ err_alloc:
 	return ret;
 }
 
-static void __exit cma_demo_exit(void)
+static int __exit cma_demo_remove(struct platform_device *pdev)
 {
 	struct cma_demo_region *region;
 
@@ -213,11 +219,27 @@ static void __exit cma_demo_exit(void)
 	misc_deregister(&cma_manager->misc);
 	kfree(cma_manager);
 	cma_manager = NULL;
+
+	return 0;
 }
 
-module_init(cma_demo_init);
-module_exit(cma_demo_exit);
+static const struct of_device_id cma_demo_of_match[] = {
+	{ .compatible = "LinuxLab, CMA_DEMO", },
+	{  },
+};
+MODULE_DEVICE_TABLE(of, cma_demo_of_match);
 
+static struct platform_driver cma_demo_driver = {
+	.probe = cma_demo_probe,
+	.remove = cma_demo_remove,
+	.driver = {
+		.owner = THIS_MODULE,
+		.name = DEVICE_NAME,
+		.of_match_table = cma_demo_of_match,
+	},
+};
+
+module_platform_driver(cma_demo_driver);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("yinwg <hkdywg@163.com>");
