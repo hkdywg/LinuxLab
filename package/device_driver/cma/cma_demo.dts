@@ -9,8 +9,27 @@
  * */
 
 / {
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		linux,cma@48000000 {
+			compatible = "shared-dma-pool";
+			reusable;
+			reg = <0x00 0x48000000 0x00 0x8000000>;
+		};
+
+		linux_lab_cma {
+			compatible = "shared-dma-pool";
+			reusable;
+			reg = <0x00000000 0x50000000 0x00000000 0x4000000>;
+		};
+	};
+
     cma_demo {
     	compatible = "LinuxLab, CMA_DEMO";
     	status = "okay";
+		cma-name = "linux_lab_cma";
     };  
 };
