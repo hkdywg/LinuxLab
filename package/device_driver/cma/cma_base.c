@@ -31,6 +31,7 @@
 #define DEVICE_NAME 	"cma_demo"
 
 #define CMA_REGION_NUM 		(64)
+#define CMA_DRAP_LEN 		(2)		/* draw width in bytes */
 #define CMA_MEM_ALLOCATE 	_IOW('m', 1, unsigned int)
 #define CMA_MEM_RELEASE 	_IOW('m', 2, unsigned int)
 
@@ -168,6 +169,52 @@ static int cma_demo_mmap(struct file *filp, struct vm_area_struct *vma)
 
 }
 
+/* Draw bitmap */
+static void draw_bitmap(unsigned long *bitmap, int width, int index)
+{
+	int len = sizeof(unsigned long) * 8;
+	char buffer_show[128];
+	int i, j;
+
+	for(i = 0; i < width; i++) {
+		unsigned long bitmap_val = bitmap[i];
+		
+		for(j = 0; j < len; j++) {
+			if((bitmap_val >> j) & 0x1)
+				buffer_show[i * len + j] = 'X';	// Used 
+			else
+				buffer_show[i * len + j] = '.';	// Free
+		}
+	}
+	buffer_show[width * len] = '\0';
+	printk("[%04d] [%s]\n", index, buffer_show);
+}
+
+/*
+ * Read on CMA area bitmap
+ *   On userspace:
+ *   --> cat /sys/class/platform/devices/
+ * */
+static ssize_t bitmap_show(struct device *dev,
+			struct device_attribute *attr, char *buf)
+{
+	return 0;
+}
+
+/*
+ * setup cma area
+ * on userspace 
+ * --> echo "linux_lab_cma" > /sys/bus/platform/devices/cma_demo/bitmap
+ * */
+static ssize_t bitmap_store(struct device *dev,
+			struct device_attribute *attr, const char *buf, size_t size)
+{
+	return size;
+}
+
+/* bitmap attribute */
+static struct device_attribute bitmap_attr = __ATTR_RW(bitmap);
+
 static struct file_operations cma_demo_fops = {
 	.owner = THIS_MODULE,
 	.unlocked_ioctl = cma_demo_ioctl,
@@ -184,6 +231,13 @@ static int cma_demo_probe(struct platform_device *pdev)
 		printk("Allocate cma demo manager memory failed\n");
 		ret = -ENOMEM;
 		goto err_alloc;
+	}
+
+	/* create sys file */
+	ret = device_create_file(&pdev->dev, &bitmap_attr);
+	if(ret) {
+		dev_err(&pdev->dev, "unable to create bitmap attribute\n");
+		goto err_file;
 	}
 
 	/* mutex lock init */
@@ -203,6 +257,8 @@ static int cma_demo_probe(struct platform_device *pdev)
 
 	return 0;
 
+err_file:
+	kfree(cma_manager);
 err_alloc:
 	return ret;
 }
@@ -217,6 +273,7 @@ static int __exit cma_demo_remove(struct platform_device *pdev)
 	mutex_unlock(&cma_manager->lock);
 
 	misc_deregister(&cma_manager->misc);
+	device_remove_file(&pdev->dev, &bitmap_attr);
 	kfree(cma_manager);
 	cma_manager = NULL;
 
