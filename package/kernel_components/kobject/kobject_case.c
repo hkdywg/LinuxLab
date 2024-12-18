@@ -27,7 +27,7 @@ struct demo_dev {
 struct demo_sysfs_entry {
 	struct attribute attr;
 	ssize_t (*show)(struct demo_dev *, char *);
-	ssize_t (*store)(struct demo_dev *, char *, size_t);
+	ssize_t (*store)(struct demo_dev *, const char *, size_t);
 };
 
 #define rb_to_kn(X)	rb_entry((X), struct kernfs_node, rb)
@@ -43,15 +43,33 @@ static void demo_release(struct kobject *kobj)
 }
 
 static ssize_t demo_attr_show(struct kobject *kobj,
-				struct attribute *attr, char *page)
+				struct attribute *attr, char *buf)
 {
-	return 0;
+	struct demo_sysfs_entry *kattr;
+	struct demo_dev *kobj_dev;
+	ssize_t ret = -EIO;
+
+	kobj_dev = container_of(kobj, struct demo_dev, kobj);
+	kattr = container_of(attr, struct demo_sysfs_entry, attr);
+	if(kattr->show)
+		ret = kattr->show(kobj_dev, buf);
+
+	return ret;
 }
 
 static ssize_t demo_attr_store(struct kobject *kobj,
-				struct attribute *attr, const char *page, size_t len)
+				struct attribute *attr, const char *buf, size_t len)
 {
-	return 0;
+	struct demo_sysfs_entry *kattr;
+	struct demo_dev *kobj_dev;
+	ssize_t ret = -EIO;
+
+	kobj_dev = container_of(kobj, struct demo_dev, kobj);
+	kattr = container_of(attr, struct demo_sysfs_entry, attr);
+	if(kattr->store)
+		ret = kattr->store(kobj_dev, buf, len);
+
+	return ret;
 }
 
 static const struct sysfs_ops demo_sysfs_ops = {
@@ -59,12 +77,12 @@ static const struct sysfs_ops demo_sysfs_ops = {
 	.store = demo_attr_store,
 };
 
-static ssize_t size_show(struct demo_dev *dev, char *page)
+static ssize_t size_show(struct demo_dev *dev, char *buf)
 {
-	return sprintf(page, "%d\n", (int)dev->dev_size);
+	return sprintf(buf, "%d\n", (int)dev->dev_size);
 }
 
-static ssize_t size_store(struct demo_dev *dev, char *buf, size_t len)
+static ssize_t size_store(struct demo_dev *dev,const char *buf, size_t len)
 {
 	sscanf(buf, "%d", &dev->dev_size);
 	return len;
@@ -72,7 +90,7 @@ static ssize_t size_store(struct demo_dev *dev, char *buf, size_t len)
 
 
 static struct demo_sysfs_entry demo_size =
-__ATTR(LinuxLab, S_IRUGO | S_IWUSR, size_show, size_store);
+__ATTR(LinuxLab_attr1, S_IRUGO | S_IWUSR, size_show, size_store);
 
 static struct attribute *demo_default_attrs[] = {
 	&demo_size.attr,
@@ -97,7 +115,8 @@ static int kobject_init_private(void)
 		return ret;
 	}
 
-	kobject_init(&p_dev->kobj, &demo_type);
+	kobject_init_and_add(&p_dev->kobj, &demo_type, kobj, "test_features");
+	kobject_uevent(&p_dev->kobj, KOBJ_ADD);
 
 	return 0;
 }
