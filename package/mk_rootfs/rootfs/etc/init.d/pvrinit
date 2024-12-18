@@ -1,0 +1,119 @@
+#!/bin/sh
+############################################################################ ###
+# File rc.pvr
+# Copyright Copyright (C) 2013-2016 Renesas Electronics Corporation
+# License Strictly Confidential.
+#### ###########################################################################
+
+# Auto-generated for r8a7799_linux from rogueddk_1.10@5138837
+#
+
+load_pvr()
+{
+	# powervr.ini parser
+	if [ -e /etc/powervr.ini ]; then
+		eval `sed -e 's/:space:*\=:space:*/=/g' \
+	            -e 's/;.*$//' \
+	            -e 's/:/_/g' \
+	            -e 's/:space:*$//' \
+	            -e 's/^:space:*//' \
+	            -e "s/^\(.*\)=\([^\"']*\)$/\1=\"\2\"/" \
+	            < /etc/powervr.ini \
+	            | sed -n -e "/^\[default\]/,/^\s*\[/{/^[^;].*\=.*/p;}"`
+		# save params
+		if [ ! ${EnableAPM} = "" ]; then
+			EnableAPM=$EnableAPM
+		else 
+			EnableAPM=0
+		fi
+		if [ ! ${DriverMode} = "" ]; then
+			DriverMode=`echo $DriverMode | tr [:upper:] [:lower:]`
+		else
+			DriverMode=0x7fffffff
+		fi
+		if [ ! ${PVR_SRVKM_PARAMS} = "" ]; then
+			PVR_SRVKM_PARAMS="DriverMode=${DriverMode} ${PVR_SRVKM_PARAMS}"
+		else
+			PVR_SRVKM_PARAMS="DriverMode=${DriverMode}"
+		fi
+	fi
+
+
+	# update modprobe.d config
+	PVR_SRVKM_OPTIONS="options pvrsrvkm ${PVR_SRVKM_PARAMS}"
+	MODPROBE_CONF="/etc/modprobe.d/pvrsrvkm.conf"
+	if [ -f ${MODPROBE_CONF} ]; then
+		CURRENT_OPTIONS=`cat ${MODPROBE_CONF}`
+	fi
+	if [ ! "${CURRENT_OPTIONS}" = "${PVR_SRVKM_OPTIONS}" ]; then
+		echo ${PVR_SRVKM_OPTIONS} > ${MODPROBE_CONF}
+	fi
+	# Load the PVR Services module.
+	#	
+	if ! /sbin/modprobe -q pvrsrvkm $PVR_SRVKM_PARAMS; then
+		echo "Module pvrsrvkm failed to load. Retrying."
+		if [ -z $depmod_has_been_run ]; then
+			if [ -e /sbin/depmod ]; then
+				echo "Running /sbin/depmod"
+				/sbin/depmod && depmod_has_been_run=1
+			fi
+		fi
+		if ! /sbin/modprobe -q pvrsrvkm $PVR_SRVKM_PARAMS ; then return; fi
+	fi
+
+	# Reload udev rules
+	#
+	if [ -e /sbin/udevadm ]; then
+		/sbin/udevadm control --reload-rules
+	fi
+
+	
+	# Load 3rd party module(s).
+	#
+		
+	echo $EnableAPM > /sys/kernel/debug/pvr/apphint/0/EnableAPM
+	echo "Loaded PowerVR consumer services."
+	return 0;
+}
+
+unload_pvr()
+{
+	# Stop the DRM Layer Compositor REL.
+	if ! /usr/local/bin/dlcsrv_REL -q ; then return; fi
+
+	# Unload 3rd party module(s).
+	#
+		
+	# Unload the PVR Services module.
+	#
+	if /sbin/modprobe -r pvrsrvkm; then :; else return 1; fi
+
+	echo "Unloaded PowerVR consumer services."
+	return 0;
+}
+
+# Deal with the type of invocation we get.
+#
+case "$1" in
+start)
+	load_pvr
+	;;
+stop)
+	if ! unload_pvr; then
+		echo "Couldn't unload modules" >&2;
+		exit 1
+	fi
+	;;
+reload|restart)
+	if unload_pvr; then
+		load_pvr
+	else
+		echo "Couldn't unload modules" >&2;
+		exit 1
+	fi
+	;;
+*)
+	echo "$0: unknown argument $1." >&2;
+	;;
+esac
+

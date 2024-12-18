@@ -1,0 +1,6 @@
+I:2744565
+E:ID_PATH=platform-fe960000.vsp
+E:ID_PATH_TAG=platform-fe960000_vsp
+E:ID_FOR_SEAT=video4linux-platform-fe960000_vsp
+G:uaccess
+G:seat

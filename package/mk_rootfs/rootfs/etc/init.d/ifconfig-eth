@@ -1,0 +1,12 @@
+#!bin/sh
+if [ -f /etc/eth-setting ] ; then
+        source /etc/eth-setting
+        /sbin/ifconfig eth0 down
+        /sbin/ifconfig eth0 hw ether $MAC
+        /sbin/ifconfig eth0 $IP netmask $Mask up
+        /sbin/ifconfig lo 127.0.0.1
+        /sbin/route add default gw $Gateway
+else
+        /sbin/ifconfig eth0 192.168.0.10 netmask 255.255.255.0 up
+        /sbin/ifconfig lo 127.0.0.1
+fi

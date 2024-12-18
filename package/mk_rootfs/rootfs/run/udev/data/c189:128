@@ -1,0 +1,16 @@
+I:301905379
+E:ID_VENDOR=Linux_4.14.70-ltsi-yocto-standard_xhci-hcd
+E:ID_VENDOR_ENC=Linux\x204.14.70-ltsi-yocto-standard\x20xhci-hcd
+E:ID_VENDOR_ID=1d6b
+E:ID_MODEL=xHCI_Host_Controller
+E:ID_MODEL_ENC=xHCI\x20Host\x20Controller
+E:ID_MODEL_ID=0003
+E:ID_REVISION=0414
+E:ID_SERIAL=Linux_4.14.70-ltsi-yocto-standard_xhci-hcd_xHCI_Host_Controller_ee000000.usb
+E:ID_SERIAL_SHORT=ee000000.usb
+E:ID_BUS=usb
+E:ID_USB_INTERFACES=:090000:
+E:ID_PATH=platform-ee000000.usb
+E:ID_PATH_TAG=platform-ee000000_usb
+E:ID_FOR_SEAT=usb-platform-ee000000_usb
+G:seat

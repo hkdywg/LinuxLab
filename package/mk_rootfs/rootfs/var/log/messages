@@ -1,0 +1,1876 @@
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 202, tty '': '-/bin/sh'
+Jan  1 00:00:42 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:00:42 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 202, tty '': '-/bin/sh'
+Jan  1 00:02:35 C001-Cyber daemon.info dlcsrv_REL[223]: start
+Jan  1 00:03:48 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:03:48 C001-Cyber daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:03:48 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 204, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 202, tty '': '-/bin/sh'
+Jan  1 00:07:10 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:07:10 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:04 C001-Cyber daemon.info init: starting pid 168, tty '': '-/bin/sh'
+Jan  1 00:02:56 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:02:56 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:05 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:11 C001-Cyber daemon.info init: starting pid 203, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 202, tty '': '-/bin/sh'
+Jan  1 00:00:15 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:00:15 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:07 C001-Cyber daemon.info init: starting pid 203, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 187, tty '': '-/bin/sh'
+Jan  1 00:00:29 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:00:29 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:07 C001-Cyber daemon.info init: starting pid 186, tty '': '-/bin/sh'
+Jan  1 00:01:28 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:01:28 C001-Cyber daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:01:28 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:04 C001-Cyber daemon.info init: starting pid 152, tty '': '-/bin/sh'
+Jan  1 00:01:33 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:01:33 C001-Cyber daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:01:33 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:04 C001-Cyber daemon.info init: starting pid 152, tty '': '-/bin/sh'
+Jan  1 00:00:37 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:00:37 C001-Cyber daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:00:37 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 186, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:07 C001-Cyber daemon.info init: starting pid 187, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:10 C001-Cyber daemon.info init: starting pid 189, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:07 C001-Cyber daemon.info init: starting pid 189, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:07 C001-Cyber daemon.info init: starting pid 187, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:07 C001-Cyber daemon.info init: starting pid 188, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 191, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:07 C001-Cyber daemon.info init: starting pid 189, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 189, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 189, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 191, tty '': '-/bin/sh'
+Jan  1 00:02:37 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:02:37 C001-Cyber daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:02:37 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 188, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:07 C001-Cyber daemon.info init: starting pid 191, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 184, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:50 C001-Cyber daemon.info dlcsrv_REL[249]: start
+Jan  1 00:00:56 C001-Cyber daemon.err dlcsrv_REL[249]: client(6) error: Connection reset by peer
+Jan  1 00:01:27 C001-Cyber daemon.info dlcsrv_REL[249]: timeout
+Jan  1 00:01:27 C001-Cyber daemon.info dlcsrv_REL[249]: finish
+Jan  1 00:06:40 C001-Cyber daemon.info dlcsrv_REL[263]: start
+Jan  1 00:06:43 C001-Cyber daemon.err dlcsrv_REL[263]: client(6) error: Connection reset by peer
+Jan  1 00:07:15 C001-Cyber daemon.info dlcsrv_REL[263]: timeout
+Jan  1 00:07:15 C001-Cyber daemon.info dlcsrv_REL[263]: finish
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:20 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:00:20 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:09 C001-Cyber daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:04 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:08 C001-Cyber daemon.info init: starting pid 217, tty '': '-/bin/sh'
+Jan  1 00:58:30 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:58:30 C001-Cyber daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:58:30 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:06 C001-Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:10 C001-Cyber daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:02:34 C001-Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:02:34 C001-Cyber syslog.info syslogd exiting
+Jan  1 00:00:00 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:04 Cyber daemon.info init: starting pid 234, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 225, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 236, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 234, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:06 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 228, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:06 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:06 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 234, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 234, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 226, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+                                                                                                                                                Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+                                                                                                                                                Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 228, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 234, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 235, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 228, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 228, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 235, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 228, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 225, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:06 Cyber daemon.info init: starting pid 236, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:06 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 235, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:06 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:04:04 Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:04:04 Cyber syslog.info syslogd exiting
+                                                                                                                                                Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 231, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:27 Cyber daemon.info init: starting pid 242, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:23 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:12:35 Cyber daemon.info init: starting pid 235, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:23:21 Cyber daemon.info init: starting pid 239, tty '': '-/bin/sh'
+                                                                                                                                                Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:40:46 Cyber daemon.info init: starting pid 239, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 02:40:09 Cyber daemon.info init: starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 19:14:56 Cyber daemon.info init: starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:06:58 Cyber daemon.info init: starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:12:47 Cyber daemon.info init: starting pid 244, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:15:40 Cyber daemon.info init: starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:16:34 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:20:44 Cyber daemon.info init: starting pid 243, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:21:23 Cyber daemon.info init: starting pid 242, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:23:55 Cyber daemon.info init: starting pid 243, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:39:45 Cyber daemon.info init: starting pid 226, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 18:46:55 Cyber daemon.info init: starting pid 248, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 19:20:44 Cyber daemon.info init: starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 22:59:07 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 23:00:15 Cyber daemon.info init: starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 23:01:08 Cyber daemon.info init: starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  2 23:01:35 Cyber daemon.info init: starting pid 233, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  4 02:05:37 Cyber daemon.info init: starting pid 234, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  5 22:18:03 Cyber daemon.info init: starting pid 234, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  5 22:28:30 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  5 22:37:43 Cyber daemon.info dlcsrv_REL[292]: start
+Jan  5 22:38:09 Cyber daemon.err dlcsrv_REL[292]: client(7) error: Connection reset by peer
+                                                                                                                     Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 244, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 235, tty '': '-/bin/sh'
+Jan  1 00:01:33 Cyber daemon.info dlcsrv_REL[251]: start
+Jan  1 00:01:42 Cyber daemon.err dlcsrv_REL[251]: client(7) error: Connection reset by peer
+Jan  1 00:02:13 Cyber daemon.info dlcsrv_REL[251]: timeout
+Jan  1 00:02:14 Cyber daemon.info dlcsrv_REL[251]: finish
+Jan  1 00:04:26 Cyber daemon.info dlcsrv_REL[292]: start
+Jan  1 00:04:56 Cyber daemon.info dlcsrv_REL[292]: timeout
+Jan  1 00:04:57 Cyber daemon.info dlcsrv_REL[292]: finish
+Jan  1 00:04:58 Cyber daemon.info dlcsrv_REL[306]: start
+Jan  1 00:05:28 Cyber daemon.info dlcsrv_REL[306]: timeout
+Jan  1 00:05:29 Cyber daemon.info dlcsrv_REL[306]: finish
+Jan  1 00:20:29 Cyber daemon.info dlcsrv_REL[370]: start
+Jan  1 00:20:59 Cyber daemon.info dlcsrv_REL[370]: timeout
+Jan  1 00:21:00 Cyber daemon.info dlcsrv_REL[370]: finish
+Jan  1 00:26:58 Cyber daemon.info dlcsrv_REL[387]: start
+Jan  1 00:27:27 Cyber daemon.info dlcsrv_REL[387]: timeout
+Jan  1 00:27:28 Cyber daemon.info dlcsrv_REL[387]: finish
+Jan  1 01:46:08 Cyber daemon.info dlcsrv_REL[439]: start
+Jan  1 01:46:37 Cyber daemon.info dlcsrv_REL[439]: timeout
+Jan  1 01:46:38 Cyber daemon.info dlcsrv_REL[439]: finish
+Jan  1 01:56:46 Cyber daemon.info dlcsrv_REL[495]: start
+Jan  1 01:57:16 Cyber daemon.info dlcsrv_REL[495]: timeout
+Jan  1 01:57:17 Cyber daemon.info dlcsrv_REL[495]: finish
+Jan  1 01:57:37 Cyber daemon.info dlcsrv_REL[508]: start
+Jan  1 01:58:07 Cyber daemon.info dlcsrv_REL[508]: timeout
+Jan  1 01:58:08 Cyber daemon.info dlcsrv_REL[508]: finish
+Jan  1 02:15:29 Cyber daemon.info dlcsrv_REL[532]: start
+Jan  1 02:15:59 Cyber daemon.info dlcsrv_REL[532]: timeout
+Jan  1 02:16:00 Cyber daemon.info dlcsrv_REL[532]: finish
+Jan  1 02:16:02 Cyber daemon.info dlcsrv_REL[548]: start
+Jan  1 02:16:36 Cyber daemon.err dlcsrv_REL[548]: client(7) error: Connection reset by peer
+Jan  1 02:17:07 Cyber daemon.info dlcsrv_REL[548]: timeout
+Jan  1 02:17:08 Cyber daemon.info dlcsrv_REL[548]: finish
+Jan  1 02:17:28 Cyber daemon.info dlcsrv_REL[579]: start
+Jan  1 02:17:58 Cyber daemon.info dlcsrv_REL[579]: timeout
+Jan  1 02:17:59 Cyber daemon.info dlcsrv_REL[579]: finish
+Jan  1 02:19:04 Cyber daemon.info dlcsrv_REL[591]: start
+Jan  1 02:19:34 Cyber daemon.info dlcsrv_REL[591]: timeout
+Jan  1 02:19:35 Cyber daemon.info dlcsrv_REL[591]: finish
+Jan  1 02:19:39 Cyber daemon.info dlcsrv_REL[603]: start
+Jan  1 02:20:09 Cyber daemon.info dlcsrv_REL[603]: timeout
+Jan  1 02:20:10 Cyber daemon.info dlcsrv_REL[603]: finish
+Jan  1 02:26:06 Cyber daemon.info dlcsrv_REL[642]: start
+Jan  1 02:26:36 Cyber daemon.info dlcsrv_REL[642]: timeout
+Jan  1 02:26:37 Cyber daemon.info dlcsrv_REL[642]: finish
+Jan  1 02:26:56 Cyber daemon.info dlcsrv_REL[670]: start
+Jan  1 02:27:26 Cyber daemon.info dlcsrv_REL[670]: timeout
+Jan  1 02:27:27 Cyber daemon.info dlcsrv_REL[670]: finish
+Jan  1 02:35:35 Cyber daemon.info dlcsrv_REL[683]: start
+Jan  1 02:36:05 Cyber daemon.info dlcsrv_REL[683]: timeout
+Jan  1 02:36:06 Cyber daemon.info dlcsrv_REL[683]: finish
+Jan  1 02:37:36 Cyber daemon.info dlcsrv_REL[714]: start
+Jan  1 02:37:39 Cyber daemon.err dlcsrv_REL[714]: client(7) error: Connection reset by peer
+Jan  1 02:38:10 Cyber daemon.info dlcsrv_REL[714]: timeout
+Jan  1 02:38:11 Cyber daemon.info dlcsrv_REL[714]: finish
+Jan  1 02:39:33 Cyber daemon.info dlcsrv_REL[741]: start
+Jan  1 02:40:03 Cyber daemon.info dlcsrv_REL[741]: timeout
+Jan  1 02:40:04 Cyber daemon.info dlcsrv_REL[741]: finish
+Jan  1 03:02:11 Cyber daemon.info dlcsrv_REL[761]: start
+Jan  1 03:02:41 Cyber daemon.info dlcsrv_REL[761]: timeout
+Jan  1 03:02:42 Cyber daemon.info dlcsrv_REL[761]: finish
+Jan  1 03:13:18 Cyber daemon.info dlcsrv_REL[775]: start
+Jan  1 03:13:48 Cyber daemon.info dlcsrv_REL[775]: timeout
+Jan  1 03:13:49 Cyber daemon.info dlcsrv_REL[775]: finish
+Jan  1 03:15:15 Cyber daemon.info dlcsrv_REL[789]: start
+Jan  1 03:15:45 Cyber daemon.info dlcsrv_REL[789]: timeout
+Jan  1 03:15:46 Cyber daemon.info dlcsrv_REL[789]: finish
+Jan  1 03:29:38 Cyber daemon.info dlcsrv_REL[831]: start
+Jan  1 03:30:07 Cyber daemon.info dlcsrv_REL[831]: timeout
+Jan  1 03:30:08 Cyber daemon.info dlcsrv_REL[831]: finish
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:01:48 Cyber daemon.info dlcsrv_REL[257]: start
+Jan  1 00:02:13 Cyber daemon.err dlcsrv_REL[257]: client(7): Broken pipe
+Jan  1 00:03:14 Cyber daemon.err dlcsrv_REL[257]: client(7) error: Connection reset by peer
+Jan  1 00:05:18 Cyber daemon.err dlcsrv_REL[257]: client(7): Broken pipe
+Jan  1 00:05:49 Cyber daemon.info dlcsrv_REL[257]: timeout
+Jan  1 00:05:50 Cyber daemon.info dlcsrv_REL[257]: finish
+Jan  1 00:09:12 Cyber daemon.info dlcsrv_REL[315]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 241, tty '': '-/bin/sh'
+Jan  1 00:02:24 Cyber daemon.info dlcsrv_REL[255]: start
+Jan  1 00:02:55 Cyber daemon.info dlcsrv_REL[255]: timeout
+Jan  1 00:02:55 Cyber daemon.info dlcsrv_REL[255]: finish
+Jan  1 01:51:45 Cyber daemon.info dlcsrv_REL[322]: start
+Jan  1 01:52:24 Cyber daemon.err dlcsrv_REL[322]: client(7): Broken pipe
+Jan  1 02:57:55 Cyber daemon.err dlcsrv_REL[322]: client(14): Broken pipe
+Jan  1 02:57:55 Cyber daemon.err dlcsrv_REL[322]: client(14) error: Connection reset by peer
+Jan  1 02:58:38 Cyber daemon.err dlcsrv_REL[322]: client(7) error: Connection reset by peer
+Jan  1 02:59:09 Cyber daemon.info dlcsrv_REL[322]: timeout
+Jan  1 02:59:09 Cyber daemon.info dlcsrv_REL[322]: finish
+Jan  1 03:09:11 Cyber daemon.info dlcsrv_REL[485]: start
+Jan  1 03:11:21 Cyber daemon.err dlcsrv_REL[485]: client(7) error: Connection reset by peer
+Jan  1 03:26:23 Cyber daemon.err dlcsrv_REL[485]: client(7) error: Connection reset by peer
+Jan  1 06:15:44 Cyber daemon.err dlcsrv_REL[485]: client(7) error: Connection reset by peer
+Jan  1 06:17:44 Cyber daemon.err dlcsrv_REL[485]: client(7) error: Connection reset by peer
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:04 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 01:58:00 Cyber daemon.info dlcsrv_REL[283]: start
+Jan  1 01:58:29 Cyber daemon.info dlcsrv_REL[283]: timeout
+Jan  1 01:58:30 Cyber daemon.info dlcsrv_REL[283]: finish
+Jan  1 02:02:50 Cyber daemon.info dlcsrv_REL[334]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:01:37 Cyber daemon.info dlcsrv_REL[256]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:02:56 Cyber daemon.info dlcsrv_REL[241]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:00:18 Cyber daemon.info dlcsrv_REL[246]: start
+Jan  1 00:00:49 Cyber daemon.err dlcsrv_REL[246]: client(7) error: Connection reset by peer
+Jan  1 00:01:24 Cyber daemon.err dlcsrv_REL[246]: client(7) error: Connection reset by peer
+Jan  1 00:01:55 Cyber daemon.info dlcsrv_REL[246]: timeout
+Jan  1 00:01:55 Cyber daemon.info dlcsrv_REL[246]: finish
+Jan  1 01:24:21 Cyber daemon.info dlcsrv_REL[396]: start
+Jan  1 01:24:50 Cyber daemon.info dlcsrv_REL[396]: timeout
+Jan  1 01:24:51 Cyber daemon.info dlcsrv_REL[396]: finish
+Jan  1 01:25:52 Cyber daemon.info dlcsrv_REL[422]: start
+Jan  1 01:26:21 Cyber daemon.info dlcsrv_REL[422]: timeout
+Jan  1 01:26:22 Cyber daemon.info dlcsrv_REL[422]: finish
+Jan  1 01:37:05 Cyber daemon.info dlcsrv_REL[463]: start
+Jan  1 01:37:05 Cyber daemon.warn dlcsrv_REL[463]: other DRM-Master process is running
+Jan  1 01:37:34 Cyber daemon.info dlcsrv_REL[463]: timeout
+Jan  1 01:37:35 Cyber daemon.info dlcsrv_REL[463]: finish
+Jan  1 01:49:23 Cyber daemon.info dlcsrv_REL[512]: start
+Jan  1 01:49:52 Cyber daemon.info dlcsrv_REL[512]: timeout
+Jan  1 01:49:53 Cyber daemon.info dlcsrv_REL[512]: finish
+Jan  1 02:03:26 Cyber daemon.info dlcsrv_REL[530]: start
+Jan  1 02:03:56 Cyber daemon.info dlcsrv_REL[530]: timeout
+Jan  1 02:03:57 Cyber daemon.info dlcsrv_REL[530]: finish
+Jan  1 02:58:15 Cyber daemon.info dlcsrv_REL[549]: start
+Jan  1 02:58:45 Cyber daemon.info dlcsrv_REL[549]: timeout
+Jan  1 02:58:46 Cyber daemon.info dlcsrv_REL[549]: finish
+Jan  1 02:59:59 Cyber daemon.info dlcsrv_REL[563]: start
+Jan  1 03:00:29 Cyber daemon.info dlcsrv_REL[563]: timeout
+Jan  1 03:00:30 Cyber daemon.info dlcsrv_REL[563]: finish
+Jan  1 03:06:34 Cyber daemon.info dlcsrv_REL[594]: start
+Jan  1 03:07:04 Cyber daemon.info dlcsrv_REL[594]: timeout
+Jan  1 03:07:05 Cyber daemon.info dlcsrv_REL[594]: finish
+Jan  1 03:26:49 Cyber daemon.info dlcsrv_REL[618]: start
+Jan  1 03:26:57 Cyber daemon.err dlcsrv_REL[618]: client(7) error: Connection reset by peer
+                                                                                                                                                                       Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:02:30 Cyber daemon.info dlcsrv_REL[235]: start
+Jan  1 00:02:37 Cyber daemon.err dlcsrv_REL[235]: client(7) error: Connection reset by peer
+Jan  1 00:03:08 Cyber daemon.info dlcsrv_REL[235]: timeout
+Jan  1 00:03:09 Cyber daemon.info dlcsrv_REL[235]: finish
+Jan  1 04:25:20 Cyber daemon.info dlcsrv_REL[386]: start
+Jan  1 04:25:49 Cyber daemon.info dlcsrv_REL[386]: timeout
+Jan  1 04:25:49 Cyber daemon.info dlcsrv_REL[386]: finish
+Jan  1 04:25:55 Cyber daemon.info dlcsrv_REL[408]: start
+Jan  1 04:26:25 Cyber daemon.info dlcsrv_REL[408]: timeout
+Jan  1 04:26:26 Cyber daemon.info dlcsrv_REL[408]: finish
+Jan  1 04:26:41 Cyber daemon.info dlcsrv_REL[427]: start
+Jan  1 04:27:10 Cyber daemon.info dlcsrv_REL[427]: timeout
+Jan  1 04:27:11 Cyber daemon.info dlcsrv_REL[427]: finish
+Jan  1 04:34:34 Cyber daemon.info dlcsrv_REL[458]: start
+Jan  1 04:35:04 Cyber daemon.info dlcsrv_REL[458]: timeout
+Jan  1 04:35:05 Cyber daemon.info dlcsrv_REL[458]: finish
+Jan  1 04:35:38 Cyber daemon.info dlcsrv_REL[476]: start
+Jan  1 04:36:08 Cyber daemon.info dlcsrv_REL[476]: timeout
+Jan  1 04:36:09 Cyber daemon.info dlcsrv_REL[476]: finish
+Jan  1 04:37:39 Cyber daemon.info dlcsrv_REL[490]: start
+Jan  1 04:37:40 Cyber daemon.err dlcsrv_REL[490]: client(7) error: Connection reset by peer
+Jan  1 04:38:11 Cyber daemon.info dlcsrv_REL[490]: timeout
+Jan  1 04:38:12 Cyber daemon.info dlcsrv_REL[490]: finish
+Jan  1 04:52:41 Cyber daemon.info dlcsrv_REL[537]: start
+Jan  1 04:53:51 Cyber daemon.err dlcsrv_REL[537]: client(7) error: Connection reset by peer
+Jan  1 04:54:23 Cyber daemon.info dlcsrv_REL[537]: timeout
+Jan  1 04:54:24 Cyber daemon.info dlcsrv_REL[537]: finish
+Jan  1 04:57:38 Cyber daemon.info dlcsrv_REL[584]: start
+Jan  1 04:58:54 Cyber daemon.err dlcsrv_REL[584]: client(7) error: Connection reset by peer
+Jan  1 04:59:25 Cyber daemon.info dlcsrv_REL[584]: timeout
+Jan  1 04:59:26 Cyber daemon.info dlcsrv_REL[584]: finish
+Jan  1 05:04:01 Cyber daemon.info dlcsrv_REL[639]: start
+Jan  1 05:04:11 Cyber daemon.err dlcsrv_REL[639]: client(7) error: Connection reset by peer
+Jan  1 05:05:08 Cyber daemon.err dlcsrv_REL[639]: client(7) error: Connection reset by peer
+Jan  1 05:06:09 Cyber daemon.info dlcsrv_REL[639]: timeout
+Jan  1 05:06:10 Cyber daemon.info dlcsrv_REL[639]: finish
+Jan  1 05:08:13 Cyber daemon.info dlcsrv_REL[722]: start
+Jan  1 05:08:38 Cyber daemon.err dlcsrv_REL[722]: client(7) error: Connection reset by peer
+Jan  1 05:09:09 Cyber daemon.info dlcsrv_REL[722]: timeout
+Jan  1 05:09:10 Cyber daemon.info dlcsrv_REL[722]: finish
+Jan  1 05:09:57 Cyber daemon.info dlcsrv_REL[772]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 226, tty '': '-/bin/sh'
+Jan  1 00:01:26 Cyber daemon.info dlcsrv_REL[250]: start
+Jan  1 00:05:14 Cyber daemon.info dlcsrv_REL[250]: timeout
+Jan  1 00:05:15 Cyber daemon.info dlcsrv_REL[250]: finish
+Jan  1 00:05:39 Cyber daemon.info dlcsrv_REL[298]: start
+Jan  1 00:34:08 Cyber daemon.info dlcsrv_REL[298]: timeout
+Jan  1 00:34:09 Cyber daemon.info dlcsrv_REL[298]: finish
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 236, tty '': '-/bin/sh'
+Jan  1 00:00:23 Cyber daemon.info dlcsrv_REL[243]: start
+Jan  1 00:01:22 Cyber daemon.err dlcsrv_REL[243]: client(7) error: Connection reset by peer
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:03 Cyber daemon.info init: starting pid 226, tty '': '-/bin/sh'
+Jan  1 00:01:47 Cyber daemon.info dlcsrv_REL[250]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:00:59 Cyber daemon.info dlcsrv_REL[247]: start
+Jan  1 00:16:43 Cyber daemon.err dlcsrv_REL[247]: client(7) error: Connection reset by peer
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 235, tty '': '-/bin/sh'
+Jan  1 03:15:26 Cyber daemon.info dlcsrv_REL[316]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:23 Cyber daemon.info dlcsrv_REL[244]: start
+Jan  1 00:10:06 Cyber daemon.err dlcsrv_REL[244]: client(7): Broken pipe
+Jan  1 00:16:47 Cyber daemon.err dlcsrv_REL[244]: client(7) error: Connection reset by peer
+Jan  1 00:20:37 Cyber daemon.err dlcsrv_REL[244]: client(7) error: Connection reset by peer
+Jan  1 00:33:15 Cyber daemon.err dlcsrv_REL[244]: client(7): Broken pipe
+Jan  1 00:49:49 Cyber daemon.err dlcsrv_REL[244]: client(7) error: Connection reset by peer
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 242, tty '': '-/bin/sh'
+Jan  1 00:00:25 Cyber daemon.info dlcsrv_REL[250]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 238, tty '': '-/bin/sh'
+                                                         Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 235, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:03:17 Cyber daemon.info dlcsrv_REL[254]: start
+Jan  1 04:08:18 Cyber daemon.err dlcsrv_REL[254]: client(7) error: Connection reset by peer
+Jan  1 04:08:49 Cyber daemon.info dlcsrv_REL[254]: timeout
+Jan  1 04:08:49 Cyber daemon.info dlcsrv_REL[254]: finish
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:05 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:04 Cyber daemon.info init: starting pid 241, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan 22 22:25:14 Cyber daemon.info init: starting pid 236, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 207, tty '': '-/bin/sh'
+Jan 22 22:25:56 Cyber daemon.info dlcsrv_REL[237]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[238]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 213, tty '': '-/bin/sh'
+Jan 22 22:56:55 Cyber daemon.info dlcsrv_REL[240]: start
+Jan 22 22:58:25 Cyber daemon.err dlcsrv_REL[240]: client(7) error: Connection reset by peer
+Jan 22 23:23:20 Cyber daemon.err dlcsrv_REL[240]: client(7) error: Connection reset by peer
+Jan 22 23:37:49 Cyber daemon.err dlcsrv_REL[240]: client(7) error: Connection reset by peer
+Jan 22 23:51:12 Cyber daemon.err dlcsrv_REL[240]: client(7) error: Connection reset by peer
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 223, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[238]: start
+Jan 23 01:01:26 Cyber daemon.err dlcsrv_REL[238]: client(7): Broken pipe
+Jan 23 01:18:15 Cyber daemon.info init: The system is going down NOW!
+Jan 23 01:18:15 Cyber syslog.info syslogd exiting
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:00:02 Cyber daemon.info dlcsrv_REL[240]: start
+Jan 23 01:19:51 Cyber daemon.info dlcsrv_REL[240]: timeout
+Jan 23 01:19:52 Cyber daemon.info dlcsrv_REL[282]: start
+Jan 23 01:19:52 Cyber daemon.info dlcsrv_REL[240]: finish
+Jan 23 01:23:09 Cyber daemon.info dlcsrv_REL[282]: timeout
+Jan 23 01:23:10 Cyber daemon.info dlcsrv_REL[282]: finish
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[241]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 205, tty '': '-/bin/sh'
+Jan 23 01:34:46 Cyber daemon.info dlcsrv_REL[231]: start
+Jan 23 01:35:17 Cyber daemon.info init: The system is going down NOW!
+Jan 23 01:35:17 Cyber daemon.info init: Sent SIGTERM to all processes
+Jan 23 01:35:17 Cyber syslog.info syslogd exiting
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 219, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[234]: start
+Jan 23 01:36:18 Cyber daemon.info init: The system is going down NOW!
+Jan 23 01:36:18 Cyber syslog.info syslogd exiting
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 203, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[235]: start
+Jan 23 01:38:02 Cyber daemon.info init: The system is going down NOW!
+Jan 23 01:38:02 Cyber syslog.info syslogd exiting
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[243]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[237]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 210, tty '': '-/bin/sh'
+Jan 23 03:27:14 Cyber daemon.info dlcsrv_REL[231]: start
+                                                                                                                                                                                                         Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 217, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[237]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 223, tty '': '-/bin/sh'
+Jan 23 03:37:27 Cyber daemon.info dlcsrv_REL[236]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[235]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 219, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[236]: start
+Jan  1 00:00:01 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Cyber daemon.info init: starting pid 223, tty '': '-/bin/sh'
+Jan  1 00:00:01 Cyber daemon.info dlcsrv_REL[237]: start
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 230, tty '': '-/bin/sh'
+Jan  1 00:00:02 Cyber daemon.info dlcsrv_REL[242]: start
+Jan  1 00:02:07 Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:02:07 Cyber syslog.info syslogd exiting
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 223, tty '': '-/bin/sh'
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 212, tty '': '-/bin/sh'
+                                                                                                                                                Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:05:22 Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:05:22 Cyber syslog.info syslogd exiting
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:12 Cyber daemon.info dlcsrv_REL[233]: start
+Jan  1 00:01:20 Cyber daemon.info dlcsrv_REL[233]: timeout
+Jan  1 00:01:20 Cyber daemon.info dlcsrv_REL[233]: finish
+Jan  1 00:05:27 Cyber daemon.info dlcsrv_REL[262]: start
+Jan  1 00:08:14 Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:08:15 Cyber syslog.info syslogd exiting
+                                                                                                                                                Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:13 Cyber daemon.info dlcsrv_REL[232]: start
+Jan  1 00:21:55 Cyber daemon.info dlcsrv_REL[232]: timeout
+Jan  1 00:21:55 Cyber daemon.info dlcsrv_REL[232]: finish
+Jan  1 00:36:15 Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:36:15 Cyber daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:36:15 Cyber syslog.info syslogd exiting
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:07:43 Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:07:43 Cyber syslog.info syslogd exiting
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 223, tty '': '-/bin/sh'
+Jan  1 00:32:26 Cyber auth.info sshd[251]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:32:26 Cyber auth.info sshd[251]: Server listening on :: port 22.
+Jan  1 00:32:45 Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:32:45 Cyber syslog.info syslogd exiting
+Jan  1 00:00:02 Cyber syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Cyber daemon.info init: starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:00:26 Cyber auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:26 Cyber auth.info sshd[235]: Server listening on :: port 22.
+Jan  1 00:01:05 Cyber auth.err sshd[240]: error: Could not get shadow information for root
+Jan  1 00:01:05 Cyber auth.info sshd[240]: Accepted none for root from 172.29.4.59 port 33278 ssh2
+Jan  1 00:01:05 Cyber auth.info sshd[242]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:01:05 Cyber auth.info sshd[242]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:01:16 Cyber auth.info sshd[240]: Received disconnect from 172.29.4.59 port 33278:11: disconnected by user
+Jan  1 00:01:16 Cyber auth.info sshd[240]: Disconnected from user root 172.29.4.59 port 33278
+Jan  1 00:01:45 Cyber daemon.info init: The system is going down NOW!
+Jan  1 00:01:45 Cyber syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 219, tty '': '-/bin/sh'
+Jan  1 00:01:04 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:04 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[231]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[231]: Server listening on :: port 22.
+Jan  1 00:01:35 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:35 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on :: port 22.
+Jan  1 00:00:21 Control_Box auth.err sshd[234]: error: Could not get shadow information for root
+Jan  1 00:00:21 Control_Box auth.info sshd[234]: Accepted none for root from 172.29.4.59 port 36632 ssh2
+Jan  1 00:00:21 Control_Box auth.info sshd[236]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:00:21 Control_Box auth.info sshd[236]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:00:23 Control_Box auth.info sshd[234]: Received disconnect from 172.29.4.59 port 36632:11: disconnected by user
+Jan  1 00:00:23 Control_Box auth.info sshd[234]: Disconnected from user root 172.29.4.59 port 36632
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 226, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on :: port 22.
+Jan  1 00:03:45 Control_Box auth.err sshd[238]: error: Could not get shadow information for root
+Jan  1 00:03:45 Control_Box auth.info sshd[238]: Accepted none for root from 172.29.4.59 port 50378 ssh2
+Jan  1 00:03:45 Control_Box auth.info sshd[240]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:03:45 Control_Box auth.info sshd[240]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:03:47 Control_Box auth.info sshd[238]: Received disconnect from 172.29.4.59 port 50378:11: disconnected by user
+Jan  1 00:03:47 Control_Box auth.info sshd[238]: Disconnected from user root 172.29.4.59 port 50378
+                                                                                                                                                                                                                                                                                                                                   Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on :: port 22.
+Jan  1 00:12:31 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:12:31 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 224, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[238]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[238]: Server listening on :: port 22.
+Jan  1 00:01:32 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:32 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 224, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on :: port 22.
+Jan  1 00:00:27 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:27 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 223, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on :: port 22.
+Jan  1 00:09:37 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:09:37 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 216, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on :: port 22.
+Jan  1 00:01:31 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:31 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on :: port 22.
+Jan  1 00:05:10 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:05:10 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 221, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[238]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[238]: Server listening on :: port 22.
+Jan  1 00:02:15 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:02:15 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on :: port 22.
+Jan  1 00:02:17 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:02:17 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:02:17 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 220, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on :: port 22.
+Jan  1 00:06:09 Control_Box auth.err sshd[300]: error: Could not get shadow information for root
+Jan  1 00:06:09 Control_Box auth.info sshd[300]: Accepted none for root from 172.29.4.59 port 37670 ssh2
+Jan  1 00:06:09 Control_Box auth.info sshd[302]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:06:09 Control_Box auth.info sshd[302]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on :: port 22.
+Jan  1 00:00:58 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:58 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[226]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:03:40 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:03:40 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 217, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[220]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:29 Control_Box daemon.info dlcsrv_REL[231]: start
+Jan  1 00:01:05 Control_Box daemon.info dlcsrv_REL[231]: timeout
+Jan  1 00:01:05 Control_Box daemon.info dlcsrv_REL[231]: finish
+Jan  1 00:01:26 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:26 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 211, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 219, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on :: port 22.
+Jan  1 00:00:07 Control_Box auth.err sshd[223]: error: Could not get shadow information for root
+Jan  1 00:00:07 Control_Box auth.info sshd[223]: Accepted none for root from 172.29.4.59 port 40492 ssh2
+Jan  1 00:00:07 Control_Box auth.info sshd[223]: Received disconnect from 172.29.4.59 port 40492:11: disconnected by user
+Jan  1 00:00:07 Control_Box auth.info sshd[223]: Disconnected from user root 172.29.4.59 port 40492
+Jan  1 00:00:23 Control_Box auth.err sshd[226]: error: Could not get shadow information for root
+Jan  1 00:00:23 Control_Box auth.info sshd[226]: Accepted none for root from 172.29.4.59 port 47874 ssh2
+Jan  1 00:00:23 Control_Box auth.info sshd[226]: Received disconnect from 172.29.4.59 port 47874:11: disconnected by user
+Jan  1 00:00:23 Control_Box auth.info sshd[226]: Disconnected from user root 172.29.4.59 port 47874
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 229, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 224, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[236]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[236]: Server listening on :: port 22.
+                                                                                                                                                                                                                                                                                                                                   Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 221, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[239]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[239]: Server listening on :: port 22.
+Jan  1 00:01:00 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:00 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:01:00 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 168, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[178]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[178]: Server listening on :: port 22.
+Jan  1 00:00:23 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:23 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:00:23 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 165, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[177]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:16 Control_Box daemon.info dlcsrv_REL[186]: start
+Jan  1 00:00:46 Control_Box daemon.info dlcsrv_REL[186]: timeout
+Jan  1 00:00:46 Control_Box daemon.info dlcsrv_REL[186]: finish
+Jan  1 00:01:15 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:15 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[233]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:19 Control_Box daemon.info dlcsrv_REL[242]: start
+Jan  1 00:00:20 Control_Box daemon.err dlcsrv_REL[242]: client(7) error: Connection reset by peer
+Jan  1 00:00:54 Control_Box daemon.info dlcsrv_REL[242]: timeout
+Jan  1 00:00:54 Control_Box daemon.info dlcsrv_REL[242]: finish
+Jan  1 00:00:55 Control_Box daemon.info dlcsrv_REL[287]: start
+Jan  1 00:01:27 Control_Box daemon.info dlcsrv_REL[287]: timeout
+Jan  1 00:01:27 Control_Box daemon.info dlcsrv_REL[287]: finish
+Jan  1 00:01:53 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:53 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 204, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[230]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:20 Control_Box daemon.info dlcsrv_REL[239]: start
+Jan  1 00:00:39 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:39 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[236]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 201, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[229]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:47 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:47 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[230]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 202, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[218]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:04:53 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:04:53 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:14 Control_Box daemon.info dlcsrv_REL[229]: start
+Jan  1 00:00:23 Control_Box daemon.err dlcsrv_REL[229]: client(7) error: Connection reset by peer
+Jan  1 00:00:54 Control_Box daemon.info dlcsrv_REL[229]: timeout
+Jan  1 00:00:54 Control_Box daemon.info dlcsrv_REL[229]: finish
+Jan  1 00:01:07 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:07 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[226]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[226]: Server listening on :: port 22.
+Jan  1 00:00:50 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:50 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:00:50 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 196, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[216]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:42 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:42 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:00:42 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 204, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on :: port 22.
+Jan  1 00:00:51 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:51 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 204, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[227]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[227]: Server listening on :: port 22.
+Jan  1 00:02:46 Control_Box daemon.info dlcsrv_REL[262]: start
+Jan  1 00:02:56 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:02:56 Control_Box syslog.info syslogd exiting
+                                                                                                                                                                                                                                                                                                                                   Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on :: port 22.
+Jan  1 00:00:55 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:55 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:00:55 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 206, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on :: port 22.
+Jan  1 00:00:35 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:35 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 211, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on :: port 22.
+Jan  1 00:00:40 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:40 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 201, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[217]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[217]: Server listening on :: port 22.
+Jan  1 00:07:13 Control_Box auth.err sshd[219]: error: Could not get shadow information for root
+Jan  1 00:07:13 Control_Box auth.info sshd[219]: Accepted none for root from 172.29.4.59 port 39186 ssh2
+Jan  1 00:07:13 Control_Box auth.info sshd[219]: Received disconnect from 172.29.4.59 port 39186:11: disconnected by user
+Jan  1 00:07:13 Control_Box auth.info sshd[219]: Disconnected from user root 172.29.4.59 port 39186
+Jan  1 00:08:21 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:08:21 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 204, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[231]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[231]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on :: port 22.
+Jan  1 00:01:31 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:31 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[226]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[225]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:45 Control_Box daemon.info dlcsrv_REL[237]: start
+Jan  1 00:01:21 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:21 Control_Box syslog.info syslogd exiting
+                                                                                                                                                                                                                                                                                                                                   Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 206, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on :: port 22.
+Jan  1 00:30:59 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:30:59 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on :: port 22.
+Jan  1 00:00:18 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:18 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:00:18 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:00 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:01 Control_Box daemon.info init: starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:03 Control_Box auth.info sshd[225]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:03 Control_Box auth.info sshd[225]: Server listening on :: port 22.
+Jan  1 00:00:04 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:04 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:00:04 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[220]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[220]: Server listening on :: port 22.
+Jan  1 00:04:10 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:04:10 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 203, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on :: port 22.
+Jan  1 00:01:40 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:40 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[228]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[228]: Server listening on :: port 22.
+Jan  1 00:04:18 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:04:18 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:04:18 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[232]: Server listening on :: port 22.
+Jan  1 00:01:17 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:17 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[230]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[230]: Server listening on :: port 22.
+Jan  1 00:10:53 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:10:53 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on :: port 22.
+Jan  1 00:15:18 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:15:18 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on :: port 22.
+Jan  1 00:00:49 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:49 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:00:49 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 206, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 01:36:59 Control_Box daemon.info dlcsrv_REL[265]: start
+Jan  1 01:37:07 Control_Box daemon.info dlcsrv_REL[265]: terminate
+Jan  1 01:37:07 Control_Box daemon.info dlcsrv_REL[265]: finish
+Jan  1 01:37:51 Control_Box daemon.info dlcsrv_REL[316]: start
+Jan  1 01:38:12 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 01:38:12 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 206, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on :: port 22.
+Jan  1 00:00:21 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:21 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 206, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[231]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:10 Control_Box daemon.info dlcsrv_REL[241]: start
+Jan  1 00:00:53 Control_Box daemon.info dlcsrv_REL[241]: timeout
+Jan  1 00:00:53 Control_Box daemon.info dlcsrv_REL[241]: finish
+Jan  1 00:02:04 Control_Box auth.err sshd[277]: error: Could not get shadow information for root
+Jan  1 00:02:04 Control_Box auth.info sshd[277]: Accepted none for root from 172.29.4.59 port 42458 ssh2
+Jan  1 00:02:04 Control_Box auth.info sshd[280]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:02:04 Control_Box auth.info sshd[280]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:02:05 Control_Box auth.info sshd[277]: Received disconnect from 172.29.4.59 port 42458:11: disconnected by user
+Jan  1 00:02:05 Control_Box auth.info sshd[277]: Disconnected from user root 172.29.4.59 port 42458
+Jan  1 00:09:27 Control_Box auth.err sshd[313]: error: Could not get shadow information for root
+Jan  1 00:09:27 Control_Box auth.info sshd[313]: Accepted none for root from 172.29.4.59 port 56930 ssh2
+Jan  1 00:09:27 Control_Box auth.info sshd[313]: Received disconnect from 172.29.4.59 port 56930:11: disconnected by user
+Jan  1 00:09:27 Control_Box auth.info sshd[313]: Disconnected from user root 172.29.4.59 port 56930
+Jan  1 00:10:33 Control_Box auth.err sshd[320]: error: Could not get shadow information for root
+Jan  1 00:10:33 Control_Box auth.info sshd[320]: Accepted none for root from 172.29.4.59 port 60808 ssh2
+Jan  1 00:10:34 Control_Box auth.info sshd[320]: Received disconnect from 172.29.4.59 port 60808:11: disconnected by user
+Jan  1 00:10:34 Control_Box auth.info sshd[320]: Disconnected from user root 172.29.4.59 port 60808
+Jan  1 00:10:40 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:10:40 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:09 Control_Box daemon.info dlcsrv_REL[245]: start
+Jan  1 00:00:42 Control_Box daemon.info dlcsrv_REL[245]: timeout
+Jan  1 00:00:42 Control_Box daemon.info dlcsrv_REL[245]: finish
+Jan  1 00:01:02 Control_Box auth.err sshd[264]: error: Could not get shadow information for root
+Jan  1 00:01:02 Control_Box auth.info sshd[264]: Accepted none for root from 172.29.4.59 port 47084 ssh2
+Jan  1 00:01:03 Control_Box auth.info sshd[264]: Received disconnect from 172.29.4.59 port 47084:11: disconnected by user
+Jan  1 00:01:03 Control_Box auth.info sshd[264]: Disconnected from user root 172.29.4.59 port 47084
+Jan  1 00:01:09 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:01:09 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:01:09 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:13 Control_Box daemon.info dlcsrv_REL[242]: start
+Jan  1 00:00:46 Control_Box daemon.info dlcsrv_REL[242]: timeout
+Jan  1 00:00:46 Control_Box daemon.info dlcsrv_REL[242]: finish
+Jan  1 00:04:51 Control_Box auth.err sshd[261]: error: Could not get shadow information for root
+Jan  1 00:04:51 Control_Box auth.info sshd[261]: Accepted none for root from 172.29.4.59 port 54028 ssh2
+Jan  1 00:04:53 Control_Box auth.info sshd[261]: Received disconnect from 172.29.4.59 port 54028:11: disconnected by user
+Jan  1 00:04:53 Control_Box auth.info sshd[261]: Disconnected from user root 172.29.4.59 port 54028
+Jan  1 00:04:59 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:04:59 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:12 Control_Box daemon.info dlcsrv_REL[245]: start
+Jan  1 00:00:45 Control_Box daemon.info dlcsrv_REL[245]: timeout
+Jan  1 00:00:46 Control_Box daemon.info dlcsrv_REL[245]: finish
+Jan  1 00:10:51 Control_Box auth.err sshd[264]: error: Could not get shadow information for root
+Jan  1 00:10:51 Control_Box auth.info sshd[264]: Accepted none for root from 172.29.4.59 port 38844 ssh2
+Jan  1 00:10:52 Control_Box auth.info sshd[264]: Received disconnect from 172.29.4.59 port 38844:11: disconnected by user
+Jan  1 00:10:52 Control_Box auth.info sshd[264]: Disconnected from user root 172.29.4.59 port 38844
+Jan  1 00:10:59 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:10:59 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[239]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:14 Control_Box daemon.info dlcsrv_REL[246]: start
+Jan  1 00:02:55 Control_Box auth.err sshd[269]: error: Could not get shadow information for root
+Jan  1 00:02:55 Control_Box auth.info sshd[269]: Accepted none for root from 172.29.4.59 port 57294 ssh2
+Jan  1 00:02:56 Control_Box auth.info sshd[269]: Received disconnect from 172.29.4.59 port 57294:11: disconnected by user
+Jan  1 00:02:56 Control_Box auth.info sshd[269]: Disconnected from user root 172.29.4.59 port 57294
+Jan  1 00:03:02 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:03:02 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:03:02 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 217, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:09 Control_Box daemon.info dlcsrv_REL[245]: start
+Jan  1 00:00:42 Control_Box daemon.info dlcsrv_REL[245]: timeout
+Jan  1 00:00:42 Control_Box daemon.info dlcsrv_REL[245]: finish
+Jan  1 00:11:19 Control_Box auth.err sshd[266]: error: Could not get shadow information for root
+Jan  1 00:11:19 Control_Box auth.info sshd[266]: Accepted none for root from 172.29.4.59 port 59934 ssh2
+Jan  1 00:11:20 Control_Box auth.info sshd[266]: Received disconnect from 172.29.4.59 port 59934:11: disconnected by user
+Jan  1 00:11:20 Control_Box auth.info sshd[266]: Disconnected from user root 172.29.4.59 port 59934
+Jan  1 00:11:27 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:11:27 Control_Box syslog.info syslogd exiting
+                                                                                                                                                                                                                                                                                                                                   Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[238]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[238]: Server listening on :: port 22.
+Jan  1 00:07:35 Control_Box auth.err sshd[239]: error: Could not get shadow information for root
+Jan  1 00:07:35 Control_Box auth.info sshd[239]: Accepted none for root from 172.29.4.59 port 49218 ssh2
+Jan  1 00:07:36 Control_Box auth.info sshd[239]: Received disconnect from 172.29.4.59 port 49218:11: disconnected by user
+Jan  1 00:07:36 Control_Box auth.info sshd[239]: Disconnected from user root 172.29.4.59 port 49218
+Jan  1 00:07:41 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:07:41 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 216, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[236]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[236]: Server listening on :: port 22.
+Jan  1 00:00:13 Control_Box daemon.info dlcsrv_REL[244]: start
+Jan  1 00:00:49 Control_Box daemon.info dlcsrv_REL[244]: timeout
+Jan  1 00:00:49 Control_Box daemon.info dlcsrv_REL[244]: finish
+Jan  1 00:03:36 Control_Box auth.err sshd[265]: error: Could not get shadow information for root
+Jan  1 00:03:36 Control_Box auth.info sshd[265]: Accepted none for root from 172.29.4.59 port 60858 ssh2
+Jan  1 00:03:37 Control_Box auth.info sshd[265]: Received disconnect from 172.29.4.59 port 60858:11: disconnected by user
+Jan  1 00:03:37 Control_Box auth.info sshd[265]: Disconnected from user root 172.29.4.59 port 60858
+Jan  1 00:03:42 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:03:42 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:03:42 Control_Box syslog.info syslogd exiting
+                                                                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 216, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[235]: Server listening on :: port 22.
+Jan  1 00:02:40 Control_Box auth.err sshd[236]: error: Could not get shadow information for root
+Jan  1 00:02:40 Control_Box auth.info sshd[236]: Accepted none for root from 172.29.4.59 port 58680 ssh2
+Jan  1 00:02:42 Control_Box auth.info sshd[236]: Received disconnect from 172.29.4.59 port 58680:11: disconnected by user
+Jan  1 00:02:42 Control_Box auth.info sshd[236]: Disconnected from user root 172.29.4.59 port 58680
+Jan  1 00:02:48 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:02:48 Control_Box daemon.info init: Sent SIGTERM to all processes
+Jan  1 00:02:48 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 217, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[242]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[242]: Server listening on :: port 22.
+Jan  1 00:00:09 Control_Box daemon.info dlcsrv_REL[249]: start
+Jan  1 00:00:47 Control_Box daemon.info dlcsrv_REL[249]: timeout
+Jan  1 00:00:47 Control_Box daemon.info dlcsrv_REL[249]: finish
+Jan  1 00:03:22 Control_Box auth.err sshd[283]: error: Could not get shadow information for root
+Jan  1 00:03:22 Control_Box auth.info sshd[283]: Accepted none for root from 172.29.4.59 port 58576 ssh2
+Jan  1 00:03:24 Control_Box auth.info sshd[283]: Received disconnect from 172.29.4.59 port 58576:11: disconnected by user
+Jan  1 00:03:24 Control_Box auth.info sshd[283]: Disconnected from user root 172.29.4.59 port 58576
+Jan  1 00:03:32 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:03:32 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[237]: Server listening on :: port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:04 Control_Box auth.info sshd[234]: Server listening on :: port 22.
+Jan  1 00:00:08 Control_Box auth.err sshd[235]: error: Could not get shadow information for root
+Jan  1 00:00:08 Control_Box auth.info sshd[235]: Accepted none for root from 172.29.4.59 port 47634 ssh2
+Jan  1 00:00:09 Control_Box auth.info sshd[235]: Received disconnect from 172.29.4.59 port 47634:11: disconnected by user
+Jan  1 00:00:09 Control_Box auth.info sshd[235]: Disconnected from user root 172.29.4.59 port 47634
+Jan  1 00:00:57 Control_Box auth.err sshd[239]: error: Could not get shadow information for root
+Jan  1 00:00:57 Control_Box auth.info sshd[239]: Accepted none for root from 172.29.4.59 port 38504 ssh2
+Jan  1 00:00:59 Control_Box auth.info sshd[239]: Received disconnect from 172.29.4.59 port 38504:11: disconnected by user
+Jan  1 00:00:59 Control_Box auth.info sshd[239]: Disconnected from user root 172.29.4.59 port 38504
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:12 Control_Box auth.err sshd[237]: error: Could not get shadow information for root
+Jan  1 00:00:12 Control_Box auth.info sshd[237]: Accepted none for root from 172.29.4.59 port 35140 ssh2
+Jan  1 00:00:14 Control_Box auth.info sshd[237]: Received disconnect from 172.29.4.59 port 35140:11: disconnected by user
+Jan  1 00:00:14 Control_Box auth.info sshd[237]: Disconnected from user root 172.29.4.59 port 35140
+Jan  1 00:00:21 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:21 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:11 Control_Box daemon.info dlcsrv_REL[242]: start
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 216, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[238]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:24 Control_Box daemon.info dlcsrv_REL[245]: start
+Jan  1 00:00:27 Control_Box daemon.info init: The system is going down NOW!
+Jan  1 00:00:27 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 217, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[243]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:10 Control_Box daemon.info dlcsrv_REL[250]: start
+Jan  1 00:00:10 Control_Box daemon.warn dlcsrv_REL[250]: other DRM-Master process is running
+Jan  1 00:00:42 Control_Box daemon.info dlcsrv_REL[250]: timeout
+Jan  1 00:00:42 Control_Box daemon.info dlcsrv_REL[250]: finish
+Jan  1 00:43:56 Control_Box auth.err sshd[272]: error: Could not get shadow information for root
+Jan  1 00:43:56 Control_Box auth.info sshd[272]: Accepted none for root from 172.29.4.59 port 49140 ssh2
+Jan  1 00:43:57 Control_Box auth.info sshd[272]: Received disconnect from 172.29.4.59 port 49140:11: disconnected by user
+Jan  1 00:43:57 Control_Box auth.info sshd[272]: Disconnected from user root 172.29.4.59 port 49140
+Jan  1 00:44:42 Control_Box auth.err sshd[279]: error: Could not get shadow information for root
+Jan  1 00:44:42 Control_Box auth.info sshd[279]: Accepted none for root from 172.29.4.59 port 54582 ssh2
+Jan  1 00:44:42 Control_Box auth.info sshd[279]: Received disconnect from 172.29.4.59 port 54582:11: disconnected by user
+Jan  1 00:44:42 Control_Box auth.info sshd[279]: Disconnected from user root 172.29.4.59 port 54582
+Jan  1 01:20:40 Control_Box auth.err sshd[294]: error: Could not get shadow information for root
+Jan  1 01:20:40 Control_Box auth.info sshd[294]: Accepted none for root from 172.29.4.59 port 56226 ssh2
+Jan  1 01:20:40 Control_Box auth.info sshd[294]: Received disconnect from 172.29.4.59 port 56226:11: disconnected by user
+Jan  1 01:20:40 Control_Box auth.info sshd[294]: Disconnected from user root 172.29.4.59 port 56226
+Jan  1 01:21:53 Control_Box authpriv.warn dropbear[310]: Failed loading /etc/dropbear/dropbear_rsa_host_key
+Jan  1 01:21:53 Control_Box authpriv.warn dropbear[310]: Failed loading /etc/dropbear/dropbear_dss_host_key
+Jan  1 01:21:53 Control_Box authpriv.warn dropbear[310]: Failed loading /etc/dropbear/dropbear_ecdsa_host_key
+Jan  1 01:21:53 Control_Box authpriv.info dropbear[310]: Early exit: No hostkeys available. 'dropbear -R' may be useful or run dropbearkey.
+Jan  1 01:23:05 Control_Box auth.err sshd[312]: error: Could not get shadow information for root
+Jan  1 01:23:05 Control_Box auth.info sshd[312]: Accepted none for root from 172.29.4.59 port 46360 ssh2
+Jan  1 01:23:05 Control_Box auth.info sshd[312]: Received disconnect from 172.29.4.59 port 46360:11: disconnected by user
+Jan  1 01:23:05 Control_Box auth.info sshd[312]: Disconnected from user root 172.29.4.59 port 46360
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.21.1
+Jan  1 00:00:02 Control_Box daemon.info init: starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:03:38 Control_Box auth.info sshd[250]: User root not allowed because shell /bin/sh does not exist
+Jan  1 00:03:38 Control_Box auth.err sshd[250]: error: Could not get shadow information for NOUSER
+Jan  1 00:03:38 Control_Box auth.info sshd[250]: Failed none for invalid user root from 172.29.4.59 port 53784 ssh2
+Jan  1 00:03:45 Control_Box auth.info sshd[250]: Failed password for invalid user root from 172.29.4.59 port 53784 ssh2
+Jan  1 00:03:47 Control_Box auth.info sshd[250]: Failed password for invalid user root from 172.29.4.59 port 53784 ssh2
+Jan  1 00:03:48 Control_Box auth.info sshd[250]: Connection closed by invalid user root 172.29.4.59 port 53784 [preauth]
+Jan  1 00:03:54 Control_Box auth.info sshd[253]: User root not allowed because shell /bin/sh does not exist
+Jan  1 00:03:54 Control_Box auth.err sshd[253]: error: Could not get shadow information for NOUSER
+Jan  1 00:03:54 Control_Box auth.info sshd[253]: Failed none for invalid user root from 172.29.4.59 port 58000 ssh2
+Jan  1 00:04:00 Control_Box auth.info sshd[253]: Failed password for invalid user root from 172.29.4.59 port 58000 ssh2
+Jan  1 00:04:03 Control_Box auth.info sshd[253]: Failed password for invalid user root from 172.29.4.59 port 58000 ssh2
+Jan  1 00:04:04 Control_Box auth.info sshd[253]: Connection closed by invalid user root 172.29.4.59 port 58000 [preauth]
+Jan  1 00:04:21 Control_Box auth.info sshd[256]: User root not allowed because shell /bin/sh does not exist
+Jan  1 00:04:21 Control_Box auth.err sshd[256]: error: Could not get shadow information for NOUSER
+Jan  1 00:04:21 Control_Box auth.info sshd[256]: Failed none for invalid user root from 172.29.4.59 port 41462 ssh2
+Jan  1 00:04:28 Control_Box auth.info sshd[256]: Failed password for invalid user root from 172.29.4.59 port 41462 ssh2
+Jan  1 00:04:29 Control_Box auth.info sshd[256]: Connection closed by invalid user root 172.29.4.59 port 41462 [preauth]
+Jan  1 00:05:18 Control_Box auth.err sshd[267]: error: Could not get shadow information for root
+Jan  1 00:05:18 Control_Box auth.info sshd[267]: Accepted none for root from 172.29.4.59 port 52620 ssh2
+Jan  1 00:05:18 Control_Box auth.info sshd[267]: Received disconnect from 172.29.4.59 port 52620:11: disconnected by user
+Jan  1 00:05:18 Control_Box auth.info sshd[267]: Disconnected from user root 172.29.4.59 port 52620
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 216, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:02:53 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:02:53 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 211, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[233]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:19 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:19 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:04:54 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:04:54 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[230]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:35 Control_Box authpriv.crit useradd[237]: cannot open login definitions /etc/login.defs [No such file or directory]
+Jan  1 00:01:39 Control_Box auth.err sshd[244]: error: Could not get shadow information for root
+Jan  1 00:01:39 Control_Box auth.info sshd[244]: Accepted none for root from 172.29.4.59 port 48572 ssh2
+Jan  1 00:01:39 Control_Box auth.info sshd[247]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:01:39 Control_Box auth.info sshd[247]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:04 Control_Box auth.info sshd[236]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:15 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:15 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:05 Control_Box auth.err sshd[233]: error: Could not get shadow information for root
+Jan  1 00:01:05 Control_Box auth.info sshd[233]: Accepted none for root from 172.29.4.59 port 54298 ssh2
+Jan  1 00:01:05 Control_Box auth.info sshd[233]: Received disconnect from 172.29.4.59 port 54298:11: disconnected by user
+Jan  1 00:01:05 Control_Box auth.info sshd[233]: Disconnected from user root 172.29.4.59 port 54298
+Jan  1 00:01:11 Control_Box auth.err sshd[237]: error: Could not get shadow information for root
+Jan  1 00:01:17 Control_Box auth.info sshd[237]: Connection closed by authenticating user root 172.29.4.59 port 54310 [preauth]
+Jan  1 00:01:25 Control_Box auth.err sshd[240]: error: Could not get shadow information for root
+Jan  1 00:01:27 Control_Box auth.info sshd[240]: Accepted password for root from 172.29.4.59 port 51162 ssh2
+Jan  1 00:01:27 Control_Box auth.info sshd[240]: Received disconnect from 172.29.4.59 port 51162:11: disconnected by user
+Jan  1 00:01:27 Control_Box auth.info sshd[240]: Disconnected from user root 172.29.4.59 port 51162
+Jan  1 00:02:49 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:02:49 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:17 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:17 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[225]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:52 Control_Box auth.err sshd[232]: error: Could not get shadow information for root
+Jan  1 00:00:55 Control_Box auth.info sshd[232]: Accepted password for root from 172.29.4.59 port 56894 ssh2
+Jan  1 00:00:55 Control_Box auth.info sshd[235]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:00:55 Control_Box auth.info sshd[235]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:05:15 Control_Box auth.info sshd[232]: Received disconnect from 172.29.4.59 port 56894:11: disconnected by user
+Jan  1 00:05:15 Control_Box auth.info sshd[232]: Disconnected from user root 172.29.4.59 port 56894
+Jan  1 00:05:15 Control_Box auth.err sshd[290]: error: Could not get shadow information for root
+Jan  1 00:05:19 Control_Box auth.info sshd[290]: Failed password for root from 172.29.4.59 port 48624 ssh2
+Jan  1 00:05:21 Control_Box auth.info sshd[290]: Failed password for root from 172.29.4.59 port 48624 ssh2
+Jan  1 00:05:22 Control_Box auth.info sshd[290]: Connection closed by authenticating user root 172.29.4.59 port 48624 [preauth]
+Jan  1 00:06:07 Control_Box auth.err sshd[296]: error: Could not get shadow information for root
+Jan  1 00:06:12 Control_Box auth.info sshd[296]: Accepted password for root from 172.29.4.59 port 57960 ssh2
+Jan  1 00:06:12 Control_Box auth.info sshd[299]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:06:12 Control_Box auth.info sshd[299]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:13:30 Control_Box auth.err passwd: unknown uid 0
+Jan  1 00:14:34 Control_Box auth.info sshd[296]: Received disconnect from 172.29.4.59 port 57960:11: disconnected by user
+Jan  1 00:14:34 Control_Box auth.info sshd[296]: Disconnected from user root 172.29.4.59 port 57960
+Jan  1 00:14:35 Control_Box auth.err sshd[350]: error: Could not get shadow information for root
+Jan  1 00:14:38 Control_Box auth.info sshd[350]: Accepted password for root from 172.29.4.59 port 40838 ssh2
+Jan  1 00:14:38 Control_Box auth.info sshd[353]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:14:38 Control_Box auth.info sshd[353]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:14:40 Control_Box auth.info sshd[350]: Received disconnect from 172.29.4.59 port 40838:11: disconnected by user
+Jan  1 00:14:40 Control_Box auth.info sshd[350]: Disconnected from user root 172.29.4.59 port 40838
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 204, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[219]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[227]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 203, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[219]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 202, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 201, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[220]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 216, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[228]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:04 Control_Box auth.err sshd[229]: error: Could not get shadow information for root
+Jan  1 00:01:07 Control_Box auth.info sshd[229]: Accepted password for root from 172.29.4.59 port 37950 ssh2
+Jan  1 00:01:07 Control_Box auth.info sshd[232]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:01:07 Control_Box auth.info sshd[232]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:05:08 Control_Box auth.err sshd[253]: error: Could not get shadow information for root
+Jan  1 00:05:11 Control_Box auth.info sshd[253]: Accepted password for root from 172.29.4.59 port 53952 ssh2
+Jan  1 00:05:11 Control_Box auth.info sshd[253]: Received disconnect from 172.29.4.59 port 53952:11: disconnected by user
+Jan  1 00:05:11 Control_Box auth.info sshd[253]: Disconnected from user root 172.29.4.59 port 53952
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 211, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:07:28 Control_Box auth.err sshd[231]: error: Could not get shadow information for root
+Jan  1 00:07:28 Control_Box auth.info sshd[231]: Connection closed by authenticating user root 172.29.4.59 port 49202 [preauth]
+Jan  1 00:07:32 Control_Box auth.err sshd[234]: error: Could not get shadow information for root
+Jan  1 00:07:32 Control_Box auth.info sshd[234]: Connection closed by authenticating user root 172.29.4.59 port 35038 [preauth]
+Jan  1 00:07:33 Control_Box auth.err sshd[237]: error: Could not get shadow information for root
+Jan  1 00:07:33 Control_Box auth.info sshd[237]: Connection closed by authenticating user root 172.29.4.59 port 35052 [preauth]
+Jan  1 00:07:33 Control_Box auth.err sshd[240]: error: Could not get shadow information for root
+Jan  1 00:07:33 Control_Box auth.info sshd[240]: Connection closed by authenticating user root 172.29.4.59 port 35054 [preauth]
+Jan  1 00:07:46 Control_Box auth.err sshd[244]: error: Could not get shadow information for root
+Jan  1 00:07:49 Control_Box auth.info sshd[244]: Accepted password for root from 172.29.4.59 port 48486 ssh2
+Jan  1 00:07:50 Control_Box auth.info sshd[244]: Received disconnect from 172.29.4.59 port 48486:11: disconnected by user
+Jan  1 00:07:50 Control_Box auth.info sshd[244]: Disconnected from user root 172.29.4.59 port 48486
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 203, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[218]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:31 Control_Box auth.err sshd[222]: error: Could not get shadow information for root
+Jan  1 00:01:34 Control_Box auth.info sshd[222]: Accepted password for root from 172.29.4.59 port 33184 ssh2
+Jan  1 00:01:35 Control_Box auth.info sshd[222]: Received disconnect from 172.29.4.59 port 33184:11: disconnected by user
+Jan  1 00:01:35 Control_Box auth.info sshd[222]: Disconnected from user root 172.29.4.59 port 33184
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[220]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:40 Control_Box auth.err sshd[228]: error: Could not get shadow information for root
+Jan  1 00:01:42 Control_Box auth.info sshd[228]: Accepted password for root from 172.29.4.59 port 54688 ssh2
+Jan  1 00:01:42 Control_Box auth.info sshd[231]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:01:42 Control_Box auth.info sshd[231]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[227]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:11:24 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:11:24 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 202, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[219]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:29 Control_Box auth.err sshd[222]: error: Could not get shadow information for root
+Jan  1 00:00:32 Control_Box auth.info sshd[222]: Accepted password for root from 172.29.4.59 port 58304 ssh2
+Jan  1 00:00:34 Control_Box auth.info sshd[222]: Received disconnect from 172.29.4.59 port 58304:11: disconnected by user
+Jan  1 00:00:34 Control_Box auth.info sshd[222]: Disconnected from user root 172.29.4.59 port 58304
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[217]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:34 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:01:34 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 211, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:09 Control_Box auth.err sshd[224]: error: Could not get shadow information for root
+Jan  1 00:00:11 Control_Box auth.info sshd[224]: Accepted password for root from 172.29.4.59 port 55554 ssh2
+Jan  1 00:00:13 Control_Box auth.info sshd[224]: Received disconnect from 172.29.4.59 port 55554:11: disconnected by user
+Jan  1 00:00:13 Control_Box auth.info sshd[224]: Disconnected from user root 172.29.4.59 port 55554
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 200, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[217]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:02:09 Control_Box auth.err sshd[222]: error: Could not get shadow information for root
+Jan  1 00:02:13 Control_Box auth.info sshd[222]: Accepted password for root from 172.29.4.29 port 2170 ssh2
+Jan  1 00:02:18 Control_Box auth.err sshd[226]: error: Could not get shadow information for root
+Jan  1 00:02:19 Control_Box auth.info sshd[226]: Connection closed by authenticating user root 172.29.4.29 port 2172 [preauth]
+Jan  1 00:02:47 Control_Box auth.err sshd[229]: error: Could not get shadow information for root
+Jan  1 00:02:50 Control_Box auth.info sshd[229]: Accepted password for root from 172.29.4.29 port 2181 ssh2
+Jan  1 00:02:54 Control_Box auth.err sshd[233]: error: Could not get shadow information for root
+Jan  1 00:02:58 Control_Box auth.info sshd[233]: Accepted password for root from 172.29.4.29 port 2188 ssh2
+Jan  1 00:04:06 Control_Box auth.err sshd[237]: error: Could not get shadow information for root
+Jan  1 00:04:08 Control_Box auth.info sshd[237]: Accepted password for root from 172.29.4.59 port 46160 ssh2
+Jan  1 00:04:09 Control_Box auth.info sshd[237]: Received disconnect from 172.29.4.59 port 46160:11: disconnected by user
+Jan  1 00:04:09 Control_Box auth.info sshd[237]: Disconnected from user root 172.29.4.59 port 46160
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[228]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 211, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[219]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:27 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:27 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 216, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[230]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:07 Control_Box auth.info sshd[230]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:07 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:27 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:27 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[227]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 200, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[218]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:31 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:31 Control_Box syslog.info syslogd exiting
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[218]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:14 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:14 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 204, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[220]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:11 Control_Box auth.err sshd[223]: error: Could not get shadow information for root
+Jan  1 00:00:13 Control_Box auth.info sshd[223]: Accepted password for root from 172.29.4.59 port 57502 ssh2
+Jan  1 00:00:14 Control_Box auth.info sshd[223]: Received disconnect from 172.29.4.59 port 57502:11: disconnected by user
+Jan  1 00:00:14 Control_Box auth.info sshd[223]: Disconnected from user root 172.29.4.59 port 57502
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:57 Control_Box auth.err sshd[230]: error: Could not get shadow information for root
+Jan  1 00:01:59 Control_Box auth.info sshd[230]: Accepted password for root from 172.29.4.59 port 37064 ssh2
+Jan  1 00:01:59 Control_Box auth.info sshd[230]: Received disconnect from 172.29.4.59 port 37064:11: disconnected by user
+Jan  1 00:01:59 Control_Box auth.info sshd[230]: Disconnected from user root 172.29.4.59 port 37064
+Jan  1 00:02:06 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:02:06 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 205, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[219]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 209, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:58 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:58 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 206, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box auth.err sshd[223]: error: Could not get shadow information for root
+Jan  1 00:00:10 Control_Box auth.info sshd[223]: Accepted password for root from 172.29.4.59 port 39496 ssh2
+Jan  1 00:00:10 Control_Box auth.info sshd[223]: Received disconnect from 172.29.4.59 port 39496:11: disconnected by user
+Jan  1 00:00:10 Control_Box auth.info sshd[223]: Disconnected from user root 172.29.4.59 port 39496
+Jan  1 00:00:15 Control_Box auth.err sshd[227]: error: Could not get shadow information for root
+Jan  1 00:00:17 Control_Box auth.info sshd[227]: Accepted password for root from 172.29.4.59 port 47376 ssh2
+Jan  1 00:00:18 Control_Box auth.info sshd[227]: Received disconnect from 172.29.4.59 port 47376:11: disconnected by user
+Jan  1 00:00:18 Control_Box auth.info sshd[227]: Disconnected from user root 172.29.4.59 port 47376
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[225]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[225]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:04 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:01:04 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[219]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:35 Control_Box auth.err sshd[221]: error: Could not get shadow information for root
+Jan  1 00:00:45 Control_Box auth.info sshd[221]: Accepted password for root from 172.29.4.59 port 53230 ssh2
+Jan  1 00:00:46 Control_Box auth.info sshd[221]: Received disconnect from 172.29.4.59 port 53230:11: disconnected by user
+Jan  1 00:00:46 Control_Box auth.info sshd[221]: Disconnected from user root 172.29.4.59 port 53230
+Jan  1 00:01:41 Control_Box auth.err sshd[225]: error: Could not get shadow information for root
+Jan  1 00:01:43 Control_Box auth.info sshd[225]: Accepted password for root from 172.29.4.59 port 49430 ssh2
+Jan  1 00:01:43 Control_Box auth.info sshd[225]: Received disconnect from 172.29.4.59 port 49430:11: disconnected by user
+Jan  1 00:01:43 Control_Box auth.info sshd[225]: Disconnected from user root 172.29.4.59 port 49430
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 211, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[225]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:05:30 Control_Box auth.err sshd[233]: error: Could not get shadow information for root
+Jan  1 00:05:32 Control_Box auth.info sshd[233]: Accepted password for root from 172.29.4.59 port 37642 ssh2
+Jan  1 00:05:33 Control_Box auth.info sshd[233]: Received disconnect from 172.29.4.59 port 37642:11: disconnected by user
+Jan  1 00:05:33 Control_Box auth.info sshd[233]: Disconnected from user root 172.29.4.59 port 37642
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:01:16 Control_Box auth.err sshd[228]: error: Could not get shadow information for root
+Jan  1 00:01:18 Control_Box auth.info sshd[228]: Accepted password for root from 172.29.4.59 port 40152 ssh2
+Jan  1 00:01:19 Control_Box auth.info sshd[228]: Received disconnect from 172.29.4.59 port 40152:11: disconnected by user
+Jan  1 00:01:19 Control_Box auth.info sshd[228]: Disconnected from user root 172.29.4.59 port 40152
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[226]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:04:48 Control_Box auth.err sshd[234]: error: Could not get shadow information for root
+Jan  1 00:04:49 Control_Box auth.info sshd[234]: Connection closed by authenticating user root 172.29.4.59 port 53464 [preauth]
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 214, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:04:26 Control_Box auth.err sshd[228]: error: Could not get shadow information for root
+Jan  1 00:04:29 Control_Box auth.info sshd[228]: Accepted password for root from 172.29.4.59 port 46944 ssh2
+Jan  1 00:04:30 Control_Box auth.info sshd[228]: Received disconnect from 172.29.4.59 port 46944:11: disconnected by user
+Jan  1 00:04:30 Control_Box auth.info sshd[228]: Disconnected from user root 172.29.4.59 port 46944
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 224, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[230]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:07:04 Control_Box auth.err sshd[242]: error: Could not get shadow information for root
+Jan  1 00:07:06 Control_Box auth.info sshd[242]: Accepted password for root from 172.29.4.59 port 51320 ssh2
+Jan  1 00:07:07 Control_Box auth.info sshd[242]: Received disconnect from 172.29.4.59 port 51320:11: disconnected by user
+Jan  1 00:07:07 Control_Box auth.info sshd[242]: Disconnected from user root 172.29.4.59 port 51320
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:03 Control_Box daemon.info : starting pid 219, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[227]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:02:12 Control_Box auth.err sshd[231]: error: Could not get shadow information for root
+Jan  1 00:02:13 Control_Box auth.info sshd[231]: Accepted password for root from 172.29.4.59 port 57826 ssh2
+Jan  1 00:02:15 Control_Box auth.info sshd[231]: Received disconnect from 172.29.4.59 port 57826:11: disconnected by user
+Jan  1 00:02:15 Control_Box auth.info sshd[231]: Disconnected from user root 172.29.4.59 port 57826
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 220, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[226]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 221, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[228]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 217, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 213, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[218]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:06:47 Control_Box auth.err sshd[242]: error: Could not get shadow information for root
+Jan  1 00:06:51 Control_Box auth.info sshd[242]: Accepted password for root from 172.29.4.59 port 50678 ssh2
+Jan  1 00:06:52 Control_Box auth.info sshd[242]: Received disconnect from 172.29.4.59 port 50678:11: disconnected by user
+Jan  1 00:06:52 Control_Box auth.info sshd[242]: Disconnected from user root 172.29.4.59 port 50678
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 236, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 236, tty '': '-/bin/sh'
+Jan  1 00:00:54 Control_Box auth.err sshd[239]: error: Could not get shadow information for root
+Jan  1 00:00:56 Control_Box auth.info sshd[239]: Accepted password for root from 172.29.4.59 port 33860 ssh2
+Jan  1 00:00:57 Control_Box auth.info sshd[239]: Received disconnect from 172.29.4.59 port 33860:11: disconnected by user
+Jan  1 00:00:57 Control_Box auth.info sshd[239]: Disconnected from user root 172.29.4.59 port 33860
+Jan  1 00:01:03 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:01:03 Control_Box syslog.info syslogd exiting
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[236]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:34:53 Control_Box auth.err sshd[243]: error: Could not get shadow information for root
+Jan  1 00:34:55 Control_Box auth.info sshd[243]: Accepted password for root from 172.29.4.59 port 33802 ssh2
+Jan  1 00:34:56 Control_Box auth.info sshd[243]: Received disconnect from 172.29.4.59 port 33802:11: disconnected by user
+Jan  1 00:34:56 Control_Box auth.info sshd[243]: Disconnected from user root 172.29.4.59 port 33802
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[232]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 236, tty '': '-/bin/sh'
+Jan  1 00:00:51 Control_Box auth.err sshd[239]: error: Could not get shadow information for root
+Jan  1 00:00:54 Control_Box auth.info sshd[239]: Accepted password for root from 172.29.4.59 port 36114 ssh2
+Jan  1 00:00:55 Control_Box auth.info sshd[239]: Received disconnect from 172.29.4.59 port 36114:11: disconnected by user
+Jan  1 00:00:55 Control_Box auth.info sshd[239]: Disconnected from user root 172.29.4.59 port 36114
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[238]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 242, tty '': '-/bin/sh'
+Jan  1 00:00:32 Control_Box auth.err sshd[245]: error: Could not get shadow information for root
+Jan  1 00:00:34 Control_Box auth.info sshd[245]: Accepted password for root from 172.29.4.59 port 38892 ssh2
+Jan  1 00:00:35 Control_Box auth.info sshd[245]: Received disconnect from 172.29.4.59 port 38892:11: disconnected by user
+Jan  1 00:00:35 Control_Box auth.info sshd[245]: Disconnected from user root 172.29.4.59 port 38892
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[239]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 243, tty '': '-/bin/sh'
+Jan  1 00:00:31 Control_Box auth.err sshd[245]: error: Could not get shadow information for root
+Jan  1 00:00:33 Control_Box auth.info sshd[245]: Accepted password for root from 172.29.4.59 port 51136 ssh2
+Jan  1 00:00:35 Control_Box auth.info sshd[245]: Received disconnect from 172.29.4.59 port 51136:11: disconnected by user
+Jan  1 00:00:35 Control_Box auth.info sshd[245]: Disconnected from user root 172.29.4.59 port 51136
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:01:13 Control_Box auth.err sshd[248]: error: Could not get shadow information for root
+Jan  1 00:01:15 Control_Box auth.info sshd[248]: Accepted password for root from 172.29.4.59 port 48336 ssh2
+Jan  1 00:01:16 Control_Box auth.info sshd[248]: Received disconnect from 172.29.4.59 port 48336:11: disconnected by user
+Jan  1 00:01:16 Control_Box auth.info sshd[248]: Disconnected from user root 172.29.4.59 port 48336
+Jan  1 00:01:39 Control_Box auth.err sshd[252]: error: Could not get shadow information for root
+Jan  1 00:01:41 Control_Box auth.info sshd[252]: Accepted password for root from 172.29.4.59 port 43104 ssh2
+Jan  1 00:01:41 Control_Box auth.info sshd[252]: Received disconnect from 172.29.4.59 port 43104:11: disconnected by user
+Jan  1 00:01:41 Control_Box auth.info sshd[252]: Disconnected from user root 172.29.4.59 port 43104
+Jan  1 00:02:02 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:02:02 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 239, tty '': '-/bin/sh'
+Jan  1 00:00:10 Control_Box auth.err sshd[241]: error: Could not get shadow information for root
+Jan  1 00:00:13 Control_Box auth.info sshd[241]: Accepted password for root from 172.29.4.59 port 42324 ssh2
+Jan  1 00:00:13 Control_Box auth.info sshd[244]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:00:13 Control_Box auth.info sshd[244]: lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[234]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[233]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 237, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[228]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 232, tty '': '-/bin/sh'
+Jan  1 00:02:52 Control_Box auth.err sshd[239]: error: Could not get shadow information for root
+Jan  1 00:02:54 Control_Box auth.info sshd[239]: Accepted password for root from 172.29.4.59 port 56188 ssh2
+Jan  1 00:02:55 Control_Box auth.info sshd[239]: Received disconnect from 172.29.4.59 port 56188:11: disconnected by user
+Jan  1 00:02:55 Control_Box auth.info sshd[239]: Disconnected from user root 172.29.4.59 port 56188
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[236]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[218]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 227, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:06 Control_Box auth.info sshd[217]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 221, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[217]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 221, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[220]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 224, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 228, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 226, tty '': '-/bin/sh'
+Jan  1 00:01:21 Control_Box auth.err sshd[237]: error: Could not get shadow information for root
+Jan  1 00:01:23 Control_Box auth.info sshd[237]: Accepted password for root from 172.29.4.59 port 55384 ssh2
+Jan  1 00:01:24 Control_Box auth.info sshd[237]: Received disconnect from 172.29.4.59 port 55384:11: disconnected by user
+Jan  1 00:01:24 Control_Box auth.info sshd[237]: Disconnected from user root 172.29.4.59 port 55384
+Jan  1 00:01:50 Control_Box auth.err sshd[241]: error: Could not get shadow information for root
+Jan  1 00:01:51 Control_Box auth.info sshd[241]: Accepted password for root from 172.29.4.59 port 56012 ssh2
+Jan  1 00:01:51 Control_Box auth.info sshd[241]: Received disconnect from 172.29.4.59 port 56012:11: disconnected by user
+Jan  1 00:01:51 Control_Box auth.info sshd[241]: Disconnected from user root 172.29.4.59 port 56012
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 226, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[218]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[216]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 220, tty '': '-/bin/sh'
+Jan  1 00:02:44 Control_Box auth.err sshd[234]: error: Could not get shadow information for root
+Jan  1 00:02:46 Control_Box auth.info sshd[234]: Accepted password for root from 172.29.4.59 port 36278 ssh2
+Jan  1 00:02:46 Control_Box auth.info sshd[234]: Received disconnect from 172.29.4.59 port 36278:11: disconnected by user
+Jan  1 00:02:46 Control_Box auth.info sshd[234]: Disconnected from user root 172.29.4.59 port 36278
+Jan  1 00:03:00 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:03:00 Control_Box syslog.info syslogd exiting
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[218]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 222, tty '': '-/bin/sh'
+Jan  1 00:01:27 Control_Box auth.err sshd[231]: error: Could not get shadow information for root
+Jan  1 00:01:28 Control_Box auth.info sshd[231]: Accepted password for root from 172.29.4.59 port 41358 ssh2
+Jan  1 00:01:29 Control_Box auth.info sshd[231]: Received disconnect from 172.29.4.59 port 41358:11: disconnected by user
+Jan  1 00:01:29 Control_Box auth.info sshd[231]: Disconnected from user root 172.29.4.59 port 41358
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[224]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 228, tty '': '-/bin/sh'
+Jan  1 00:04:05 Control_Box auth.err sshd[248]: error: Could not get shadow information for root
+Jan  1 00:04:07 Control_Box auth.info sshd[248]: Accepted password for root from 172.29.4.59 port 35458 ssh2
+Jan  1 00:04:07 Control_Box auth.info sshd[248]: Received disconnect from 172.29.4.59 port 35458:11: disconnected by user
+Jan  1 00:04:07 Control_Box auth.info sshd[248]: Disconnected from user root 172.29.4.59 port 35458
+Jan  1 00:05:01 Control_Box auth.err sshd[257]: error: Could not get shadow information for root
+Jan  1 00:05:03 Control_Box auth.info sshd[257]: Accepted password for root from 172.29.4.59 port 35918 ssh2
+Jan  1 00:05:04 Control_Box auth.info sshd[257]: Received disconnect from 172.29.4.59 port 35918:11: disconnected by user
+Jan  1 00:05:04 Control_Box auth.info sshd[257]: Disconnected from user root 172.29.4.59 port 35918
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[220]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:07 Control_Box daemon.info : starting pid 224, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 216, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[238]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 215, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 208, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[229]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 218, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 204, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[223]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:22 Control_Box daemon.info : The system is going down NOW!
+Jan  1 00:00:22 Control_Box syslog.info syslogd exiting
+                                                                                                                                                                                                                                              Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 202, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 201, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[220]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 211, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[241]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:11 Control_Box daemon.info : starting pid 244, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[241]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:11 Control_Box daemon.info : starting pid 244, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[237]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:10 Control_Box daemon.info : starting pid 240, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[235]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:17 Control_Box daemon.info : starting pid 238, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 210, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[222]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 207, tty '': '-/bin/sh'
+Jan  1 00:00:05 Control_Box auth.info sshd[221]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:02 Control_Box daemon.info : starting pid 212, tty '': '-/bin/sh'
+Jan  1 00:00:06 Control_Box auth.info sshd[227]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[231]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:06 Control_Box daemon.info : starting pid 234, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[239]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:17 Control_Box daemon.info : starting pid 242, tty '': '-/bin/sh'
+Jan  1 00:00:02 Control_Box syslog.info syslogd started: BusyBox v1.35.0
+Jan  1 00:00:05 Control_Box auth.info sshd[231]: Server listening on 0.0.0.0 port 22.
+Jan  1 00:00:17 Control_Box daemon.info : starting pid 234, tty '': '-/bin/sh'

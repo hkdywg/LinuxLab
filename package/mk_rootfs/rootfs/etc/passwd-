@@ -1,0 +1,1 @@
+sshd:x:74:74:Privilege-separated SSH:/var/run/sshd:/sbin/nologin

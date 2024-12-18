@@ -1,0 +1,5 @@
+ACTION=="add", KERNEL=="sd[a-z]", SUBSYSTEMS=="usb", RUN+="/bin/mount /dev/%k /mnt/disk"
+ACTION=="add", KERNEL=="sd[a-z][0-9]", SUBSYSTEMS=="usb", RUN+="/bin/mount /dev/%k /mnt/disk"
+ACTION=="remove", KERNEL=="sd[a-z]", SUBSYSTEMS=="usb", RUN+="/bin/umount /mnt/disk"
+ACTION=="remove", KERNEL=="sd[a-z][0-9]", SUBSYSTEMS=="usb", RUN+="/bin/umount /mnt/disk"
+

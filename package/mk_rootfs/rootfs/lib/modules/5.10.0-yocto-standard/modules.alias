@@ -1,0 +1,8 @@
+# Aliases extracted from modules themselves.
+alias net-pf-10 ipv6
+alias platform:pvrsrvkm pvrsrvkm
+alias of:N*T*Crenesas,gsxC* pvrsrvkm
+alias of:N*T*Crenesas,gsx pvrsrvkm
+alias vsp2 vsp2
+alias of:N*T*Crenesas,vspm-vsp2C* vsp2
+alias of:N*T*Crenesas,vspm-vsp2 vsp2

@@ -1,0 +1,35 @@
+#############################################################################
+#
+# PURPOSE
+#   OMX Media Component Configuration File
+#
+# CAUTION
+#   Do not change the newline characters of this file.
+#
+# AUTHOR
+#   Renesas Electronics Corporation
+#
+#############################################################################
+#
+#  Copyright(C) 2013 Renesas Electronics Corporation. All Rights Reserved.
+#  RENESAS ELECTRONICS CONFIDENTIAL AND PROPRIETARY
+#  This program must be used solely for the purpose for which
+#  it was furnished by Renesas Electronics Corporation.
+#  No part of this program may be reproduced or disclosed to
+#  others, in any form, without the prior written permission
+#  of Renesas Electronics Corporation.
+#
+#############################################################################
+
+#############################################################################
+#  Macro Definitions
+
+$DLL_EXTENSION      = so
+
+#############################################################################
+#  Include Files
+
+include omxr_config_vdcmn.txt
+include omxr_config_vecmn.txt
+include omxr_config_audio.txt
+

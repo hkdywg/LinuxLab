@@ -1,0 +1,10 @@
+S:disk/by-id/mmc-BGSD3R_0x4dd85217
+S:disk/by-path/platform-ee160000.sd
+W:1
+I:10020843
+E:ID_NAME=BGSD3R
+E:ID_SERIAL=0x4dd85217
+E:ID_PATH=platform-ee160000.sd
+E:ID_PATH_TAG=platform-ee160000_sd
+E:ID_PART_TABLE_TYPE=dos
+G:systemd

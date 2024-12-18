@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=/usr/lib
+includedir=/usr/include
+
+Name: gbm
+Description: gbm library
+Requires.private: libudev
+Version: 10.3.0
+Libs: -L${libdir} -lgbm
+Libs.private: -ldl
+Cflags: -I${includedir}/gbm

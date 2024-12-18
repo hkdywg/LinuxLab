@@ -1,0 +1,94 @@
+#! /bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:
+runlevel=5
+prevlevel=N umask 022
+
+export PATH runlevel prevlevel
+
+trap ":" INT QUIT TSTP
+
+/bin/hostname -F /etc/hostname
+
+[ -e /proc/1 ] || /bin/mount -n -t proc none /proc
+[ -e /sys/class ] || /bin/mount -n -t sysfs none /sys
+[ -e /dev/tty ] || /bin/mount -t ramfs none /dev
+
+/sbin/mdev -s
+
+mkdir -p /dev/pts
+mkdir -p /dev/shm
+
+/bin/mount -n -t devpts none /dev/pts -o mode=0622
+/bin/mount -n -t tmpfs tmpfs /dev/shm
+
+mkdir -p /var/empty
+mkdir -p /var/log
+mkdir -p /var/log/boa
+mkdir -p /var/lock
+mkdir -p /var/run
+mkdir -p /var/tmp
+
+ln -sf /dev/null /dev/tty2
+ln -sf /dev/null /dev/tty3
+ln -sf /dev/null /dev/tty4
+
+#creat serial soft-link
+ln -sf /dev/ttySC1 /dev/mcu_soc_serial
+ln -sf /dev/ttySC2 /dev/cyber_project_serial
+
+#creat ram fs 
+/bin/mount tmpfs /tmp -t tmpfs
+
+#ethernet 0 config
+/etc/init.d/ifconfig-eth
+
+# OpenGLE drm pvr need udev
+/bin/udevd --daemon
+/bin/udevadm control --env=STARTUP=1
+
+syslogd
+
+/etc/init.d/pre_load_drv.sh
+
+echo 0 > /sys/class/graphics/fbcon/cursor_blink
+
+/usr/sbin/sshd &
+
+#mkdir /dev/dri/by-path
+#ln -sf /dev/dri/card1 /dev/dri/by-path/platform-fd000000.gsx-card
+#ln -sf /dev/dri/card0 /dev/dri/by-path/platform-feb00000.display-card
+#ln -sf /dev/dri/renderD128 /dev/dri/by-path/platform-fd000000.gsx-render
+#export qt enviroment
+#export QTEDIR=/opt/qt5.13.0-arm/
+#export LD_LIBRARY_PATH=/opt/qt5.13.0-arm/lib:$LD_LIBRARY_PATH
+#export QT_QPA_PLATFORM_PLUGIN_PATH=$QTEDIR/plugins
+#export QT_QPA_PLATFORM=linuxfb:fb=/dev/fb0
+#export QT_QPA_FONTDIR=$QTEDIR/fonts/ttf
+# reboot board ,opengl cannot executed, deleted this file
+if [ -e /run/DLCSRV.sock ]; then
+        rm  /run/DLCSRV.sock
+fi
+/home/root/debug.sh
+/HUD/Application/bin/mplayer -vo fbdev2 /HUD/Application/resource/2080_640.mp4
+cat /home/root/test_File > /dev/fb0
+
+exit
+# run my app in background
+cd /HUD/Application/bin
+#./dtcc &
+#./kanzi &
+cd ~/
+#./imr_sample & 
+
+if [ ! -e /mnt/disk ]; then
+        mkdir /mnt/disk
+fi
+sleep 5
+#/HUD/Application/bin/i2c_d_test 0x4c 0x1ea 0x05
+#/HUD/Application/bin/i2c_d_test 0x4c 0x1ce 0x86
+#/HUD/Application/bin/mplayer /HUD/Application/resource/white.mp4 -vo fbdev2
+#/HUD/Application/bin/mplayer /HUD/Application/resource/X01_PRO_UI_2/3.bmp -vo fbdev2
+/HUD/Application/bin/i2c_d_test 0x4c 0x1ea 0x05
+/HUD/Application/bin/i2c_d_test 0x4c 0x1ce 0x86
+#/HUD/Application/bin/mplayer /HUD/Application/resource/white.mp4 -vo fbdev2

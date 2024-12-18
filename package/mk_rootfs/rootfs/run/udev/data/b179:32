@@ -1,0 +1,6 @@
+S:disk/by-path/platform-ee160000.sd-boot0
+W:3
+I:10131857
+E:ID_PATH=platform-ee160000.sd
+E:ID_PATH_TAG=platform-ee160000_sd
+G:systemd

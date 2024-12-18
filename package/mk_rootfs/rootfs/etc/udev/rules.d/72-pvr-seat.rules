@@ -1,0 +1,8 @@
+############################################################################ ###
+# File 72-pvr-services.rules
+# Copyright Copyright (C) 2013-2016 Renesas Electronics Corporation
+# License Strictly Confidential.
+#### ###########################################################################
+# Rules for PowerVR device nodes
+SUBSYSTEM=="drm", DEVPATH=="/devices/platform/soc/fd000000.gsx/drm/*", TAG+="seat", TAG+="master-of-seat", ENV{ID_AUTOSEAT}="1", ENV{ID_SEAT}="seat1"
+

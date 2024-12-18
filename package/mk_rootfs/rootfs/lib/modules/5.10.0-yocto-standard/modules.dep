@@ -1,0 +1,10 @@
+kernel/net/ipv6/ipv6.ko:
+extra/vspm.ko:
+extra/pvrsrvkm.ko:
+extra/mmngr.ko:
+extra/vspm_if.ko: extra/vspm.ko
+extra/uvcs_drv.ko:
+extra/vsp2.ko: extra/vspm.ko
+extra/mmngrbuf.ko:
+extra/qos.ko:
+extra/uio_imr.ko:

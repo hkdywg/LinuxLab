@@ -1,0 +1,11 @@
+S:dri/by-path/platform-fd000000.gsx-card
+I:2508182
+E:ID_PATH=platform-fd000000.gsx
+E:ID_PATH_TAG=platform-fd000000_gsx
+E:ID_FOR_SEAT=drm-platform-fd000000_gsx
+E:ID_AUTOSEAT=1
+E:ID_SEAT=seat1
+G:uaccess
+G:seat1
+G:master-of-seat
+G:seat

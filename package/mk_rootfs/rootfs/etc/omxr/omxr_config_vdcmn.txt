@@ -1,0 +1,49 @@
+#############################################################################
+#
+# PURPOSE
+#   OMX Media Component Configuration File
+#
+# CAUTION
+#   Do not change the newline characters of this file.
+#
+# AUTHOR
+#   Renesas Electronics Corporation
+#
+#############################################################################
+#
+#  Copyright(C) 2013 Renesas Electronics Corporation. All Rights Reserved.
+#  RENESAS ELECTRONICS CONFIDENTIAL AND PROPRIETARY
+#  This program must be used solely for the purpose for which
+#  it was furnished by Renesas Electronics Corporation.
+#  No part of this program may be reproduced or disclosed to
+#  others, in any form, without the prior written permission
+#  of Renesas Electronics Corporation.
+#
+#############################################################################
+
+#############################################################################
+# Video Decoder Common Configuration
+
+$V_DEC_STREAM_BUFF_COUNT_DEFAULT  = 2
+$V_DEC_STREAM_BUFF_SIZE           = 1572864
+$V_DEC_STREAM_BUFF_SIZE_4K        = 6291456
+$V_DEC_PICTURE_BUFF_COUNT_DEFAULT = 3
+$V_DEC_PICTURE_BUFF_SIZE          = 38016
+$V_DEC_PICTURE_BUFF_SIZE_4K       = 38016
+
+#############################################################################
+# Codec Specific Configuration
+
+include omxr_config_h264d.txt
+include omxr_config_m4vd.txt
+include omxr_config_vc1d.txt
+include omxr_config_m2vd.txt
+include omxr_config_h263d.txt
+include omxr_config_divxd.txt
+include omxr_config_rlvd.txt
+include omxr_config_soh263d.txt
+include omxr_config_vp6d.txt
+include omxr_config_vp8d.txt
+include omxr_config_h265d.txt
+include omxr_config_vp9d.txt
+

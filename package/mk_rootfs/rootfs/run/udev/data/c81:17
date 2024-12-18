@@ -1,0 +1,7 @@
+S:v4l/by-path/platform-fe9a0000.vsp-video-index1
+I:2769972
+E:ID_PATH=platform-fe9a0000.vsp
+E:ID_PATH_TAG=platform-fe9a0000_vsp
+E:ID_FOR_SEAT=video4linux-platform-fe9a0000_vsp
+G:uaccess
+G:seat

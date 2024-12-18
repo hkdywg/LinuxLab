@@ -1,0 +1,80 @@
+#! /bin/sh
+ 
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:
+ 
+runlevel=S
+ 
+prevlevel=N
+ 
+umask 022
+ 
+export PATH runlevel prevlevel
+ 
+ 
+trap ":" INT QUIT TSTP
+ 
+/bin/hostname -F /etc/hostname
+ 
+
+ 
+[ -e /proc/1 ] || /bin/mount -n -t proc none /proc
+ 
+[ -e /sys/class ] || /bin/mount -n -t sysfs none /sys
+ 
+[ -e /dev/tty ] || /bin/mount -t ramfs none /dev
+
+
+ 
+#echo /sbin/mdev > /proc/sys/kernel/hotplug
+ 
+/sbin/mdev -s
+
+#mkdir -p /sys/temp 
+mkdir -p /dev/pts
+ 
+mkdir -p /dev/shm
+ 
+/bin/mount -n -t devpts none /dev/pts -o mode=0622
+ 
+/bin/mount -n -t tmpfs tmpfs /dev/shm
+
+ 
+mkdir -p /var/empty
+ 
+mkdir -p /var/log
+ 
+mkdir -p /var/log/boa
+ 
+mkdir -p /var/lock
+ 
+mkdir -p /var/run
+
+mkdir -p /var/tmp
+ 
+ln -sf /dev/null /dev/tty2
+ln -sf /dev/null /dev/tty3
+ln -sf /dev/null /dev/tty4
+#
+#/bin/mount -t tmpfs tmpfs/dev
+# OpenGLE drm pvr need udev 
+#/bin/udevd --daemon
+#/bin/udevadm control --env=STARTUP=1
+
+
+ 
+
+syslogd
+
+
+
+/etc/init.d/pre_load_drv.sh
+
+cd ~/
+mkdir /dev/dri/by-path
+ln -sf /dev/dri/card1 /dev/dri/by-path/platform-fd000000.gsx-card
+ln -sf /dev/dri/card0 /dev/dri/by-path/platform-feb00000.display-card
+ln -sf /dev/dri/renderD128 /dev/dri/by-path/platform-fd000000.gsx-render
+#./imr_sample &
+#mkdir /mnt/disk
+
+

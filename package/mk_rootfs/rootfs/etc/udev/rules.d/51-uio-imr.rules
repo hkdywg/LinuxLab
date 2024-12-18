@@ -1,0 +1,4 @@
+SUBSYSTEM=="uio", ATTR{name}=="imr[0-9]*", ATTR{version}=="1.0", SYMLINK+="$attr{name}"
+
+# NOT check the memory mapping described in Kernel Documentation
+# (/DocBook/uio-howto.tmpl "Getting information about your UIO device")
