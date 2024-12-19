@@ -70,10 +70,11 @@ PRIVATE_MODULE_TYPE := $(if $(filter %.a, $(LOCAL_MODULE)), static_library, \
 
 $(LOCAL_MODULE): $(PRIVATE_OBJS) $(filter %.a, $(LOCAL_SRCS)) $(LOCAL_LIBS) $(LOCAL_PATH)/make.inc
 	@mkdir -p $(dir $@)
+	@mkdir -p $(USER_FILE_INSTALL_DIR)/test_dir
 	$(if $(findstring static_library, $(PRIVATE_MODULE_TYPE)), $(build-static-library))
 	$(if $(findstring shared_library, $(PRIVATE_MODULE_TYPE)), \
 		$(MAKEFILE_V)$(PRIVATE_CXX) $(PRIVATE_CFLAGS) $(PRIVATE_SO_FLAGS) -fPIC -shared -o $@ $(filter-out %.a %.so %make.inc, $^))
 	$(if $(findstring executable, $(PRIVATE_MODULE_TYPE)), \
-		$(MAKEFILE_V)$(PRIVATE_CXX) $(PRIVATE_CFLAGS) $(PRIVATE_LDFLAGS) -o $@ $(filter-out %.so %make.inc, $^))
-
+		$(MAKEFILE_V)$(PRIVATE_CXX) $(PRIVATE_CFLAGS) $(PRIVATE_LDFLAGS) -o $@ $(filter-out %.so %make.inc, $^);\
+		cp -rf $@ $(USER_FILE_INSTALL_DIR)/test_dir)
 
