@@ -18,6 +18,8 @@
 #include <linux/sched/task.h>
 #include <linux/sched/signal.h>
 #include <linux/kallsyms.h>
+#include <linux/tracepoint.h>
+#include <linux/stacktrace.h>
 
 #define FSHIFT 			11 				/* nr of bits of precision */
 #define FIXED_1 		(1<<FSHIFT)		/* 1.0 as fixed-point */
@@ -35,15 +37,40 @@ static void print_all_task_stack(void)
 	unsigned long backtrace[BACKTRACE_DEPTH];
 	struct stack_trace trace;
 
-	memset(&trace, 0, sizeof(trace));
-	memset(backtrace, 0, BACKTRACE_DEPTH * sizeof(unsigned long));
-	trace.max_entries = BACKTRACE_DEPTH;
-	trace.entries = backtrace;
-
 	printk("\tLoad: %lu.%02lu, %lu.%02lu, %lu.%02lu\n",
 		   LOAD_INT(ptr_avenrun[0]), LOAD_FRAC(ptr_avenrun[0]),
 		   LOAD_INT(ptr_avenrun[1]), LOAD_FRAC(ptr_avenrun[1]),
 		   LOAD_INT(ptr_avenrun[2]), LOAD_FRAC(ptr_avenrun[2]));
+
+	rcu_read_lock();
+
+	printk("dump runing task.\n");
+	do_each_thread(g, p) {
+		if(p->state == TASK_RUNNING) {
+			printk("runing task, comm: %s, pid %d\n", p->comm, p->pid);
+			memset(&trace, 0, sizeof(trace));
+			memset(backtrace, 0, BACKTRACE_DEPTH * sizeof(unsigned long));
+			trace.max_entries = BACKTRACE_DEPTH;
+			trace.entries = backtrace;
+			save_stack_trace_tsk(p, &trace);
+			stack_trace_print(backtrace, trace.nr_entries, 0);
+		}
+	} while_each_thread(g, p);
+
+	printk("dump uninterrupted task.\n");
+	do_each_thread(g, p) {
+		if(p->state == TASK_UNINTERRUPTIBLE) {
+			printk("runing task, comm: %s, pid %d\n", p->comm, p->pid);
+			memset(&trace, 0, sizeof(trace));
+			memset(backtrace, 0, BACKTRACE_DEPTH * sizeof(unsigned long));
+			trace.max_entries = BACKTRACE_DEPTH;
+			trace.entries = backtrace;
+			save_stack_trace_tsk(p, &trace);
+			stack_trace_print(backtrace, trace.nr_entries, 0);
+		}
+	} while_each_thread(g, p);
+
+	rcu_read_unlock();
 }
 
 static void check_load(void)
