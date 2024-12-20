@@ -78,7 +78,8 @@ static int kernel_test_thread(void *arg)
 	uint8_t *buffer;
 	struct thread_info *info;
     unsigned long stack;
-	uint32_t nop_time = 0xFFFFFFFF;
+	unsigned long start = jiffies;
+	unsigned long end = start + msecs_to_jiffies(5000);
 
 	/* obtain current thread_info address */
 	info = current_thread_info();
@@ -94,8 +95,10 @@ static int kernel_test_thread(void *arg)
 	while(1) {
 		buffer = kzalloc(4 * 1024, GFP_KERNEL);
 		kfree(buffer);
-		while(nop_time--);
-		nop_time = 0xFFFFFFFF;
+
+		while (time_before(jiffies, end)) {
+			cpu_relax(); // 提示编译器不要优化掉这个循环
+		}
 	}
 		
 	return 0;
@@ -138,7 +141,7 @@ static int __init load_monitor_init(void)
 		return -EINVAL;
 	}
 
-	start_timer();
+	//start_timer();
 
 	//kthread_run(kernel_test_thread, NULL, "kernel_test_thread");
 	test_task = kthread_create(kernel_test_thread, NULL, "test_thread");
