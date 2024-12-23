@@ -98,6 +98,7 @@ static int kernel_test_thread(void *arg)
 				else
 					--mutex_counter;
 				mutex_unlock(muster->mutex);
+				msleep(100);
 				break;
 			case USE_RWLOCK_MECH:
 				write_lock(muster->rw_lock);
