@@ -10,7 +10,7 @@
 ##
 
 
-SUB_DTS_TOPDIR := $(srctree)/package/device_driver
+SUB_DTS_TOPDIR := $(srctree)/package
 DTB_INSTALL_DIR := $(srctree)/output/device_tree
 newline := $(shell echo)
 
@@ -21,6 +21,7 @@ TOP_SOURCE_DTS := $(srctree)/device_tree/virtual_device.dts
 
 # 自动搜索所有子目录下的 .dts 文件
 DTS_FILES = $(shell find $(SUB_DTS_TOPDIR) -type f -name "*.dts" | tr ' ' '\n')
+$(warning $(DTS_FILES))
 
 # 将所有 .dts 文件包含到主设备树文件中
 INCLUDE_DTS = $(foreach dts_file, $(DTS_FILES), \#include "$(dts_file)")
