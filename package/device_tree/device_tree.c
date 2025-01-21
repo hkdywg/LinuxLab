@@ -39,6 +39,7 @@ static int dts_demo_probe(struct platform_device *pdev)
 	void __iomem *base[RESOURCE_REG_NUM];
 	struct resource iomem[RESOURCE_REG_NUM];
 	struct of_phandle_args args;
+	struct property *node_prop;
 	const phandle *handle;
 	const __be32 *prop;
 	const u32 *ret_p;
@@ -53,36 +54,40 @@ static int dts_demo_probe(struct platform_device *pdev)
 
 	/* count child number for current device node */
 	count = of_get_child_count(np);
-	printk("%s has %d child node\n", np->name, count);
+	dev_info(dev, "%s has %d child node\n", np->name, count);
 
-	printk("%s child: \n", np->name);
+	dev_info(dev, "%s child: \n", np->name);
 	for_each_child_of_node(np, child_node)
-		printk("	%s \n", child_node->name);
+		dev_info(dev, "	%s \n", child_node->name);
 
-	printk("%s available child:\n", np->name);
+	dev_info(dev, "%s available child:\n", np->name);
 	for_each_available_child_of_node(np, child_node)
-		printk("	%s\n", child_node->name);
+		dev_info(dev, "	%s\n", child_node->name);
 
 	/* find device node via compatible property */
 	for_each_compatible_node(node, NULL, "LinuxLab, dts_demo")
-		printk("Found %s by compatible property\n", node->full_name);
+		dev_info(dev, "Found %s by compatible property\n", node->full_name);
 
 	/* find all device node via device node id */
 	for_each_matching_node(node, dts_demo_of_match)
-		printk("matching %s by match table\n", node->name);
+		dev_info(dev, "matching %s by match table\n", node->name);
 
 	/* find device node via property name */
 	for_each_node_with_property(node,"node-name")
-		printk("found %s by property\n", node->name);
+		dev_info(dev, "found %s by property\n", node->name);
 
-	for(i = 0; i < RESOURCE_REG_NUM; i++) {
-		of_address_to_resource(np, i, &iomem[i]);
-		base[i] = devm_ioremap_resource(dev, &iomem[i]);
-		if(IS_ERR(base[i])) {
-			dev_err(dev, "%d could not IO remap\n", i);
-		}else 
-			printk("LinuxLab: %#lx - %#lx\n", (unsigned long)iomem[i].start,
-			   							  (unsigned long)iomem[i].end);
+	node_prop = of_find_property(np, "reg", NULL);
+	if(node_prop) {
+		/* get iomap resource */
+		for(i = 0; i < RESOURCE_REG_NUM; i++) {
+			of_address_to_resource(np, i, &iomem[i]);
+			base[i] = devm_ioremap_resource(dev, &iomem[i]);
+			if(IS_ERR(base[i])) {
+				dev_err(dev, "%d could not IO remap\n", i);
+			}else 
+				dev_info(dev, "LinuxLab: %#lx - %#lx\n", (unsigned long)iomem[i].start,
+											  (unsigned long)iomem[i].end);
+		}
 	}
 	
 	/* read first phandle argument */
