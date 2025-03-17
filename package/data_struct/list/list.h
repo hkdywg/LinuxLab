@@ -60,6 +60,30 @@ typedef struct list_node list_t;
 #define list_entry(ptr, type, member) \
 	container_of(ptr, type, member)
 
+/*
+ * list_first_entry
+ * brief 
+ * 		get the struct for the list first entry
+ * 	param
+ * 		ptr: the struct list head pointer
+ * 		type: the type of the struct this is embedded in
+ * 		member: the name of the list_struct within the struct
+ */
+#define list_first_entry(ptr, type, member) \
+	container_of(ptr->next, type, member)
+
+/*
+ * list_last_entry
+ * brief 
+ * 		get the struct for the list last entry
+ * 	param
+ * 		ptr: the struct list head pointer
+ * 		type: the type of the struct this is embedded in
+ * 		member: the name of the list_struct within the struct
+ */
+#define list_last_entry(ptr, type, member) \
+	container_of(ptr->prev, type, member)
+
 
 /*
  * list_for_each
@@ -304,10 +328,134 @@ static inline void list_rotate_left(list_t *head)
  */
 static inline void list_rotate_right(list_t *head)
 {
-	list_t *entry;
-	list_for_each(entry, head) {
-		list_move_tail(entry, head);
+	list_t *first;
+	if(!list_empty(head)) {
+		first = head->next;
+		list_move(first, head);
 	}
+}
+
+/*
+ * list_is_singular
+ * breif
+ * 		test the list is just include one node
+ * param
+ * 		head: list to be test
+ */
+static inline bool list_is_singular(list_t *head)
+{
+	return !list_empty(head) && (head->next == head->prev);
+}
+
+/*
+ * list_is_head
+ * brief
+ * 		test the entry is head
+ * param
+ * 		head: list head
+ * 		entry: list entry to be test
+ */
+static inline bool list_is_head(list_t *head, list_t *entry)
+{
+	return head == entry;
+}
+
+/*
+ *	__list_cut_position
+ *	brief
+ *		cut list from the entry position to two list(new list include entry)
+ *	param
+ *		list: new list head
+ *		head: origin list head
+ *		entry: the specifical list node to cut
+ */
+static inline void __list_cut_position(list_t *list, list_t *head, list_t *entry)
+{
+	list_t *new_first = entry->next;
+	list->next = head->next;
+	head->next->prev = list;
+	list->prev = entry;
+	entry->next = list;
+
+	head->next = new_first;
+	new_first->prev = head;
+}
+
+/*
+ *	list_cut_position
+ *	brief
+ *		cut list from the entry position to two list(new list include entry)
+ *	param
+ *		list: new list head
+ *		head: origin list head
+ *		entry: the specifical list node to cut
+ */
+static inline void list_cut_position(list_t *list, list_t *head, list_t *entry)
+{
+	if(list_empty(head))
+		return;
+	if(list_is_singular(head) && !(list_is_head(head, entry) && (entry != head->next)))
+		return;
+	if(list_is_head(head, entry))
+		INIT_LIST_HEAD(list);
+	else
+		__list_cut_position(list, head, entry);
+}
+
+/*
+ * list_cut_befor
+ * brief
+ * 		cut list form the entry node to two list(new list not include entry)
+ *	param
+ *		list: new list head
+ *		head: origin list head
+ *		entry: the specifical list node to cut
+ */
+static inline void list_cut_befor(list_t *list, list_t *head, list_t *entry)
+{
+	if(head->next == entry) {
+		INIT_LIST_HEAD(list);
+		return;
+	}
+	list->next = head->next;
+	head->next->prev = list;
+	list->prev = entry->prev;
+	entry->prev->next = list;
+
+	head->next = entry;
+	entry->prev = head;
+}
+
+
+/*
+ * __list_splice
+ * brief
+ * 		two list splice
+ */
+static inline void __list_splice(const list_t *list, list_t *prev, list_t *next)
+{
+	list_t *first = list->next;
+	list_t *last = list->prev;
+
+	last->next = next;
+	next->prev = last;
+
+	first->prev = prev;
+	prev->next = first;
+}
+
+/*
+ * list_splice
+ * brief
+ *		two list splice 		
+ * param
+ * 		list: new list to be insert
+ * 		head: list head
+ */
+static inline void list_splice(const list_t *list, list_t *head)
+{
+	if(!list_empty(list))
+		__list_splice(list, head, head->next);
 }
 
 

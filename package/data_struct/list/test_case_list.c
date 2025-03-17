@@ -125,22 +125,60 @@ void test_list_rotate()
 		struct task_info *task = list_entry(entry, struct task_info, tlist); 	
 		printf("task name: %s\n", task->name);
 	}
-#if 0
 	/* test case of rotate */
 	list_rotate_right(&__task_list);
 	list_for_each(entry, &__task_list) {
 		struct task_info *task = list_entry(entry, struct task_info, tlist); 	
 		printf("task name: %s\n", task->name);
 	}
-#endif
 	printf("================ end test case of list rotate operation ================ \n\n");
+}
+
+void test_list_cut()
+{
+	printf("================ sart test case of list cut operation ================ \n");
+
+	LIST_HEAD(new_list);
+	for(int i = 0; i < sizeof(user_task)/sizeof(struct task_info); i++)
+		list_add_tail(&__task_list, &user_task[i].tlist);
+
+	list_for_each(entry, &__task_list) {
+		struct task_info *task = list_entry(entry, struct task_info, tlist); 	
+		printf("origin task name: %s\n", task->name);
+	}
+	printf("---------------------------------\n");
+	/* test case of cut */
+	list_for_each(entry, &__task_list) {
+		struct task_info *task = list_entry(entry, struct task_info, tlist); 	
+		if(strcmp(task->name, "file_system_manager") == 0) {
+			list_cut_befor(&new_list, &__task_list, entry);
+			break;
+		}
+	}
+	list_for_each(entry, &__task_list) {
+		struct task_info *task = list_entry(entry, struct task_info, tlist); 	
+		printf("new task list_1 name: %s\n", task->name);
+	}
+	printf("---------------------------------\n");
+	list_for_each(entry, &new_list) {
+		struct task_info *task = list_entry(entry, struct task_info, tlist); 	
+		printf("new task list_2 name: %s\n", task->name);
+	}
+	printf("---------------------------------\n");
+	list_splice(&new_list, &__task_list);
+	list_for_each(entry, &__task_list) {
+		struct task_info *task = list_entry(entry, struct task_info, tlist); 	
+		printf("splice task list name: %s\n", task->name);
+	}
+
+	printf("================ end test case of list cut operation ================ \n\n");
 }
 
 int main(int argc, char *argv[])
 {
 
 	int opt;
-    while ((opt = getopt(argc, argv, "adrl")) != -1) {
+    while ((opt = getopt(argc, argv, "adrlc")) != -1) {
         switch (opt) {
             case 'a':
 				test_list_add();
@@ -153,6 +191,9 @@ int main(int argc, char *argv[])
                 break;
             case 'l':
 				test_list_rotate();
+                break;
+            case 'c':
+				test_list_cut();
                 break;
             default:
                 printf("未知选项\n");
