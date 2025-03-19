@@ -8,4 +8,6 @@
 ##  it under the terms of the GNU General Public License version 2 as
 ##  published by the Free Software Foundation.
 ##
-include $(call all-subdir-makefiles)
+
+LOCAL_PATH	:= $(call my-dir)
+include $(LOCAL_PATH)/Makefile
