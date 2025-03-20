@@ -83,7 +83,7 @@ static const struct address_space_operations ramfs_aops = {
 	.readpage = simple_readpage,
 	.write_begin = simple_write_begin,
 	.write_end =  simple_write_end,
-//	.set_page_dirty = __set_page_dirty_no_writeback,
+	.set_page_dirty = noop_set_page_dirty,
 };
 
 static const struct inode_operations ramfs_dir_inode_operation = {
@@ -135,7 +135,7 @@ static struct inode *ramfs_get_inode(struct super_block *sb,
 
 static int ramfs_fill_super(struct super_block *sb, void *data,int silent)
 {
-	struct inode *inode;
+	struct inode *root_inode;
 
 	sb->s_maxbytes 		 = MAX_LFS_FILESIZE;	/* max file size */
 	sb->s_blocksize_bits = PAGE_SHIFT;
@@ -143,8 +143,8 @@ static int ramfs_fill_super(struct super_block *sb, void *data,int silent)
 	sb->s_magic 		 = TMP_RAMFS_MAGIC;
 	sb->s_time_gran 	 = 1;
 
-	inode = ramfs_get_inode(sb, NULL, S_IFDIR, 0);
-	sb->s_root = d_make_root(inode);
+	root_inode = ramfs_get_inode(sb, NULL, S_IFDIR, 0);
+	sb->s_root = d_make_root(root_inode);
 	if(!sb->s_root)
 		return -ENOMEM;
 
