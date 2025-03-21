@@ -41,7 +41,7 @@ VPATH := $(srctree)
 
 export srctree objtree VPATH
 
--include include/config/auto.conf
+#-include include/config/auto.conf
 
 KCONFIG_CONFIG ?= .config
 export KCONFIG_CONFIG
@@ -210,5 +210,4 @@ PHONY += help
 help:
 	@echo "srctree is $(srctree)"
 	@echo "CONFIG_SHELL is $(CONFIG_SHELL)"
-
 
