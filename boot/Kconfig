@@ -66,6 +66,9 @@ config UBOOT_CROSS_GNUARM64
     bool "aarch64-linux-gnu"
     select TOOL_ARM_GNUARM64
 
+config UBOOT_NO_CROSS
+    bool ""
+
 endchoice
     
 config UBOOT_CROSS_COMPILE
@@ -73,6 +76,7 @@ config UBOOT_CROSS_COMPILE
     default "arm-linux-gnueabi" if UBOOT_CROSS_GNUEABI
     default "arm-linux-gnueabihf" if UBOOT_CROSS_GNUEABIHF
     default "aarch64-linux-gnu" if UBOOT_CROSS_GNUARM64 
+    default "" if UBOOT_NO_CROSS
 
 config UBOOT_DEFCONFIG
     string "uboot default defconfig"

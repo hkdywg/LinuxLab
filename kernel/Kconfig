@@ -75,6 +75,9 @@ config LINUX_KERNEL_CROSS_COMPILE_GNUEABIHF
 config LINUX_KERNEL_CROSS_COMPILE_AARCH64
     bool "aarch64-linux-gnu"
 
+config LINUX_KERNEL_NO_CROSS_COMPILE
+    bool ""
+
 endchoice
 
 config LINUX_KERNEL_CROSS_COMPILE
@@ -82,6 +85,7 @@ config LINUX_KERNEL_CROSS_COMPILE
     default "arm-linux-gnueabi" if LINUX_KERNEL_CROSS_COMPILE_GNUEABI
     default "arm-linux-gnueabihf" if LINUX_KERNEL_CROSS_COMPILE_GNUEABIHF
     default "aarch64-linux-gnu" if LINUX_KERNEL_CROSS_COMPILE_AARCH64
+    default "" if LINUX_KERNEL_NO_CROSS_COMPILE
 
 config KERNEL_DEFCONFIG
     string "kernel default defconfig"
