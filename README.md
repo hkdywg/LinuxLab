@@ -54,7 +54,7 @@ The next step, you need to build LinuxLab with common Kbuild syntax.The Kbuild w
 So utilise command on your terminal:
 
 ```
-cd */LinuxLab
+cd LinuxLab
 make defconfig
 make
 cd workspace
