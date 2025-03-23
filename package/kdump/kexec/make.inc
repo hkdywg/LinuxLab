@@ -16,7 +16,7 @@ KEXEC_GITHUB_SITE		:= https://github.com/horms/kexec-tools.git
 KEXEC_WORKSPACE 		:= $(srctree)/output/package/kdump/kexec
 KEXEC_BUILD_OUTPATH	    := $(KEXEC_WORKSPACE)/build_out/
 
-SUB_TARGET 				+= kexec kexec-download kexec-config kexec-pack kexec-build
+#SUB_TARGET 				+= kexec kexec-download kexec-config kexec-pack kexec-build
 
 # This is a -R option in MAKEFLAGS in the top-level Makefile
 # The -R option affects the use of COMPILE.c variables in kexec compile
