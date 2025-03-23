@@ -193,7 +193,7 @@ include package/Makefile
 endif
 
 # The all:target is the default when no target is given on the command line
-all: $(SUB_TARGET)
+all: $(filter-out rootfs-mk, $(SUB_TARGET)) rootfs-mk
 	@[ -d $(srctree)/dl ] || mkdir -p $(srctree)/dl
 	@echo "build default target: $(SUB_TARGET)"
 
