@@ -21,7 +21,6 @@ TOP_SOURCE_DTS := $(srctree)/device_tree/virtual_device.dts
 
 # 自动搜索所有子目录下的 .dts 文件
 DTS_FILES = $(shell find $(SUB_DTS_TOPDIR) -type f -name "*.dts" | tr ' ' '\n')
-$(warning $(DTS_FILES))
 
 # 将所有 .dts 文件包含到主设备树文件中
 INCLUDE_DTS = $(foreach dts_file, $(DTS_FILES), \#include "$(dts_file)")
@@ -41,6 +40,11 @@ DTB_D_PRE_TMP := $(patsubst %.dts,%.dtb.d.pre.tmp,$(MAIN_DTS))
 DTB_D_DTC_TMP := $(patsubst %.dts,%.dtb.d.dtc.tmp,$(MAIN_DTS))
 DTB_D_TMP := $(patsubst %.dts,%.dtb.dts.tmp,$(MAIN_DTS))
 DTB_TARGET := $(shell basename $(patsubst %.dts,%.dtb,$(TOP_SOURCE_DTS)))
+
+$(MAIN_DTS): $(DTB_INSTALL_DIR)
+
+$(DTB_INSTALL_DIR):
+	@mkdir -p $@
 
 # 生成最终的需要编译的设备树源文件（build_main.dts）
 $(MAIN_DTS): $(DTS_FILES)
