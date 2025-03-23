@@ -22,7 +22,6 @@ ARM_GNUEABI_GCC_SITE 	:= https://releases.linaro.org/components/toolchain/binari
 ARM_GNUEABI_GCC_GITHUB 	:=
 ifeq ($(CONFIG_TOOL_ARM_GNUEABI), y)
 	SUB_TARGET += arm-linux-gnueabi_download
-$(warning $(CONFIG_TOOL_ARM_GNUEABI))
 endif
 
 # arm-linux-gnueabihf for ARM32/Uboot
