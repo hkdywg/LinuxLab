@@ -9,7 +9,7 @@
 ##  published by the Free Software Foundation.
 ##
 
-SUB_TARGET += lockdep-build
+# SUB_TARGET += lockdep-build
 
 # This is a -R option in MAKEFLAGS in the top-level Makefile
 # The -R option affects the use of COMPILE.c variables in kexec compile
