@@ -17,13 +17,63 @@
 #include <linux/printk.h>
 #include <linux/rcupdate.h>
 #include <linux/kdev_t.h>
+#include <linux/time.h>
 
-static int print_vfs_super_block(void)
+void print_time_human_readable(struct timespec64 ts)
 {
-    struct super_block *sb;
+    struct tm result;
+    time64_to_tm(ts.tv_sec, 0, &result);
+
+    printk(KERN_INFO "Time: %04ld-%02d-%02d %02d:%02d:%02d UTC\n",
+           result.tm_year + 1900, result.tm_mon + 1, result.tm_mday,
+           result.tm_hour, result.tm_min, result.tm_sec);
+}
+
+static int print_vfs_super_block(struct super_block *sb)
+{
+    pr_info("------------super block information-------------------------\n");
+    pr_info("sb->s_blocksize_bits = %d\n", sb->s_blocksize_bits);
+    pr_info("sb->s_blocksize = %d\n", sb->s_blocksize);
+    pr_info("sb->s_maxbytes = %x\n", sb->s_maxbytes);
+    pr_info("sb->s_magic = %x\n", sb->s_magic);
+    pr_info("sb->s_root = %s\n", sb->s_root->d_name.name);
+    pr_info("sb->s_count = %d\n", sb->s_count);
+    if(sb->s_bdev)
+        pr_info("sb->s_bdev = major(%d) minor(%d)\n", MAJOR(sb->s_bdev->bd_dev), MINOR(sb->s_bdev->bd_dev));
+    pr_info("sb->s_type->name = %s", sb->s_type->name);
+    pr_info("bs->s_type->fs_flags = %d", sb->s_type->fs_flags);
+
+    
+    return 0;
+}
+
+static int  print_vfs_info(struct inode *inode)
+{
+    pr_info("------------inode information-------------------------\n");
+    pr_info("inode->i_mode = %x\n", inode->i_mode);
+    pr_info("inode->i_opflags = %d\n", inode->i_opflags);
+    pr_info("inode->i_uid = %x\n", inode->i_uid);
+    pr_info("inode->i_gid = %x\n", inode->i_gid);
+    pr_info("inode->i_ino = %d\n", inode->i_ino);
+    pr_info("inode->i_size = %d\n", inode->i_size);
+    print_time_human_readable(inode->i_atime);
+    print_time_human_readable(inode->i_mtime);
+    print_time_human_readable(inode->i_ctime);
+    
+    return 0;
+}
+
+static int __init print_fsinfo_init(void)
+{
     struct file_system_type *fs;
     struct fdtable *fdt;
     struct file **fd;
+    struct file *file = filp_open("/etc/init.d/rcS", O_RDONLY, 0);
+    struct inode *inode = file->f_path.dentry->d_inode;
+    struct super_block *sb = file->f_path.dentry->d_sb;
+
+    pr_info("file parent dentry name: %s\n", file->f_path.dentry->d_parent->d_name.name);
+    print_vfs_info(inode);
 
     fs = get_fs_type("ext4");
     if(!fs) {
@@ -42,56 +92,7 @@ static int print_vfs_super_block(void)
     pr_info("fd: %d, file name is %s\n", 2, fd[2]->f_path.dentry->d_name.name);
     rcu_read_unlock();
 
-    //sb = fd[0]->f_path.mnt->mnt_sb;
-    sb = fd[0]->f_path.dentry->d_sb;
-    pr_info("------------super block information-------------------------\n");
-    pr_info("sb->s_blocksize_bits = %d\n", sb->s_blocksize_bits);
-    pr_info("sb->s_blocksize = %d\n", sb->s_blocksize);
-    pr_info("sb->s_maxbytes = %x\n", sb->s_maxbytes);
-    pr_info("sb->s_magic = %x\n", sb->s_magic);
-    pr_info("sb->s_root = %s\n", sb->s_root->d_name.name);
-    pr_info("sb->s_count = %d\n", sb->s_count);
-    if(sb->s_bdev)
-        pr_info("sb->s_bdev = major(%d) minor(%d)\n", MAJOR(sb->s_bdev->bd_dev), MINOR(sb->s_bdev->bd_dev));
-
-    struct file *file = filp_open("/etc/init.d/rcS", O_RDONLY, 0);
-    sb = file->f_path.dentry->d_sb;
-    pr_info("------------super block information-------------------------\n");
-    pr_info("sb->s_blocksize_bits = %d\n", sb->s_blocksize_bits);
-    pr_info("sb->s_blocksize = %d\n", sb->s_blocksize);
-    pr_info("sb->s_maxbytes = %x\n", sb->s_maxbytes);
-    pr_info("sb->s_magic = %x\n", sb->s_magic);
-    pr_info("sb->s_root = %s\n", sb->s_root->d_name.name);
-    pr_info("sb->s_count = %d\n", sb->s_count);
-    if(sb->s_bdev)
-        pr_info("sb->s_bdev = major(%d) minor(%d)\n", MAJOR(sb->s_bdev->bd_dev), MINOR(sb->s_bdev->bd_dev));
-    pr_info("sb->s_type->name = %s", sb->s_type->name);
-    pr_info("bs->s_type->fs_flags = %d", sb->s_type->fs_flags);
-
-    
-    return 0;
-}
-
-static int  print_vfs_info(void)
-{
-    struct file *file = filp_open("/etc/init.d/rcS", O_RDONLY, 0);
-    struct inode *inode = file->f_path.dentry->d_inode;
-    pr_info("------------inode information-------------------------\n");
-    pr_info("file parent dentry name: %s\n", file->f_path.dentry->d_parent->d_name.name);
-    pr_info("inode->i_mode = %x\n", inode->i_mode);
-    pr_info("inode->i_opflags = %d\n", inode->i_opflags);
-    pr_info("inode->i_uid = %x\n", inode->i_uid);
-    pr_info("inode->i_gid = %x\n", inode->i_gid);
-    pr_info("inode->i_ino = %d\n", inode->i_ino);
-    pr_info("inode->i_size = %d\n", inode->i_size);
-    
-    return 0;
-}
-
-static int __init print_fsinfo_init(void)
-{
-    print_vfs_super_block();
-    print_vfs_info();
+    print_vfs_super_block(sb);
     return 0;
 }
 
