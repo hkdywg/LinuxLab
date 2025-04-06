@@ -18,6 +18,8 @@
 #include <linux/rcupdate.h>
 #include <linux/kdev_t.h>
 #include <linux/time.h>
+#include <linux/kallsyms.h>
+#include <linux/statfs.h>
 
 void print_time_human_readable(struct timespec64 ts)
 {
@@ -33,9 +35,9 @@ static int print_vfs_super_block(struct super_block *sb)
 {
     pr_info("------------super block information-------------------------\n");
     pr_info("sb->s_blocksize_bits = %d\n", sb->s_blocksize_bits);
-    pr_info("sb->s_blocksize = %d\n", sb->s_blocksize);
-    pr_info("sb->s_maxbytes = %x\n", sb->s_maxbytes);
-    pr_info("sb->s_magic = %x\n", sb->s_magic);
+    pr_info("sb->s_blocksize = %ld\n", sb->s_blocksize);
+    pr_info("sb->s_maxbytes = %lld\n", sb->s_maxbytes);
+    pr_info("sb->s_magic = %lx\n", sb->s_magic);
     pr_info("sb->s_root = %s\n", sb->s_root->d_name.name);
     pr_info("sb->s_count = %d\n", sb->s_count);
     if(sb->s_bdev)
@@ -52,10 +54,10 @@ static int  print_vfs_info(struct inode *inode)
     pr_info("------------inode information-------------------------\n");
     pr_info("inode->i_mode = %x\n", inode->i_mode);
     pr_info("inode->i_opflags = %d\n", inode->i_opflags);
-    pr_info("inode->i_uid = %x\n", inode->i_uid);
-    pr_info("inode->i_gid = %x\n", inode->i_gid);
-    pr_info("inode->i_ino = %d\n", inode->i_ino);
-    pr_info("inode->i_size = %d\n", inode->i_size);
+    pr_info("inode->i_uid = %x\n", inode->i_uid.val);
+    pr_info("inode->i_gid = %x\n", inode->i_gid.val);
+    pr_info("inode->i_ino = %ld\n", inode->i_ino);
+    pr_info("inode->i_size = %lld\n", inode->i_size);
     print_time_human_readable(inode->i_atime);
     print_time_human_readable(inode->i_mtime);
     print_time_human_readable(inode->i_ctime);
@@ -66,6 +68,8 @@ static int  print_vfs_info(struct inode *inode)
 static int __init print_fsinfo_init(void)
 {
     struct file_system_type *fs;
+    struct super_block *tmp_sb;
+    struct kstatfs stat;
     struct fdtable *fdt;
     struct file **fd;
     struct file *file = filp_open("/etc/init.d/rcS", O_RDONLY, 0);
@@ -79,6 +83,18 @@ static int __init print_fsinfo_init(void)
     if(!fs) {
         pr_info("can't find filesystem !\n");
         return -1;
+    }
+    hlist_for_each_entry(tmp_sb, &fs->fs_supers, s_instances) {
+        if(!tmp_sb->s_root)
+            continue;
+        pr_info("super_block: dev = %s\n", tmp_sb->s_id);
+        if(tmp_sb->s_op && tmp_sb->s_op->statfs) {
+            tmp_sb->s_op->statfs(tmp_sb->s_root, &stat);
+            pr_info("block size: %lu\n", stat.f_bsize);
+            pr_info("tatal blocks: %llu\n", stat.f_blocks);
+            pr_info("free blocks: %llu\n", stat.f_bfree);
+            pr_info("avaible: %llu\n", stat.f_bavail);
+        }
     }
     pr_info("------------file_system_type information-------------------------\n");
     pr_info("file_system_type->name = %s", fs->name);
