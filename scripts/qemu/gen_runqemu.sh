@@ -18,6 +18,8 @@ WORKSPACE=${ROOT}/workspace
 QEMU_WORKSPACE=${WORKSPACE}/qemu
 MF=${WORKSPACE}/run_qemu.sh
 
+[ $# -eq 6 ] && [ ${6} == "-d" ] && GDB_OPT="-s -S"
+
 cat << EOF > ${MF} 
 #!/bin/bash
 
@@ -66,7 +68,7 @@ sudo \${QEMU} \\
     -drive if=none,file=\${ROOT_DIR}/rootfs.img,format=raw,id=hd0 \\
     -nographic \\
 	-virtfs local,path=\${SHARE_DIR},mount_tag=hostshare,security_model=none,id=hostshare \\
-    -append "\${CMDLINE}"
+    -append "\${CMDLINE}" ${GDB_OPT}
 EOF
 
 chmod +x ${MF}
