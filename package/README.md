@@ -7,7 +7,7 @@
 - 如何快速掌握阅读内核源码方法与技巧
 - 进程原理及系统调用详解
 - 进程/进程生命周期
-- task_ struct数据结构
+- task_struct数据结构
 - 进程优先级/系统调用
 - 调度器及CFS调度器
 - 实时调度类/SMP/NUMA
@@ -20,7 +20,7 @@
 - 编译自己Linux内核实战分析
 - 进程管理4大常用API案例分析
 - 系统调用API1
-- kthread _create_on_node案例分析
+- kthread_create_on_node案例分析
 - wake_up_process案例分析
 - 系统调用API2
 - 获取进程NICE值案例分析
@@ -85,7 +85,7 @@
 - /proc/sys/kernel/
 - /proc/sys/vm/
 - /proc/sy/fs/
-- 水位调优参数min_ free_kbytes
+- 水位调优参数min_free_kbytes
 - 面分配参数lowmem_reserve _ratio
 - 内存管理meminfo&zoneinfo信息分析
 - 分配物理页实战分析
@@ -126,11 +126,11 @@
 - device数据结构/PCI总线/USB总线
 - 内核插入模块及删除模块
 - 内核模块基础知识
-- module_ init/module_exit
+- module_init/module_exit
 - insmod/mmod/dmesg
 - PCI设备驱动讲解
 - PCI基础及拓扑关系
-- pci host _bridge/pci _bus/pci. dev
+- pci_host_bridge/pci_bus/pci_dev
 - PC驱动讲解与实现
 - USB设备驱动详解
 - 总线速度及主机控制器
@@ -144,7 +144,7 @@
 - open/release方法
 - read/wite方法
 - lslek/poll防法
-- 填充file operations结构体
+- 填充file_operations结构体
 
 设备驱动案例分析
 ------------------
@@ -202,7 +202,7 @@
 - Ext2物理结构
 - Ext2数据结构分析
 - Ext2文件系统操作
-- Ext4_ 日志JBD2
+- Ext4 日志JBD2
 - Ext4文件系统特性
 - Ext4文件系统数据结构
 - Ext4_日志JBD2
@@ -216,7 +216,7 @@
 - 顺序文件
 - 使用libfs编写FS
 - 调试文件系统
-- 文件系统API : vfs fstat/fget/get. max_ files
+- 文件系统API : vfs_fstat/fget/get_max_files
 - 挂载文件系统
 - 系统调用mount处理流程
 - 绑定挂载/挂载命名空间
@@ -246,8 +246,8 @@
 - 套接字通信基础
 - 网络分层模型
 - 接字缓冲区及net_device
-- sk buff数据结构分析
-- net _device数据结构分析
+- sk_buff数据结构分析
+- net_device数据结构分析
 - 从套接字缓冲区获取TCP首部
 - 内核邻接子系统
 - 邻接子系统基础
@@ -328,7 +328,7 @@
 - tasklet等待队列工作队列
 - 中断控制器及域
 - 中断处理流程
-- 禁止_开启中断
+- 禁止/开启中断
 - 处理器间中断
 - 软中断分析
 - 审计规则及数据结构
@@ -337,9 +337,9 @@
 ----------------------
 
 - tasklet_init/tasklet_schedule
-- tasklet_hi_ schedule/tasklet_ kill
-- tasklet_disable_ nosync/tasklet _disable
-- setup_irq/request _threaded. irq/irqp_set _chip_data
+- tasklet_hi_schedule/tasklet_ kill
+- tasklet_disable_nosync/tasklet _disable
+- setup_irq/request_threaded. irq/irqp_set_chip_data
 - 中断管理之保存中断上下文
 
 内核调试方法printk案例分析
