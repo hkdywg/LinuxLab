@@ -1,0 +1,28 @@
+#
+# Rootfs configure menu
+#
+
+choice
+    prompt "Setup buildroot source code"
+
+config BUILDROOT_GITHUB
+    bool "buildroot source code from Github"
+
+config BUILDROOT_WGET
+    bool "buildroot source code from Wget"
+
+endchoice
+
+config BUILDROOT_SRC
+    int
+    default 1 if BUILDROOT_GITHUB
+    default 2 if BUILDROOT_WGET
+
+config BUILDROOT_VERSION
+    string "buildroot version"
+    default "2021.05"
+
+config BUILDROOT_DEFCONFIG
+    string "buildroot default config"
+    default "qemu_aarch64_virt_defconfig"
+

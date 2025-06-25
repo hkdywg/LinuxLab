@@ -2,7 +2,6 @@
 # Rootfs configure menu
 #
 
-
 menuconfig ROOTFS
     bool "Root-filesystem"
     default -y
@@ -12,30 +11,30 @@ menuconfig ROOTFS
 if ROOTFS
 
 choice
-    prompt "Setup busybox source code"
+     prompt "Select rootfs style"
+ 
+config BUSYBOX_ROOT_FS
+    bool "Tiny rootfs by busybox"
 
-config BUSYBOX_GITHUB
-    bool "busybox source code from Github"
+config BUILD_ROOT_FS
+    bool "Embedded relatively complete file system by buildroot"
 
-config BUSYBOX_WGET
-    bool "busybox source code from Wget"
+config DEBIAN_ROOT_FS
+    bool "Debian rootfs"
 
 endchoice
 
-config BUSYBOX_SRC
-    int
-    default 1 if BUSYBOX_GITHUB
-    default 2 if BUSYBOX_WGET
+if BUSYBOX_ROOT_FS
+    source fs/busybox/Kconfig
+endif
 
-config BUSYBOX_VERSION
-    string "busybox version"
-    default "1.24.2"
+if BUILD_ROOT_FS
+    source fs/buildroot/Kconfig
+endif
 
-config BUSYBOX_DEFCONFIG
-    string "busyxbox default config"
-    default "TEST_rh9_defconfig"
-
-source fs/Debian/Kconfig
+if DEBIAN_ROOT_FS
+    source fs/debian/Kconfig
+endif
 
 config ROOTFS_SIZE
     default 150
