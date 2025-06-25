@@ -13,6 +13,8 @@
 #	build local linux application
 ###########################################################################################################
 
+ifeq ($(ENABLE_EGL_GST), true)
+
 LOCAL_PATH	:= $(call my-dir)
 
 include $(CLEAR_VARS)
@@ -33,8 +35,6 @@ LOCAL_LDFLAGS   += $(shell PKG_CONFIG_PATH=$(PKG_PATH) PKG_CONFIG_SYSROOT_DIR=$(
 LOCAL_LDFLAGS   += $(shell PKG_CONFIG_PATH=$(PKG_PATH) PKG_CONFIG_SYSROOT_DIR=$(PKG_SYSROOT_DIR) pkg-config --libs --cflags gstreamer-1.0 gstreamer-app-1.0 gstreamer-video-1.0 gstreamer-pbutils-1.0) 
 LOCAL_LDFLAGS   += -lEGL -lGLESv2 -lpthread
 
-$(warning $(LOCAL_CFLGAS))
-
 include $(BUILD_APP)
 
 .PHONY: $(LOCAL_TARGET)
@@ -44,3 +44,4 @@ $(LOCAL_TARGET): $(LOCAL_MODULE)
 
 $(call add-target-into-build, $(LOCAL_TARGET))
 
+endif
