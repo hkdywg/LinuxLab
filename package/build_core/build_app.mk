@@ -47,11 +47,11 @@ $(LOCAL_MODULE): PRIVATE_SO_FLAGS := -Wl,-soname,$(LOCAL_SO_NAME)
 # compile
 $(PACKAGE_BUILD_OUTPATH)/%.o: $(PACKAGE_BUILD_TOPDIR)/%.c $(LOCAL_PATH)/make.inc
 	@mkdir -p $(dir $@)
-	$(MAKEFILE_V)$(PRIVATE_CXX) $(PRIVATE_CFLAGS) -MMD -c $< -o $@
+	$(MAKEFILE_V)$(CC) $(PRIVATE_CFLAGS) -MMD -c $< -o $@
 
 $(PACKAGE_BUILD_OUTPATH)/%.o: $(PACKAGE_BUILD_TOPDIR)/%.cpp $(LOCAL_PATH)/make.inc
 	@mkdir -p $(dir $@)
-	$(MAKEFILE_V)$(PRIVATE_CXX) $(PRIVATE_CFLAGS) -MMD -c $< -o $@
+	$(MAKEFILE_V)$(CXX) $(PRIVATE_CFLAGS) -MMD -c $< -o $@
 
 $(PACKAGE_BUILD_OUTPATH)/%.o: $(PACKAGE_BUILD_TOPDIR)/%.S $(LOCAL_PATH)/make.inc
 	@mkdir -p $(dir $@)
