@@ -26,7 +26,7 @@ config QEMU_VERSION
     default "7.1.0"
 
 config RAM_SIZE
-    default 256
+    default 2048
     int "The ram size of system(MB)"
 
 config CPU_CORE
