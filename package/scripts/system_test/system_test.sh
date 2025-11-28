@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CURRENT_DIR=`dirname $0`
+CURRENT_DIR=$(cd "$(dirname $0)" && pwd)
 TEST_RESULT_DIR=${CURRENT_DIR}/result
 TEST_LOG_DIR=${CURRENT_DIR}/log
 
@@ -55,3 +55,27 @@ cpu_test()
 {
     bash ${CURRENT_DIR}/cpu/cpu_test.sh
 }
+
+flash_stress_test()
+{
+    bash ${CURRENT_DIR}/flash/flash_stress_test.sh 5 20000 
+}
+
+module_test()
+{
+    case ${MODULE_CHOICE} in
+        1)
+            ddr_test
+            ;;
+        2)
+            cpu_test
+            ;;
+        3)
+            flash_stress_test
+            ;;
+    esac
+}
+
+module_choice
+module_test
+
