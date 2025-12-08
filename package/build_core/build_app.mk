@@ -26,8 +26,15 @@ LOCAL_OBJS_S := $(filter %.o, $(patsubst $(PACKAGE_BUILD_TOPDIR)/%.S, $(PACKAGE_
 # convert .asm file to objs
 LOCAL_OBJS_ASM := $(filter %.o, $(patsubst $(PACKAGE_BUILD_TOPDIR)/%.asm, $(PACKAGE_BUILD_OUTPATH)/%.o, $(LOCAL_SRCS)))
 
+# obj files
+LOCAL_OBJ_FILES := $(LOCAL_OBJS_C) $(LOCAL_OBJS_CPP) $(LOCAL_OBJS_S) $(LOCAL_OBJS_ASM)
+
+# depend .d files
+LOCAL_OBJS_DEPEND := $(LOCAL_OBJ_FILES:%.o=%.d)
+-include $(LOCAL_OBJS_DEPEND)
+
 # final local objs
-PRIVATE_OBJS := $(LOCAL_OBJS_C) $(LOCAL_OBJS_CPP) $(LOCAL_OBJS_S) $(LOCAL_OBJS_ASM) $(LOCAL_OBJS_DEPEND)
+PRIVATE_OBJS :=  $(LOCAL_OBJ_FILES)
 
 # define variables owned by specific $(LOCAL_LIBS)
 PRIVATE_LIBS := $(patsubst lib%.so, -l%, $(filter %.so,$(LOCAL_LIBS)))
