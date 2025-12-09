@@ -12,11 +12,13 @@ _start:
 proc_hang:
     b proc_hang
 
+.extern test_data
 master:
     adr x0, bss_begin
     adr x1, bss_end
     sub x1, x1, x0
-    bl memzero
+#bl memzero
+    bl memclr
 
     mov sp, #LOW_MEMORY
     bl kernel_main

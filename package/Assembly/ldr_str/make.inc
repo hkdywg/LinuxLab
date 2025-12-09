@@ -37,7 +37,7 @@ $(call add-target-into-build, $(LOCAL_TARGET))
 ######################################################################################
 
 LOCAL_TARGET_RUN := $(LOCAL_TARGET)_run
-QEMU_FLAGS := -M virt -cpu cortex-a72 -nographic -kernel
+QEMU_FLAGS := -machine raspi3 -nographic -kernel
 
 $(LOCAL_TARGET_RUN): $(LOCAL_MODULE)
 	@echo "running $< with qemu"
@@ -50,4 +50,4 @@ LOCAL_TARGET_GDB := $(LOCAL_TARGET)_gdb
 
 $(LOCAL_TARGET_GDB): $(LOCAL_MODULE)
 	@echo "use gdb connect to $<"
-	gdb-multiarch -tui $<
+	gdb-multiarch  $<
