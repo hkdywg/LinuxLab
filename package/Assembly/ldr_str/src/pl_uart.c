@@ -43,10 +43,11 @@ void uart_init(void)
     selector |= 4<<15;
     writel(selector, GPFSEL1);
 
-    /* set gpio14/15 pull down state */
-    selector = readl(GPIO_PUP_PDN_CNTRL_REG0);
-    selector |= (0x2 << 30) | (0x2 << 28);
-    writel(selector, GPIO_PUP_PDN_CNTRL_REG0);
+    writel(0, GPPUD);
+    delay(150);
+    writel((1<<14) | (1<<15), GPPUDCLK0);
+    delay(150);
+    writel(0, GPPUDCLK0);
 
     /* disable UART until configuration is done */
     writel(0, U_CR_REG);
