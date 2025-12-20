@@ -1,5 +1,13 @@
-// SPDX-License-Identifier: GPL-2.0-only
-#include "core.h"
+/*
+* serdes_core.c 
+*	core define for mfd display arch
+*
+* @copyright Copyright (c) 2022 Jiangsu New Vision Automotive Electronics Co.，Ltd. All rights reserved.
+*
+* Author: weigenyin <weigenyin@zjautomotive.com>
+*
+*/
+#include "display_serdes_core.h"
 
 static void serdes_i2c_shutdown(struct i2c_client *client)
 {
