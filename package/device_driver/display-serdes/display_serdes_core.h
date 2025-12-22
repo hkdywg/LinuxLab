@@ -86,6 +86,25 @@
 
 struct serdes;
 
+enum serdes_id {
+    SERDES_ID_INVALID = 0,
+    MAXIM_ID_MAX96781,
+    TI_ID_DS90UH981,
+    TI_ID_DS90UH983,
+    AIM_ID_AIM951X,
+    SERDES_NUM_ID,
+};
+
+enum serdes_gpio_state {
+    SERDES_GPIO_PULL_NONE = 0,
+    SERDES_GPIO_PULL_DOWN,
+    SERDES_GPIO_PULL_UP,
+    SERDES_GPIO_DIR_IN,
+    SERDES_GPIO_DIR_OUT,
+    SERDES_GPIO_LEVEL_HIGH,
+    SERDES_GPIO_LEVEL_LOW,
+};
+
 enum ser_link_mode {
     SER_DUAL_LINK,
     SER_LINKA,
