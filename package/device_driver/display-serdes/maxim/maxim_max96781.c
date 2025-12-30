@@ -10,6 +10,491 @@
 #include "../display_serdes_core.h"
 #include "maxim_max96781.h"
 
+static bool max96781_volatile_reg(struct device *dev, unsigned int reg)
+{
+    switch(reg) {
+    case 0x0076:
+    case 0x0086:
+    case 0x0200 ... 0x02ce:
+    case 0x7000:
+    case 0x7070:
+    case 0x7074:
+        return false;
+    default:
+        return true;
+    }
+}
+
+static struct regmap_config max96781_regmap_config = {
+    .name = "max96781",
+    .reg_bits = 16,
+    .val_bits = 8,
+    .max_register = 0x8000,
+    .volatile_reg = max96781_volatile_reg,
+    .cache_type = REGCACHE_RBTREE,
+};
+
+struct serdes_function_data {
+    u8 gpio_out_dis:1;
+    u8 gpio_io_rx_en:1;
+    u8 gpio_tx_en_a:1;
+    u8 gpio_tx_en_b:1;
+    u8 gpio_rx_en_a:1;
+    u8 gpio_rx_en_b:1;
+    u8 gpio_tx_id;
+    u8 gpio_rx_id;
+};
+
+struct config_desc {
+    u16 reg;
+    u8 mask;
+    u8 val;
+};
+
+struct serdes_group_data {
+    const struct config_desc *configs;
+    int num_configs;
+};
+
+static int max96781_mfp0_pins[] = {0}; 
+static int max96781_mfp1_pins[] = {1}; 
+static int max96781_mfp2_pins[] = {2}; 
+static int max96781_mfp3_pins[] = {3}; 
+static int max96781_mfp4_pins[] = {4}; 
+static int max96781_mfp5_pins[] = {5}; 
+static int max96781_mfp6_pins[] = {6}; 
+static int max96781_mfp7_pins[] = {7}; 
+
+static int max96781_mfp8_pins[] = {8}; 
+static int max96781_mfp9_pins[] = {9}; 
+static int max96781_mfp10_pins[] = {10}; 
+static int max96781_mfp11_pins[] = {11}; 
+static int max96781_mfp12_pins[] = {12}; 
+static int max96781_mfp13_pins[] = {13}; 
+static int max96781_mfp14_pins[] = {14}; 
+static int max96781_mfp15_pins[] = {15}; 
+
+static int max96781_mfp16_pins[] = {16}; 
+static int max96781_mfp17_pins[] = {17}; 
+static int max96781_mfp18_pins[] = {18}; 
+static int max96781_mfp19_pins[] = {19}; 
+static int max96781_mfp20_pins[] = {20}; 
+static int max96781_mfp21_pins[] = {21}; 
+static int max96781_mfp22_pins[] = {22}; 
+static int max96781_mfp23_pins[] = {23}; 
+
+static int max96781_mfp24_pins[] = {24}; 
+static int max96781_mfp25_pins[] = {25}; 
+static int max96781_i2c_pins[] = {3, 7}; 
+static int max96781_uart_pins[] = {3, 7}; 
+
+#define GROUP_DESC(nm) \
+{ \
+    .name = #nm, \
+    .pins = nm ## _pins, \
+    .num_pins = ARRAY_SIZE(nm ## _pins), \
+}
+
+static const char *serdes_gpio_groups[] = {
+    "max96781_mfp0", "max96781_mfp1", "max96781_mfp2", "max96781_mfp3",
+    "max96781_mfp4", "max96781_mfp5", "max96781_mfp6", "max96781_mfp7",
+
+    "max96781_mfp8", "max96781_mfp9", "max96781_mfp10", "max96781_mfp11",
+    "max96781_mfp12", "max96781_mfp13", "max96781_mfp14", "max96781_mfp15",
+
+    "max96781_mfp16", "max96781_mfp17", "max96781_mfp18", "max96781_mfp19",
+    "max96781_mfp20", "max96781_mfp21", "max96781_mfp22", "max96781_mfp23",
+
+    "max96781_mfp24", "max96781_mfp25",
+};
+
+static const char *max96781_i2c_groups[] = { "max96781_i2c" };
+static const char *max96781_uart_groups[] = { "max96781_uart" };
+
+#define FUNCTION_DESC(nm) \
+{ \
+    .name = #nm, \
+    .group_names = nm##_groups, \
+    .num_group_names = ARRAY_SIZE(nm##groups), \
+}
+
+#define FUNCTION_DESC_GPIO_OUTOUT_A(id) \
+{ \
+    .name = "SER_TXID"#id"_TO_DES_LINKA", \
+    .group_names = serdes_gpio_groups, \
+    .num_gpoup_name = ARRAY_SIZE(serdes_gpio_groups), \
+    .data = (void *)(const struct serdes_function_data []) { \
+        { .gpio_out_dis = 1, .gpio_tx_en_a = 1, \
+          .gpio_io_rx_en = 1, .gpio_rx_id = id, } \
+    }, \
+}
+
+#define FUNCTION_DESC_GPIO_OUTOUT_B(id) \
+{ \
+    .name = "SER_TXID"#id"_TO_DES_LINKB", \
+    .group_names = serdes_gpio_groups, \
+    .num_gpoup_name = ARRAY_SIZE(serdes_gpio_groups), \
+    .data = (void *)(const struct serdes_function_data []) { \
+        { .gpio_out_dis = 1, .gpio_tx_en_a = 1, \
+          .gpio_io_rx_en = 1, .gpio_rx_id = id, } \
+    }, \
+}
+
+#define FUNCTION_DESC_GPIO_INPUT_A(id) \
+{ \
+    .name = "SER_TXID"#id"_TO_DES_LINKA", \
+    .group_names = serdes_gpio_groups, \
+    .num_gpoup_name = ARRAY_SIZE(serdes_gpio_groups), \
+    .data = (void *)(const struct serdes_function_data []) { \
+        { .gpio_io_rx_en = 1, .gpio_rx_id = id, } \
+    }, \
+}
+
+#define FUNCTION_DESC_GPIO_INPUT_B(id) \
+{ \
+    .name = "SER_TXID"#id"_TO_DES_LINKA", \
+    .group_names = serdes_gpio_groups, \
+    .num_gpoup_name = ARRAY_SIZE(serdes_gpio_groups), \
+    .data = (void *)(const struct serdes_function_data []) { \
+        { .gpio_io_rx_en = 1, .gpio_rx_id = id, } \
+    }, \
+}
+
+
+#define FUNCTION_DESC_GPIO() \
+{ \
+    .name = "MAX96781_GPIO", \
+    .group_names = serdes_gpio_groups, \
+    .num_gpoup_name = ARRAY_SIZE(serdes_gpio_groups), \
+    .data = (void *)(const struct serdes_function_data []) { \
+        {  } \
+    }, \
+}
+
+static struct pinctrl_pin_desc max96781_pins_desc[] = {
+    PINCTRL_PIN(MAX96781_MFP0, "MAX96781_MFP0"),
+    PINCTRL_PIN(MAX96781_MFP1, "MAX96781_MFP1"),
+    PINCTRL_PIN(MAX96781_MFP2, "MAX96781_MFP2"),
+    PINCTRL_PIN(MAX96781_MFP3, "MAX96781_MFP3"),
+    PINCTRL_PIN(MAX96781_MFP4, "MAX96781_MFP4"),
+    PINCTRL_PIN(MAX96781_MFP5, "MAX96781_MFP5"),
+    PINCTRL_PIN(MAX96781_MFP6, "MAX96781_MFP6"),
+    PINCTRL_PIN(MAX96781_MFP7, "MAX96781_MFP7"),
+
+    PINCTRL_PIN(MAX96781_MFP8, "MAX96781_MFP8"),
+    PINCTRL_PIN(MAX96781_MFP9, "MAX96781_MFP9"),
+    PINCTRL_PIN(MAX96781_MFP10, "MAX96781_MFP10"),
+    PINCTRL_PIN(MAX96781_MFP11, "MAX96781_MFP11"),
+    PINCTRL_PIN(MAX96781_MFP12, "MAX96781_MFP12"),
+    PINCTRL_PIN(MAX96781_MFP13, "MAX96781_MFP13"),
+    PINCTRL_PIN(MAX96781_MFP14, "MAX96781_MFP14"),
+    PINCTRL_PIN(MAX96781_MFP15, "MAX96781_MFP15"),
+
+    PINCTRL_PIN(MAX96781_MFP16, "MAX96781_MFP16"),
+    PINCTRL_PIN(MAX96781_MFP17, "MAX96781_MFP17"),
+    PINCTRL_PIN(MAX96781_MFP18, "MAX96781_MFP18"),
+    PINCTRL_PIN(MAX96781_MFP19, "MAX96781_MFP19"),
+    PINCTRL_PIN(MAX96781_MFP20, "MAX96781_MFP20"),
+    PINCTRL_PIN(MAX96781_MFP21, "MAX96781_MFP21"),
+    PINCTRL_PIN(MAX96781_MFP22, "MAX96781_MFP22"),
+    PINCTRL_PIN(MAX96781_MFP23, "MAX96781_MFP23"),
+
+    PINCTRL_PIN(MAX96781_MFP24, "MAX96781_MFP24"),
+    PINCTRL_PIN(MAX96781_MFP25, "MAX96781_MFP25"),
+};
+
+static struct group_desc max96781_groups_desc[] = {
+    GROUP_DESC(max96781_mfp0),
+    GROUP_DESC(max96781_mfp1),
+    GROUP_DESC(max96781_mfp2),
+    GROUP_DESC(max96781_mfp3),
+    GROUP_DESC(max96781_mfp4),
+    GROUP_DESC(max96781_mfp5),
+    GROUP_DESC(max96781_mfp6),
+    GROUP_DESC(max96781_mfp7),
+
+    GROUP_DESC(max96781_mfp8),
+    GROUP_DESC(max96781_mfp9),
+    GROUP_DESC(max96781_mfp10),
+    GROUP_DESC(max96781_mfp11),
+    GROUP_DESC(max96781_mfp12),
+    GROUP_DESC(max96781_mfp13),
+    GROUP_DESC(max96781_mfp14),
+    GROUP_DESC(max96781_mfp15),
+
+    GROUP_DESC(max96781_mfp16),
+    GROUP_DESC(max96781_mfp17),
+    GROUP_DESC(max96781_mfp18),
+    GROUP_DESC(max96781_mfp19),
+    GROUP_DESC(max96781_mfp20),
+    GROUP_DESC(max96781_mfp21),
+    GROUP_DESC(max96781_mfp22),
+    GROUP_DESC(max96781_mfp23),
+
+    GROUP_DESC(max96781_mfp24),
+    GROUP_DESC(max96781_mfp25),
+
+    GROUP_DESC(max96781_i2c),
+    GROUP_DESC(max96781_uart),
+};
+
+static struct function_desc max96781_functions_desc[] = {
+    FUNCTION_DESC_GPIO_INPUT_A(0),
+    FUNCTION_DESC_GPIO_INPUT_A(1),
+    FUNCTION_DESC_GPIO_INPUT_A(2),
+    FUNCTION_DESC_GPIO_INPUT_A(3),
+    FUNCTION_DESC_GPIO_INPUT_A(4),
+    FUNCTION_DESC_GPIO_INPUT_A(6),
+    FUNCTION_DESC_GPIO_INPUT_A(7),
+
+    FUNCTION_DESC_GPIO_INPUT_A(8),
+    FUNCTION_DESC_GPIO_INPUT_A(9),
+    FUNCTION_DESC_GPIO_INPUT_A(10),
+    FUNCTION_DESC_GPIO_INPUT_A(11),
+    FUNCTION_DESC_GPIO_INPUT_A(12),
+    FUNCTION_DESC_GPIO_INPUT_A(13),
+    FUNCTION_DESC_GPIO_INPUT_A(14),
+    FUNCTION_DESC_GPIO_INPUT_A(15),
+
+    FUNCTION_DESC_GPIO_INPUT_A(16),
+    FUNCTION_DESC_GPIO_INPUT_A(17),
+    FUNCTION_DESC_GPIO_INPUT_A(18),
+    FUNCTION_DESC_GPIO_INPUT_A(19),
+    FUNCTION_DESC_GPIO_INPUT_A(20),
+    FUNCTION_DESC_GPIO_INPUT_A(21),
+    FUNCTION_DESC_GPIO_INPUT_A(22),
+    FUNCTION_DESC_GPIO_INPUT_A(23),
+
+    FUNCTION_DESC_GPIO_INPUT_A(24),
+    FUNCTION_DESC_GPIO_INPUT_A(25),
+
+    FUNCTION_DESC_GPIO_OUTPUT_A(0),
+    FUNCTION_DESC_GPIO_OUTPUT_A(1),
+    FUNCTION_DESC_GPIO_OUTPUT_A(2),
+    FUNCTION_DESC_GPIO_OUTPUT_A(3),
+    FUNCTION_DESC_GPIO_OUTPUT_A(4),
+    FUNCTION_DESC_GPIO_OUTPUT_A(6),
+    FUNCTION_DESC_GPIO_OUTPUT_A(7),
+
+    FUNCTION_DESC_GPIO_OUTPUT_A(8),
+    FUNCTION_DESC_GPIO_OUTPUT_A(9),
+    FUNCTION_DESC_GPIO_OUTPUT_A(10),
+    FUNCTION_DESC_GPIO_OUTPUT_A(11),
+    FUNCTION_DESC_GPIO_OUTPUT_A(12),
+    FUNCTION_DESC_GPIO_OUTPUT_A(13),
+    FUNCTION_DESC_GPIO_OUTPUT_A(14),
+    FUNCTION_DESC_GPIO_OUTPUT_A(15),
+
+    FUNCTION_DESC_GPIO_OUTPUT_A(16),
+    FUNCTION_DESC_GPIO_OUTPUT_A(17),
+    FUNCTION_DESC_GPIO_OUTPUT_A(18),
+    FUNCTION_DESC_GPIO_OUTPUT_A(19),
+    FUNCTION_DESC_GPIO_OUTPUT_A(20),
+    FUNCTION_DESC_GPIO_OUTPUT_A(21),
+    FUNCTION_DESC_GPIO_OUTPUT_A(22),
+    FUNCTION_DESC_GPIO_OUTPUT_A(23),
+
+    FUNCTION_DESC_GPIO_OUTPUT_A(24),
+    FUNCTION_DESC_GPIO_OUTPUT_A(25),
+
+    FUNCTION_DESC_GPIO_INPUT_B(0),
+    FUNCTION_DESC_GPIO_INPUT_B(1),
+    FUNCTION_DESC_GPIO_INPUT_B(2),
+    FUNCTION_DESC_GPIO_INPUT_B(3),
+    FUNCTION_DESC_GPIO_INPUT_B(4),
+    FUNCTION_DESC_GPIO_INPUT_B(6),
+    FUNCTION_DESC_GPIO_INPUT_B(7),
+
+    FUNCTION_DESC_GPIO_INPUT_B(8),
+    FUNCTION_DESC_GPIO_INPUT_B(9),
+    FUNCTION_DESC_GPIO_INPUT_B(10),
+    FUNCTION_DESC_GPIO_INPUT_B(11),
+    FUNCTION_DESC_GPIO_INPUT_B(12),
+    FUNCTION_DESC_GPIO_INPUT_B(13),
+    FUNCTION_DESC_GPIO_INPUT_B(14),
+    FUNCTION_DESC_GPIO_INPUT_B(15),
+
+    FUNCTION_DESC_GPIO_INPUT_B(16),
+    FUNCTION_DESC_GPIO_INPUT_B(17),
+    FUNCTION_DESC_GPIO_INPUT_B(18),
+    FUNCTION_DESC_GPIO_INPUT_B(19),
+    FUNCTION_DESC_GPIO_INPUT_B(20),
+    FUNCTION_DESC_GPIO_INPUT_B(21),
+    FUNCTION_DESC_GPIO_INPUT_B(22),
+    FUNCTION_DESC_GPIO_INPUT_B(23),
+
+    FUNCTION_DESC_GPIO_INPUT_B(24),
+    FUNCTION_DESC_GPIO_INPUT_B(25),
+
+    FUNCTION_DESC_GPIO_OUTPUT_B(0),
+    FUNCTION_DESC_GPIO_OUTPUT_B(1),
+    FUNCTION_DESC_GPIO_OUTPUT_B(2),
+    FUNCTION_DESC_GPIO_OUTPUT_B(3),
+    FUNCTION_DESC_GPIO_OUTPUT_B(4),
+    FUNCTION_DESC_GPIO_OUTPUT_B(6),
+    FUNCTION_DESC_GPIO_OUTPUT_B(7),
+
+    FUNCTION_DESC_GPIO_OUTPUT_B(8),
+    FUNCTION_DESC_GPIO_OUTPUT_B(9),
+    FUNCTION_DESC_GPIO_OUTPUT_B(10),
+    FUNCTION_DESC_GPIO_OUTPUT_B(11),
+    FUNCTION_DESC_GPIO_OUTPUT_B(12),
+    FUNCTION_DESC_GPIO_OUTPUT_B(13),
+    FUNCTION_DESC_GPIO_OUTPUT_B(14),
+    FUNCTION_DESC_GPIO_OUTPUT_B(15),
+
+    FUNCTION_DESC_GPIO_OUTPUT_B(16),
+    FUNCTION_DESC_GPIO_OUTPUT_B(17),
+    FUNCTION_DESC_GPIO_OUTPUT_B(18),
+    FUNCTION_DESC_GPIO_OUTPUT_B(19),
+    FUNCTION_DESC_GPIO_OUTPUT_B(20),
+    FUNCTION_DESC_GPIO_OUTPUT_B(21),
+    FUNCTION_DESC_GPIO_OUTPUT_B(22),
+    FUNCTION_DESC_GPIO_OUTPUT_B(23),
+
+    FUNCTION_DESC_GPIO_OUTPUT_B(24),
+    FUNCTION_DESC_GPIO_OUTPUT_B(25),
+
+    FUNCTION_DESC_GPIO(),
+
+    FUNCTION_DESC(max96781_i2c),
+    FUNCTION_DESC(max96781_uart),
+};
+
+static struct serdes_chip_pinctrl_info max96781_pinctrl_info = {
+    .pins = max96781_pins_desc,
+    .num_pins = ARRAY_SIZE(max96781_pins_desc),
+    .groups = max96781_groups_desc,
+    .num_groups = ARRAY_SIZE(max96781_groups_desc),
+    .functions = max96781_functions_desc,
+    .num_functions = ARRAY_SIZE(max96781_functions_desc),
+};
+
+static int max96781_bridge_init(struct serdes *serdes)
+{
+    extcon_set_state(serdes->extcon, EXTCON_JACK_VIDEO_OUT, true);
+
+    return 0;
+}
+
+static bool max96781_bridge_link_locked(struct serdes *serdes)
+{
+    u32 val = 0, i;
+
+    if(serdes->lock_gpio) {
+        for(i = 0; i < 3; i++) {
+            val = gpiod_get_value_cansleep(serdes->lock_gpio);
+            if(val)
+                break;
+            msleep(20);
+        }
+
+        SERDES_DBG_CHIP("%s:%s-%s, gpio %s\n", __func__, dev_name(serdes->dev),
+                serdes->chip_data->name, (val) ? "locked" : "unlocked");
+
+        if(val)
+            return true;
+    }
+
+    if(serdes_reg_read(serdes, 0x002a), &val) {
+        SERDES_DBG_CHIP("serdes %s: unlocked val = 0x%x\n", __func__, val);
+        return false;
+    }
+
+    if(!FIELD_GET(LINK_LOCKED, val)) {
+        SERDES_DBG_CHIP("serdes %s: unlocked val = 0x%x\n", __func__, val);
+        return false;
+    }
+
+    SERDES_DBG_CHIP("%s: serdes reg locked val = 0x%x\n", __func__, val);
+
+    return true;
+}
+
+static int max96781_bridge_attach(struct serdes *serdes)
+{
+    if(max96781_bridge_link_locked(serdes))
+        serdes->serdes_bridge->status = connector_status_connected;
+    else
+        serdes->serdes_bridge->status = connector_status_disconnected;
+
+    return 0;
+}
+
+static enum drm_connector_status 
+max96781_bridge_detect(struct serdes *serdes)
+{
+    struct serdes_bridge *serdes_bridge = serdes->serdes_bridge;
+    enum drm_connector_status status = connector_status_connected;
+
+    if(!drm_kms_helper_is_poll_worker())
+        return serdes_bridge->status;
+    
+    if(!max96781_bridge_link_locked(serdes)) {
+        status = connector_status_disconnected;
+        goto out;
+    }
+
+    if(extcon_get_state(serdes->extcon, EXTCON_JACK_VIDEO_OUT)) {
+        u32 dprx_trn_status2;
+
+        if(atomic_cmpxchg(&serdes_bridge->trigged, 1, 0)) {
+            status = connector_status_disconnected;
+            SERDES_DBG_CHIP("1 status = %d state = %d\n", status, serdes->extcon->state);
+            goto out;
+        }
+
+        if(serdes_reg_read(serdes, 0x641a, &dprx_trn_status2)) {
+            status = connector_status_disconnected;
+            SERDES_DBG_CHIP("2 status = %d state = %d\n", status, serdes->extcon->state);
+            goto out;
+        }
+
+        if((dprx_trn_status2 & DPRX_TRAIN_STATE) != DPRX_TRAIN_STATE) {
+            dev_err(serdes->dev, "Taining State: 0x%lx\n",
+                    FIELD_GET(DPRX_TRAIN_STATE, dprx_trn_status2));
+            SERDES_DBG_CHIP("3 status = %d state = %d\n", status, serdes->extcon->state);
+        }
+    } else {
+        atomic_set(&serdes_brige->triggered, 0);
+        SERDES_DBG_CHIP("4 status = %d state = %d\n", status, serdes->extcon->state);
+    }
+
+    if(serdes_bridge->next_bridge && (serdes->next_bridge->ops & DRM_BRIDGE_OP_DETECT))
+        return drm_bridge_detect(serdes_bridge->next_bridge);
+
+out:
+    serdes_bridge->status = status;
+
+    SERDES_DBG_CHIP("%s: %s %s status = %d state = %d\n", __func__, dev_name(serdes->dev),
+                serdes->chip_data->name, status, serdes->extcon->state);
+
+    return status;
+}
+
+static int max96781_bridge_enable(struct serdes *serdes)
+{
+    int ret = 0;
+
+    SERDES_DBG_CHIP("%s: serdes chip %s ret = %d status = %d\n",
+            __func__, serdes->chip_data->name, ret, serdes->extcon->state);
+
+    return ret;
+}
+
+static int max96781_bridge_disable(struct serdes *serdes)
+{
+    return 0;
+}
+
+static struct serdes_chip_bridge_ops max96781_bridge_ops = {
+    .init = max96781_bridge_init,
+    .attach = max96781_bridge_attach,
+    .detect = max96781_bridge_detect,
+    .enable = max96781_bridge_enable,
+    .disable = max96781_bridge_disable,
+};
+
 static int max96781_pinctrl_set_mux(struct serdes *serdes,
                         unsigned int function, unsigned int group)
 {
@@ -58,6 +543,83 @@ static int max96781_pinctrl_set_mux(struct serdes *serdes,
                             FIELD_PREP(GPIO_TX_EN_A, data->gpio_tx_en_a) |
                             FIELD_PREP(GPIO_RX_EN_A, data->gpio_rx_en_a) |
                             FIELD_PREP(GPIO_IO_RX_EN, data->gpio_io_rx_en));
+        }
+    }
+
+    return 0;
+}
+
+static int max96781_pinctrl_config_set(struct serdes *serdes,
+                        unsigned int pin, unsigned long *configs,
+                        unsigned int num_configs)
+{
+    enum pin_config_param param;
+    u32 arg;
+    u8 res_cfg;
+    int i;
+
+    for(i = 0; i < num_configs; i++) {
+        param = pinconf_to_config_param(configs[i]);
+        arg = pinconf_to_config_argument(configs[i]);
+
+        SEDES_DBG_CHIP("%s: serdes chip %s pin = %d param = %d\n", __func__,
+                   serdes->chip_data->name, pin, param);
+
+        switch(param) {
+        case PIN_CONFIG_DRIVE_OPEN_DRAIN:
+            serdes_set_bits(serdes, GPIO_B_REG(pin),
+                            OUY_TYPE, FIELD_PREP(OUT_TYPE, 0));
+            break;
+        case PIN_CONFIG_DRIVE_PUSH_PULL:
+            serdes_set_bits(serdes, GPIO_B_REG(pin),
+                            OUY_TYPE, FIELD_PREP(OUT_TYPE, 1));
+            break;
+        case PIN_CONFIG_BIAS_DISABLE:
+            serdes_set_bits(serdes, GPIO_C_REG(pin),
+                            PULL_UPDN_SEL, FIELD_PREP(PULL_UPDN_SEL, 0));
+            break;
+        case PIN_CONFIG_BIAS_PULL_UP:
+            switch(arg) {
+            case 40000:
+                res_cfg = 0;
+                break;
+            case 1000000:
+                res_cfg = 1;
+                break;
+            default:
+                return -EINVAL;
+            }
+
+            serdes_set_bits(serdes, GPIO_A_REG(pin),
+                            RES_CFG, FIELD_PREP(RES_CFG, res_cfg));
+            serdes_set_bits(serdes, GPIO_C_REG(pin),
+                            PULL_UPDN_SEL, FIELD_PREP(PULL_UPDN_SEL, 1));
+            break;
+        case PIN_CONFIG_BIAS_PULL_DOWN:
+            switch(arg) {
+            case 40000:
+                res_cfg = 0;
+                break;
+            case 1000000:
+                res_cfg = 1;
+                break;
+            default:
+                return -EINVAL;
+            }
+
+            serdes_set_bits(serdes, GPIO_A_REG(pin),
+                            RES_CFG, FIELD_PREP(RES_CFG, res_cfg));
+            serdes_set_bits(serdes, GPIO_C_REG(pin),
+                            PULL_UPDN_SEL, FIELD_PREP(PULL_UPDN_SEL, 2));
+            break;
+        case PIN_CONFIG_OUTPUT:
+            serdes_set_bits(serdes, GPIO_A_REG(pin),
+                            GPIO_OUT_DIS | GPIO_OUT, 
+                            FIELD_PREP(GPIO_OUT_DIS, 0) |
+                            FIELD_PREP(GPIO_OUT, arg));
+            break;
+        default:
+            return -EOPNOTSUPP;
         }
     }
 
