@@ -16,10 +16,12 @@ struct _Params {
     char    *location;
     char    *h26x;
     char    *rtsp_url;
+	char 	*uri;
     int     connector_id;
     int     plane_id;
     bool    replay;
     bool    is_rtsp;
+	bool 	use_wayland;
 };
 
 bool parse_parameter(struct _Params *params, int argc, char **argv);

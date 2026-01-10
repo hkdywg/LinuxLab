@@ -64,6 +64,7 @@ static void *timing_thread(void *arg) {
     return (void *)0;
 }
 
+#if 0
 static void on_rtsp_pad_added(GstElement *src, GstPad *pad, gpointer data)
 {
     GstElement *depay = (GstElement *)data;
@@ -77,6 +78,38 @@ static void on_rtsp_pad_added(GstElement *src, GstPad *pad, gpointer data)
 
     gst_object_unref(sinkpad);
 }
+#else
+static void on_rtsp_pad_added(GstElement *src, GstPad *pad, gpointer data)
+{
+    GstElement *depay = (GstElement *)data;
+    GstPad *sinkpad = gst_element_get_static_pad(depay, "sink");
+
+    if (gst_pad_is_linked(sinkpad)) {
+        gst_object_unref(sinkpad);
+        return;
+    }
+
+    GstCaps *caps = gst_pad_get_current_caps(pad); // <-- 使用 get_current_caps
+    if (!caps)
+        caps = gst_pad_query_caps(pad, NULL);
+
+    if (caps && gst_caps_is_fixed(caps)) {
+        const GstStructure *str = gst_caps_get_structure(caps, 0);
+        const gchar *name = gst_structure_get_name(str);
+
+        if (g_str_has_prefix(name, "application/x-rtp")) {
+            if (gst_pad_link(pad, sinkpad) == GST_PAD_LINK_OK) {
+                g_print("Linked RTSP src pad to depayloader\n");
+            } else {
+                g_printerr("Failed to link RTSP src pad to depayloader\n");
+            }
+        }
+    }
+
+    if (caps) gst_caps_unref(caps);
+    gst_object_unref(sinkpad);
+}
+#endif
 
 /**
  * Gstreamer pipeline message bus callback function
@@ -161,6 +194,35 @@ static void on_pad_added(GstElement *element, GstPad *pad, gpointer data) {
     gst_caps_unref(caps);
 }
 
+static void on_decodebin_pad_added(GstElement *decodebin,
+                                   GstPad *pad,
+                                   gpointer data)
+{
+    GstElement *convert = (GstElement *)data;
+    GstPad *sinkpad = gst_element_get_static_pad(convert, "sink");
+
+    if (gst_pad_is_linked(sinkpad)) {
+        gst_object_unref(sinkpad);
+        return;
+    }
+
+    GstCaps *caps = gst_pad_get_current_caps(pad);
+    if (!caps)
+        caps = gst_pad_query_caps(pad, NULL);
+
+    if (caps) {
+        gchar *caps_str = gst_caps_to_string(caps);
+        g_print("decodebin caps: %s\n", caps_str);
+        g_free(caps_str);
+        gst_caps_unref(caps);
+    }
+
+    if (gst_pad_link(pad, sinkpad) == GST_PAD_LINK_OK)
+        g_print("decodebin linked to videoconvert\n");
+
+    gst_object_unref(sinkpad);
+}
+
 /**
  * signal handler function
  */
@@ -203,7 +265,19 @@ bool make_gst_elements(struct _GSTELES *elements , struct _Params *params) {
         return false;
 	}
 
-	if(params->is_rtsp) {
+    if(params->use_wayland) {
+        // 使用 uridecodebin + waylandsink
+        //elements->source = gst_element_factory_make("uridecodebin", "_uridecodebin");
+        elements->source  = gst_element_factory_make("rtspsrc", "_rtspsrc");
+        elements->depay   = gst_element_factory_make("rtph264depay", "_rtph264depay");
+        elements->decoder = gst_element_factory_make("decodebin", "_decodebin");
+        elements->sink    = gst_element_factory_make("waylandsink", "_waylandsink");
+
+        if (!elements->source || !elements->sink || !elements->decoder || !elements->depay) {
+            printf("Failed to create uridecodebin or waylandsink\n");
+            return false;
+        }
+    } else if(params->is_rtsp) {
         /* Create the elements */
         elements->source        = gst_element_factory_make("rtspsrc", "_rtspsrc");
         elements->depay         = gst_element_factory_make("rtph264depay", "_rtph264depay");
@@ -244,6 +318,7 @@ bool check_gst_elements(struct _GSTELES *elements) {
     if (elements == NULL)
     return false;
 
+#if 0
     /*Check if the element was successfully created*/
     if( !elements->source  ||
         !elements->parser || !elements->decoder || 
@@ -252,6 +327,7 @@ bool check_gst_elements(struct _GSTELES *elements) {
         printf("Failed to create elements. Exiting.\n");
         return false;
     }
+#endif
  
     return TRUE ;
 }
@@ -263,7 +339,10 @@ bool config_gst_elements(struct _Params *params, struct _GSTELES *elements) {
 
     if (params == NULL || elements == NULL)
         return false;
-    if(params->is_rtsp) {
+
+    if (params->use_wayland) {
+		g_object_set(G_OBJECT(elements->source), "location", params->uri, NULL);
+    } else if(params->is_rtsp) {
         /* Set rtsp url*/
 		g_object_set(G_OBJECT(elements->source), "location", params->rtsp_url, NULL);
     } else {
@@ -272,10 +351,14 @@ bool config_gst_elements(struct _Params *params, struct _GSTELES *elements) {
     }
 
     /*Config the kmssink */
-    if(params->plane_id)
-        g_object_set(elements->sink, "connector-id", params->connector_id, "plane-id", params->plane_id, NULL);
-    else
-        g_object_set(elements->sink, "connector-id", params->connector_id, NULL);
+    if(!params->use_wayland) {
+        if(params->plane_id)
+            g_object_set(elements->sink, "connector-id", params->connector_id, 
+                "plane-id", params->plane_id, "fullscreen", TRUE, NULL);
+        else
+            g_object_set(elements->sink, "connector-id", params->connector_id,
+                         "fullscreen", TRUE, NULL);
+    }	
 
     return true;
 }
@@ -285,10 +368,37 @@ bool config_gst_elements(struct _Params *params, struct _GSTELES *elements) {
  */
 bool link_gst_elements(struct _GSTELES *elements, GstElement *pipeline) {
     
-    if (elements == NULL || pipeline == NULL)
+    if (elements == NULL || pipeline == NULL) {
         return false;
+	}
 
-    if(elements->depay) {
+	if (elements->decoder && g_str_has_prefix(GST_OBJECT_NAME(elements->decoder), "_decodebin")) {
+    /* 1. 先加入 pipeline（非常关键） */
+    gst_bin_add_many(GST_BIN(pipeline),
+                     elements->source,
+                     elements->depay,
+                     elements->decoder,
+                     elements->sink,
+                     NULL);
+
+    /* 2. rtspsrc  depay（动态 pad） */
+    g_signal_connect(elements->source,
+                     "pad-added",
+                     G_CALLBACK(on_rtsp_pad_added),
+                     elements->depay);
+
+    /* 3. depay  decodebin（静态 link，安全） */
+    if (!gst_element_link(elements->depay, elements->decoder)) {
+        g_printerr("Failed to link depay to decodebin\n");
+        return false;
+    }
+
+    /* 4. decodebin  waylandsink（动态 pad） */
+    g_signal_connect(elements->decoder,
+                     "pad-added",
+                     G_CALLBACK(on_decodebin_pad_added),
+                     elements->sink);
+    } else if(elements->depay) {
         /* RTSP pipeline */
         gst_bin_add_many(GST_BIN(pipeline),
                          elements->source, elements->depay,
