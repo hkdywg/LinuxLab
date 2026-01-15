@@ -50,7 +50,7 @@ This project is suitable for **BSP development**, **automotive IVI/HUD**, and **
 - Play a single RTSP video stream on three screens.(waylandsink)
 
 ```
-	./dst_dec_display -i rtsp://172.29.4.196:8554/phud_demo
+	./dst_dec_display -w -u rtsp://172.29.4.196:8554/phud_demo
 ```
 
 - gst_dec_diplay usage help
@@ -59,19 +59,19 @@ This project is suitable for **BSP development**, **automotive IVI/HUD**, and **
 	root@RK3576-Tronlong:~# ./gst_dec_display --help
 	Usage: gst_dec_display [options]
 	Options:
-	   -c | --connector-id     Select the connector-id.
+	   -c | --connector-id     Select the connector-id.        
 	   -p | --plane-id         Select the plane-id.
-	   -x | --h26x             Select h264 or h265 parse
+	   -x | --h26x             Select h264 or h265 parse       
 	   -l | --location         The file path
 	   -u | --url              The RTSP url
-	   -i | --uri              Use wayland not kmssink, set uri
+	   -w | --wayland          Use wayland not kmssink
 	   -r | --replay           Replay video
 	   -v | --version          Version Info.
 	   --help                  Show this message.
 
 
 	e.g. :
-		   ./gst_dec_display -c 208 -p 57  -x h264 -l test.mp4
+		   ./gst_dec_display -c 208 -p 57  -x h264 -l test.mp4 
 ```
 
 ##  Project Structure
