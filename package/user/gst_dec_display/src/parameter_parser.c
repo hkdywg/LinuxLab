@@ -1,5 +1,3 @@
-/* Copyright 2019 Tronlong Elec. Tech. Co. Ltd. All Rights Reserved. */
-
 #include "parameter_parser.h"
 
 #include <stdio.h>
@@ -10,16 +8,16 @@
 #include <getopt.h>
 #include <libgen.h>
 
-const char * const VERSION = "0.1.0";
+const char * const VERSION = "1.0.0";
 
-static const char short_opts [] = ":l:u:i:x:c:p:rvh";
+static const char short_opts [] = ":l:u:x:c:p:wrvh";
 static const struct option long_opts [] = {
     { "connector-id",   required_argument,      NULL, 'c' },
     { "plane-id",       required_argument,      NULL, 'p' },
     { "h26x",           required_argument,      NULL, 'x' },
     { "location",       required_argument,      NULL, 'l' },
     { "url",            required_argument,      NULL, 'u' },
-    { "uri",            required_argument,      NULL, 'i' },
+    { "wayland",        no_argument,            NULL, 'w' },
     { "replay",         no_argument,            NULL, 'r' },
     { "version",        no_argument,            NULL, 'v' },
     { "help",           no_argument,            NULL, 0 },
@@ -34,7 +32,7 @@ static void usage(char *prog_name) {
             "   -x | --h26x             Select h264 or h265 parse\n"
             "   -l | --location         The file path \n"
             "   -u | --url              The RTSP url\n"
-            "   -i | --uri              Use wayland not kmssink, set uri\n"
+            "   -w | --wayland          Use wayland not kmssink\n"
             "   -r | --replay           Replay video\n"
             "   -v | --version          Version Info.\n"
             "   --help                  Show this message.\n\n"
@@ -75,9 +73,8 @@ bool parse_parameter(struct _Params *params, int argc, char **argv) {
             params->is_rtsp = true;
             params->rtsp_url = optarg;
             break;
-        case 'i':
+        case 'w':
             params->use_wayland = true;
-            params->uri = optarg;
             break;
         case 0: /* --help */
             usage(basename(argv[0]));

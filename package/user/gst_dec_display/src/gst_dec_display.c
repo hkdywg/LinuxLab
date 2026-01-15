@@ -1,4 +1,3 @@
-/* Copyright 2023 Tronlong Elec. Tech. Co. Ltd. All Rights Reserved. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -7,30 +6,114 @@
 
 #include "parameter_parser.h"
 
-struct _GSTHANDLE {
+struct gst_handle {
     GMainLoop *loop;
     GstBus *bus;
     GstElement *pipeline;
     GstMessage *msg;
 };
 
-struct _GSTELES {
-    GstElement *source,
-               *demuxer,
-               *depay,
-               *parser,
-               *decoder,
-               *sink;
+struct gst_eles {
+    GstElement *source;
+    GstElement *demuxer;
+    GstElement *depay;
+    GstElement *parser;
+    GstElement *decoder;
+    GstElement *sink;
 };
 
-struct GSTOBJ {
-    struct _GSTHANDLE handle;
-    struct _GSTELES elements;
+struct gst_obj {
+    struct gst_handle handle;
+    struct gst_eles elements;
 };
 
-static struct GSTOBJ *gstobj = NULL;
+struct rtsp_probe_ctx {
+    GMainLoop *loop;
+    gboolean   success;
+};
+
+
+static struct gst_obj *gst_obj = NULL;
 static bool g_quit = false;
 static bool g_replay = false;
+static bool g_reconnect = false;
+
+
+static gboolean probe_bus_cb(GstBus *bus, GstMessage *msg, gpointer data)
+{
+    struct rtsp_probe_ctx *ctx = data;
+
+    switch (GST_MESSAGE_TYPE(msg)) {
+    case GST_MESSAGE_ERROR: {
+        GError *err = NULL;
+        gst_message_parse_error(msg, &err, NULL);
+        g_printerr("RTSP probe error: %s\n", err->message);
+        g_error_free(err);
+        g_main_loop_quit(ctx->loop);
+        break;
+    }
+    case GST_MESSAGE_ASYNC_DONE:
+        ctx->success = TRUE;
+        g_main_loop_quit(ctx->loop);
+        break;
+    default:
+        break;
+    }
+    return TRUE;
+}
+
+static void pad_added_cb(GstElement *src, GstPad *pad, gpointer user_data)
+{
+    GstElement *sink = user_data;
+    GstPad *sinkpad = gst_element_get_static_pad(sink, "sink");
+
+    if (!gst_pad_is_linked(sinkpad)) {
+        gst_pad_link(pad, sinkpad);
+    }
+    gst_object_unref(sinkpad);
+}
+
+static bool rtsp_server_ready(const char *url)
+{
+    GstElement *pipeline, *src, *sink;
+    GstBus *bus;
+    struct rtsp_probe_ctx ctx = {0};
+
+    pipeline = gst_pipeline_new("rtsp-probe");
+    src = gst_element_factory_make("rtspsrc", NULL);
+    sink = gst_element_factory_make("fakesink", NULL);
+
+    if (!pipeline || !src || !sink)
+        return false;
+
+    ctx.loop = g_main_loop_new(NULL, FALSE);
+    ctx.success = FALSE;
+
+    g_object_set(src,
+        "location", url,
+        "latency", 50,
+        NULL);
+
+    g_signal_connect(src, "pad-added", G_CALLBACK(pad_added_cb), sink);
+
+    gst_bin_add_many(GST_BIN(pipeline), src, sink, NULL);
+
+    bus = gst_element_get_bus(pipeline);
+    gst_bus_add_watch(bus, probe_bus_cb, &ctx);
+    gst_object_unref(bus);
+
+    gst_element_set_state(pipeline, GST_STATE_PLAYING);
+
+    //g_timeout_add(timeout_ms, (GSourceFunc)g_main_loop_quit, ctx.loop);
+    g_main_loop_run(ctx.loop);
+
+    gst_element_set_state(pipeline, GST_STATE_NULL);
+    gst_object_unref(pipeline);
+    g_main_loop_unref(ctx.loop);
+
+    return ctx.success;
+}
+
 /* This thread is used to calculate the time spent */
 static void *timing_thread(void *arg) {
     static struct timeval t_start, t_current;
@@ -89,7 +172,7 @@ static void on_rtsp_pad_added(GstElement *src, GstPad *pad, gpointer data)
         return;
     }
 
-    GstCaps *caps = gst_pad_get_current_caps(pad); // <-- 使用 get_current_caps
+    GstCaps *caps = gst_pad_get_current_caps(pad);
     if (!caps)
         caps = gst_pad_query_caps(pad, NULL);
 
@@ -115,14 +198,13 @@ static void on_rtsp_pad_added(GstElement *src, GstPad *pad, gpointer data)
  * Gstreamer pipeline message bus callback function
  */
 static gboolean bus_call(GstBus *bus, GstMessage *msg, gpointer data) {
-	struct GSTOBJ *obj = (struct GSTOBJ *)data;
+	struct gst_obj *obj = (struct gst_obj *)data;
 	GMainLoop *loop = (&obj->handle)->loop;
     gchar  *debug;
     GError *error;
 
     switch (GST_MESSAGE_TYPE(msg)) {
 	case GST_MESSAGE_SEGMENT_DONE:
-        /* 一个 segment 播放完，立刻从 0 开始下一个 */
 		gst_element_seek(
 			obj->handle.pipeline,
 			1.0,
@@ -132,7 +214,6 @@ static gboolean bus_call(GstBus *bus, GstMessage *msg, gpointer data) {
 			GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 		break;
     case GST_MESSAGE_EOS:
-        /* 一个 segment 播放完，立刻从 0 开始下一个 */
         if(g_replay) {
             g_print("End of stream, restarting ...\n");
             gst_element_seek(
@@ -149,11 +230,13 @@ static gboolean bus_call(GstBus *bus, GstMessage *msg, gpointer data) {
         break;
 
     case GST_MESSAGE_ERROR:
-        gst_message_parse_error(msg, &error, &debug);
-        g_free(debug);
-        printf("Error: %s\n", error->message);
-        g_error_free(error);
-        g_main_loop_quit(loop);
+		gst_message_parse_error(msg, &error, &debug);
+		g_printerr("RTSP error: %s\n", error->message);
+		g_error_free(error);
+		g_free(debug);
+
+		g_main_loop_quit(loop);   
+		g_reconnect = true;       
         break;
 
     default:
@@ -228,9 +311,9 @@ static void on_decodebin_pad_added(GstElement *decodebin,
  */
 static void sig_handle(int signal) {
     printf("\n\n\r\033[k");
-    if (gstobj != NULL)
+    if (gst_obj != NULL)
     {
-         g_main_loop_quit(gstobj->handle.loop);
+         g_main_loop_quit(gst_obj->handle.loop);
     }
     g_quit = true;
     sleep(1);
@@ -239,13 +322,11 @@ static void sig_handle(int signal) {
 /**
  * initialize gst object
  */
-bool initialize_gst(int argc, char **argv, struct _GSTHANDLE *handle) {
+bool initialize_gst(struct gst_handle *handle) {
     
     if (handle == NULL)
         return false;
 
-    /* Initialization of gstreamer */
-    gst_init(&argc, &argv);
     handle->loop = g_main_loop_new(NULL, FALSE);
 
     /* Create a new pipeline */
@@ -259,37 +340,43 @@ bool initialize_gst(int argc, char **argv, struct _GSTHANDLE *handle) {
 /**
  * Create the elements 
  */
-bool make_gst_elements(struct _GSTELES *elements , struct _Params *params) {
+bool make_gst_elements(struct gst_eles *elements , struct _Params *params) {
     
     if (params == NULL || elements == NULL) {
         return false;
 	}
 
-    if(params->use_wayland) {
-        // 使用 uridecodebin + waylandsink
-        //elements->source = gst_element_factory_make("uridecodebin", "_uridecodebin");
-        elements->source  = gst_element_factory_make("rtspsrc", "_rtspsrc");
-        elements->depay   = gst_element_factory_make("rtph264depay", "_rtph264depay");
-        elements->decoder = gst_element_factory_make("decodebin", "_decodebin");
-        elements->sink    = gst_element_factory_make("waylandsink", "_waylandsink");
-
-        if (!elements->source || !elements->sink || !elements->decoder || !elements->depay) {
-            printf("Failed to create uridecodebin or waylandsink\n");
-            return false;
-        }
-    } else if(params->is_rtsp) {
+    if(params->is_rtsp) {
         /* Create the elements */
         elements->source        = gst_element_factory_make("rtspsrc", "_rtspsrc");
         elements->depay         = gst_element_factory_make("rtph264depay", "_rtph264depay");
-        elements->parser        = gst_element_factory_make("h264parse", "_h264parse");
-        elements->decoder       = gst_element_factory_make("mppvideodec", "_mppvideodec");
-        elements->sink          = gst_element_factory_make("kmssink", "_kmssink");
+        if(params->use_wayland) {
+            elements->decoder   = gst_element_factory_make("decodebin", "_decodebin");
+            elements->sink      = gst_element_factory_make("waylandsink", "_waylandsink");
+            if (!elements->source || !elements->sink || !elements->decoder || !elements->depay) {
+                printf("Failed to create uridecodebin or waylandsink\n");
+                return false;
+            }
+        } else {
+            elements->parser    = gst_element_factory_make("h264parse", "_h264parse");
+            elements->decoder   = gst_element_factory_make("mppvideodec", "_mppvideodec");
+            elements->sink      = gst_element_factory_make("kmssink", "_kmssink");
+            if (!elements->source || !elements->sink || !elements->decoder || !elements->depay || !elements->parser) {
+                printf("Failed to create rtsp sink\n");
+                return false;
+            }
+        }
     } else {
         /* Initialization of elements */
-        elements->source        = gst_element_factory_make("filesrc", "_filesrc");
-        elements->demuxer       = gst_element_factory_make("qtdemux", "_qtdemux");
-        elements->decoder       = gst_element_factory_make("mppvideodec", "_mppvideodec");
-        elements->sink          = gst_element_factory_make("kmssink", "_kmssink");
+        elements->source      = gst_element_factory_make("filesrc", "_filesrc");
+        elements->demuxer     = gst_element_factory_make("qtdemux", "_qtdemux");
+        if(params->use_wayland) {
+            elements->decoder = gst_element_factory_make("decodebin", "_decodebin");
+            elements->sink    = gst_element_factory_make("waylandsink", "_waylandsink");
+        } else {
+            elements->decoder = gst_element_factory_make("mppvideodec", "_mppvideodec");
+            elements->sink    = gst_element_factory_make("kmssink", "_kmssink");
+        }
 
         /*Determine the parameters entered by the user*/
         if(strcmp(params->h26x,"h264") == 0 )
@@ -313,7 +400,7 @@ bool make_gst_elements(struct _GSTELES *elements , struct _Params *params) {
 /**
  * check if element was created successfully
  */
-bool check_gst_elements(struct _GSTELES *elements) {
+bool check_gst_elements(struct gst_eles *elements) {
         
     if (elements == NULL)
     return false;
@@ -335,14 +422,12 @@ bool check_gst_elements(struct _GSTELES *elements) {
 /**
  * config elements
  */
-bool config_gst_elements(struct _Params *params, struct _GSTELES *elements) {
+bool config_gst_elements(struct _Params *params, struct gst_eles *elements) {
 
     if (params == NULL || elements == NULL)
         return false;
 
-    if (params->use_wayland) {
-		g_object_set(G_OBJECT(elements->source), "location", params->uri, NULL);
-    } else if(params->is_rtsp) {
+    if(params->is_rtsp) {
         /* Set rtsp url*/
 		g_object_set(G_OBJECT(elements->source), "location", params->rtsp_url, NULL);
     } else {
@@ -366,38 +451,38 @@ bool config_gst_elements(struct _Params *params, struct _GSTELES *elements) {
 /**
  * link elements
  */
-bool link_gst_elements(struct _GSTELES *elements, GstElement *pipeline) {
+bool link_gst_elements(struct gst_eles *elements, GstElement *pipeline) {
     
     if (elements == NULL || pipeline == NULL) {
         return false;
 	}
 
 	if (elements->decoder && g_str_has_prefix(GST_OBJECT_NAME(elements->decoder), "_decodebin")) {
-    /* 1. 先加入 pipeline（非常关键） */
-    gst_bin_add_many(GST_BIN(pipeline),
-                     elements->source,
-                     elements->depay,
-                     elements->decoder,
-                     elements->sink,
-                     NULL);
+        /* 1. add pipeline */
+        gst_bin_add_many(GST_BIN(pipeline),
+                         elements->source,
+                         elements->depay,
+                         elements->decoder,
+                         elements->sink,
+                         NULL);
 
-    /* 2. rtspsrc  depay（动态 pad） */
-    g_signal_connect(elements->source,
-                     "pad-added",
-                     G_CALLBACK(on_rtsp_pad_added),
-                     elements->depay);
+        /* 2. rtspsrc  depay（dynamic pad） */
+        g_signal_connect(elements->source,
+                         "pad-added",
+                         G_CALLBACK(on_rtsp_pad_added),
+                         elements->depay);
 
-    /* 3. depay  decodebin（静态 link，安全） */
-    if (!gst_element_link(elements->depay, elements->decoder)) {
-        g_printerr("Failed to link depay to decodebin\n");
-        return false;
-    }
+        /* 3. depay  decodebin（static link） */
+        if (!gst_element_link(elements->depay, elements->decoder)) {
+            g_printerr("Failed to link depay to decodebin\n");
+            return false;
+        }
 
-    /* 4. decodebin  waylandsink（动态 pad） */
-    g_signal_connect(elements->decoder,
-                     "pad-added",
-                     G_CALLBACK(on_decodebin_pad_added),
-                     elements->sink);
+        /* 4. decodebin  waylandsink(dynamic pad） */
+        g_signal_connect(elements->decoder,
+                         "pad-added",
+                         G_CALLBACK(on_decodebin_pad_added),
+                         elements->sink);
     } else if(elements->depay) {
         /* RTSP pipeline */
         gst_bin_add_many(GST_BIN(pipeline),
@@ -434,7 +519,7 @@ bool link_gst_elements(struct _GSTELES *elements, GstElement *pipeline) {
     return true;
 }
 
-bool play_gst_pipeline(struct _GSTHANDLE *handle) {
+bool play_gst_pipeline(struct gst_handle *handle) {
     pthread_t id;
     gboolean ret;
 
@@ -443,7 +528,7 @@ bool play_gst_pipeline(struct _GSTHANDLE *handle) {
 
     /* Get pipeline message bus and monitoring messages */
     handle->bus = gst_pipeline_get_bus(GST_PIPELINE(handle->pipeline));
-    gst_bus_add_watch(handle->bus, bus_call, gstobj);
+    gst_bus_add_watch(handle->bus, bus_call, gst_obj);
     gst_object_unref(handle->bus);
 
     /* Start the pipeline */
@@ -463,17 +548,25 @@ bool play_gst_pipeline(struct _GSTHANDLE *handle) {
 /**
  * Release gstreamer pipeline
  */
-void release_gst(struct _GSTHANDLE *handle) {
-    /* clean up */
-    gst_element_set_state(handle->pipeline, GST_STATE_NULL);
+void release_gst(struct gst_handle *handle) {
+    if (!handle)
+        return;
 
-    /* Release gst pipeline*/
-    gst_object_unref(GST_OBJECT(handle->pipeline));
+    if (handle->pipeline) {
+        gst_element_set_state(handle->pipeline, GST_STATE_NULL);
+        gst_object_unref(handle->pipeline);
+        handle->pipeline = NULL;
+    }
 
-    /* Quit loop */
-    g_main_loop_unref(handle->loop);
+    if (handle->loop) {
+        g_main_loop_unref(handle->loop);
+        handle->loop = NULL;
+    }
 }
 
+/*
+ * gst_dec_display main function
+ */
 int main(int argc, char *argv[]) {
 
     gboolean ret; 
@@ -490,59 +583,79 @@ int main(int argc, char *argv[]) {
     /* Ctrl+c handler */
     signal(SIGINT, sig_handle);
 
-    /*gstobj Apply for heap space*/
-    gstobj = (struct GSTOBJ *)malloc(sizeof(struct GSTOBJ));
-    memset(gstobj, 0, sizeof(struct GSTOBJ));
+    /*gst_obj Apply for heap space*/
+    gst_obj = (struct gst_obj *)malloc(sizeof(struct gst_obj));
+    memset(gst_obj, 0, sizeof(struct gst_obj));
 
     /* Initialization of gstreamer */
-    ret = initialize_gst(argc, argv, &gstobj->handle);
-    if (! ret) {
-        printf("\n Initialization failed \n");
-        goto err_release;
-    }
+    gst_init(&argc, &argv);
 
-    /* Create elements */
-    ret = make_gst_elements(&gstobj->elements, &params);
-    if (! ret) {
-        printf("\n Make elements failed\n\n");
-        goto err_release;
-    }
+    while(!g_quit) {
+        if(params.is_rtsp) {
+            while(!g_quit && !rtsp_server_ready(params.rtsp_url)) {
+                sleep(1);
+            }
+            if(g_quit)
+                break;
+        }
 
-    /* Check creation of elements */
-    ret = check_gst_elements(&gstobj->elements);
-    if (! ret) {
-        printf("\n Elements error in check \n");
-        goto err_release;
-    }
+        /* Initialization of gstreamer */
+        ret = initialize_gst( &gst_obj->handle);
+        if (! ret) {
+            printf("\n Initialization failed \n");
+            goto err_release;
+        }
 
-    /* Configuration elements */
-    ret = config_gst_elements(&params, &gstobj->elements);
-    if (! ret) {
-        printf("\n Config elements failed \n");
-        goto err_release;
-    }
+        /* Create elements */
+        ret = make_gst_elements(&gst_obj->elements, &params);
+        if (! ret) {
+            printf("\n Make elements failed\n\n");
+            goto err_release;
+        }
 
-    /* Link elements into pipeline */
-    ret = link_gst_elements( &gstobj->elements,gstobj->handle.pipeline);
-    if (! ret) {
-        printf("\n Link elements failed \n");
-        goto err_release;
-    }
+        /* Check creation of elements */
+        ret = check_gst_elements(&gst_obj->elements);
+        if (! ret) {
+            printf("\n Elements error in check \n");
+            goto err_release;
+        }
 
-    /* Play the pipeline */
-    ret = play_gst_pipeline(&gstobj->handle);
-    if (! ret) {
-        printf(" \n Play the pipeline failed \n");
-        goto err_release;
-    }
+        /* Configuration elements */
+        ret = config_gst_elements(&params, &gst_obj->elements);
+        if (! ret) {
+            printf("\n Config elements failed \n");
+            goto err_release;
+        }
 
-    /* Create loop, keep listen for pipeline event */
-    g_main_loop_run(gstobj->handle.loop);
+        /* Link elements into pipeline */
+        ret = link_gst_elements( &gst_obj->elements,gst_obj->handle.pipeline);
+        if (! ret) {
+            printf("\n Link elements failed \n");
+            goto err_release;
+        }
+
+        /* Play the pipeline */
+        ret = play_gst_pipeline(&gst_obj->handle);
+        if (! ret) {
+            printf(" \n Play the pipeline failed \n");
+            goto err_release;
+        }
+
+        /* Create loop, keep listen for pipeline event */
+        g_main_loop_run(gst_obj->handle.loop);
+
+        /* Release gst pipeline*/
+        release_gst(&gst_obj->handle);
+        
+        if(!g_reconnect || g_quit) {
+            break;
+		}
+    }
 
 err_release:
     /* Release gst pipeline*/
-    release_gst(&gstobj->handle);
-    free(gstobj);
+    release_gst(&gst_obj->handle);
+    free(gst_obj);
     if (! ret)
         return -1;
     printf("Exit\n");

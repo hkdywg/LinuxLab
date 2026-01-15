@@ -1,5 +1,3 @@
-/* Copyright 2019 Tronlong Elec. Tech. Co. Ltd. All Rights Reserved. */
-
 #ifndef PARAMETER_PARSER_H
 #define PARAMETER_PARSER_H
 
@@ -12,11 +10,9 @@ extern "C" {
 #endif
 
 struct _Params {
-    
     char    *location;
     char    *h26x;
     char    *rtsp_url;
-	char 	*uri;
     int     connector_id;
     int     plane_id;
     bool    replay;
