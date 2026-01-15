@@ -15,12 +15,16 @@ CXXFLAGS:= $(CFLAGS)
 SOURCE  := $(wildcard ./src/*.c)
 OBJS    := $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
 TARGET  := gst_dec_display
+BUILD_PATH := ./build
 
 .PHONY : clean distclean rebuild
 
 all : $(TARGET)
 
-$(TARGET) : $(SOURCE)
+$(BUILD_PATH):
+	@mkdir -p $(BUILD_PATH)
+
+$(TARGET) : $(SOURCE) $(BUILD_PATH)
 	$(CXX) $(CXXFLAGS) -o ./build/$@ $(SOURCE) $(LDFLAGS) $(LIBS)
 
 rebuild: distclean all
