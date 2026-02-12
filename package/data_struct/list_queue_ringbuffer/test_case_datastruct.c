@@ -11,9 +11,11 @@
  *  published by the Free Software Foundation.
  * */
 #include "list.h"
+#include "queue.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct task_info
 {
@@ -174,10 +176,63 @@ void test_list_cut()
 	printf("================ end test case of list cut operation ================ \n\n");
 }
 
+void queue_test()
+{
+    struct queue_data qdat1, qdat2, qdat3, qdat4;
+    const char *test_data[4] = {
+            (char *) "Working with the kernel development community",
+            (char *) "Kernel Hacking Guides",
+            (char *) "Human Interface Devices",
+            (char *) "Core API Documentation"
+    };
+    struct queue_node *q = (struct queue_node *)malloc(sizeof(struct queue_node));
+
+    queue_init(q);
+
+    qdat1.size = strlen(test_data[0]);
+    qdat1.data = malloc(qdat1.size);
+    memcpy(qdat1.data, test_data[0], qdat1.size);
+    queue_push(q, &qdat1);
+
+
+    qdat2.size = strlen(test_data[1]);
+    qdat2.data = malloc(qdat2.size);
+    memcpy(qdat2.data, test_data[1], qdat2.size);
+    queue_push(q, &qdat2);
+
+    qdat3.size = strlen(test_data[2]);
+    qdat3.data = malloc(qdat3.size);
+    memcpy(qdat3.data, test_data[2], qdat3.size);
+    queue_push(q, &qdat3);
+
+    qdat4.size = strlen(test_data[3]);
+    qdat4.data = malloc(qdat4.size);
+    memcpy(qdat4.data, test_data[3], qdat4.size);
+    queue_push(q, &qdat4);
+
+    while(!queue_empty(q)) {
+        unsigned int size = queue_size(q);
+        struct queue_data *head = queue_head(q);
+        struct queue_data *tail = queue_tail(q);
+
+        printf("qsize = %d, head.size = %d, tail.size = %d, head.data = %s, tail.data = %s\n",
+               size, head->size, tail->size, (char *)head->data, (char *)tail->data);
+        queue_pop(q);
+    }
+
+    free(qdat4.data);
+    free(qdat3.data);
+    free(qdat2.data);
+    free(qdat1.data);
+    free(q);
+}
+
 int main(int argc, char *argv[])
 {
-
 	int opt;
+
+    queue_test();
+
     while ((opt = getopt(argc, argv, "adrlc")) != -1) {
         switch (opt) {
             case 'a':
