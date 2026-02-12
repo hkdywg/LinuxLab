@@ -17,8 +17,8 @@ LOCAL_PATH	:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_TARGET	:= test_case_list
-LOCAL_SRCS		:= $(LOCAL_PATH)/test_case_list.c
+LOCAL_TARGET	:= test_case_datastruct 
+LOCAL_SRCS		:= $(LOCAL_PATH)/test_case_datastruct.c $(LOCAL_PATH)/queue.c
 LOCAL_CFLAGS	:= -Wall -g
 
 include $(BUILD_APP)
