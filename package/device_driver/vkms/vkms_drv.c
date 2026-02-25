@@ -18,8 +18,13 @@
 #include <drm/drm_gem_cma_helper.h>
 #include <linux/hrtimer.h>
 #include <drm/drm_vblank.h>
+#include <linux/platform_device.h>
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_fb_helper.h>
+
+static unsigned int vblank_interval_ns = 16666667;
+module_param(vblank_interval_ns, uint, 0644);
+MODULE_PARM_DESC(vblank_interval_ns, "VBlank interval in nanoseconds (default: 16666667 ns for ~60Hz)");
 
 struct vkms_device {
     struct drm_device drm;
@@ -29,9 +34,6 @@ struct vkms_device {
     struct drm_connector connector;
     struct hrtimer vblank_hrtimer;
 };
-
-/* global vkms defined */
-static struct vkms_device *vkms;
 
 static void vkms_plane_atomic_update(struct drm_plane *plane,
                         struct drm_plane_state *old_state)
@@ -44,7 +46,7 @@ static enum hrtimer_restart vkms_vblank_simulate(struct hrtimer *timer)
     struct vkms_device *vkms = container_of(timer, struct vkms_device, vblank_hrtimer);
 
     drm_crtc_handle_vblank(&vkms->crtc);
-    hrtimer_forward_now(&vkms->vblank_hrtimer, 16666667);
+    hrtimer_forward_now(&vkms->vblank_hrtimer, vblank_interval_ns);
 
     return HRTIMER_RESTART;
 }
@@ -55,7 +57,7 @@ static int vkms_enable_vblank(struct drm_crtc *crtc)
 
     hrtimer_init(&vkms->vblank_hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
     vkms->vblank_hrtimer.function = &vkms_vblank_simulate;
-    hrtimer_start(&vkms->vblank_hrtimer, 16666667, HRTIMER_MODE_REL);
+    hrtimer_start(&vkms->vblank_hrtimer, vblank_interval_ns, HRTIMER_MODE_REL);
 
     return 0;
 }
@@ -155,39 +157,60 @@ static const struct  drm_connector_helper_funcs vkms_conn_helper_funcs = {
     .get_modes = vkms_conn_get_modes,
 };
 
-/************* init plane/crtc/encoder/connector ***********/
-void vkms_output_init(struct vkms_device *vkms)
+static void vkms_plane_init(struct vkms_device *vkms)
 {
     struct drm_device *drm = &vkms->drm;
     struct drm_plane *primary = &vkms->primary;
-    struct drm_crtc *crtc = &vkms->crtc;
-    struct drm_encoder *encoder = &vkms->encoder;
-    struct drm_connector *connector = &vkms->connector;
 
     static const u32 vkms_formats[] = {
         DRM_FORMAT_XRGB8888,
     };
 
-    /* plane init */
     drm_universal_plane_init(drm, primary, 0, &vkms_plane_funcs,
                 vkms_formats, ARRAY_SIZE(vkms_formats), NULL, DRM_PLANE_TYPE_PRIMARY, NULL);
     drm_plane_helper_add(primary, &vkms_primary_helper_funcs);
+}
 
-    /* crtc init */
+static void vkms_crtc_init(struct vkms_device *vkms)
+{
+    struct drm_device *drm = &vkms->drm;
+    struct drm_crtc *crtc = &vkms->crtc;
+    struct drm_plane *primary = &vkms->primary;
+
     drm_crtc_init_with_planes(drm, crtc, primary, NULL,
                         &vkms_crtc_funcs, NULL);
     drm_crtc_helper_add(crtc, &vkms_crtc_helper_funcs);
+}
 
-    /* encoder init */
+static void vkms_encoder_init(struct vkms_device *vkms)
+{
+    struct drm_device *drm = &vkms->drm;
+    struct drm_encoder *encoder = &vkms->encoder;
+
     drm_encoder_init(drm, encoder, &vkms_encoder_funcs,
                 DRM_MODE_ENCODER_VIRTUAL, NULL);
     encoder->possible_crtcs = 1;
+}
 
-    /* connector init */
+static void vkms_connector_init(struct vkms_device *vkms)
+{
+    struct drm_device *drm = &vkms->drm;
+    struct drm_encoder *encoder = &vkms->encoder;
+    struct drm_connector *connector = &vkms->connector;
+
     drm_connector_init(drm, connector, &vkms_connector_funcs, DRM_MODE_CONNECTOR_VIRTUAL);
     drm_connector_helper_add(connector, &vkms_conn_helper_funcs);
     drm_connector_register(connector);
     drm_connector_attach_encoder(connector, encoder);
+}
+
+/************* init plane/crtc/encoder/connector *************/
+void vkms_output_init(struct vkms_device *vkms)
+{
+    vkms_plane_init(vkms);
+    vkms_crtc_init(vkms);
+    vkms_encoder_init(vkms);
+    vkms_connector_init(vkms);
 }
 
 /********************** drm core **************************/
@@ -227,31 +250,86 @@ static void vkms_modeset_init(struct vkms_device *vkms)
     drm_mode_config_reset(drm);
 }
 
-static int __init vkms_init(void)
+static int vkms_probe(struct platform_device *pdev)
 {
-    vkms = kzalloc(sizeof(*vkms), GFP_KERNEL);
-    if(!vkms)
+    struct vkms_device *vkms;
+    int ret;
+
+    vkms = devm_kzalloc(&pdev->dev, sizeof(*vkms), GFP_KERNEL);
+    if (!vkms)
         return -ENOMEM;
 
-    drm_dev_init(&vkms->drm, &vkms_driver, NULL);
+    platform_set_drvdata(pdev, vkms);
+
+    drm_dev_init(&vkms->drm, &vkms_driver, &pdev->dev);
     vkms->drm.irq_enabled = true;
-    drm_vblank_init(&vkms->drm, 1);
+    ret = drm_vblank_init(&vkms->drm, 1);
+    if (ret)
+        goto err_vblank_init;
+
     vkms_modeset_init(vkms);
-    drm_dev_register(&vkms->drm, 0);
+    ret = drm_dev_register(&vkms->drm, 0);
+    if (ret)
+        goto err_drm_dev_register;
+
     drm_fbdev_generic_setup(&vkms->drm, 32);
+
+    return 0;
+
+err_drm_dev_register:
+err_vblank_init:
+    drm_dev_put(&vkms->drm);
+    return ret;
+}
+
+static int vkms_remove(struct platform_device *pdev)
+{
+    struct vkms_device *vkms = platform_get_drvdata(pdev);
+
+    drm_dev_unregister(&vkms->drm);
+    drm_dev_put(&vkms->drm);
+    return 0;
+}
+
+static struct platform_device vkms_pdev = {
+    .name = "vkms",
+    .id = -1,
+};
+
+static struct platform_driver vkms_platform_driver = {
+    .probe = vkms_probe,
+    .remove = vkms_remove,
+    .driver = {
+        .name = "vkms",
+        .owner = THIS_MODULE,
+    },
+};
+
+static int __init vkms_driver_init(void)
+{
+    int ret;
+
+    ret = platform_device_register(&vkms_pdev);
+    if (ret)
+        return ret;
+
+    ret = platform_driver_register(&vkms_platform_driver);
+    if (ret) {
+        platform_device_unregister(&vkms_pdev);
+        return ret;
+    }
 
     return 0;
 }
 
-static void __exit vkms_exit(void)
+static void __exit vkms_driver_exit(void)
 {
-    drm_dev_unregister(&vkms->drm);
-    drm_dev_put(&vkms->drm);
-    kfree(vkms);
+    platform_driver_unregister(&vkms_platform_driver);
+    platform_device_unregister(&vkms_pdev);
 }
 
-module_init(vkms_init);
-module_exit(vkms_exit);
+module_init(vkms_driver_init);
+module_exit(vkms_driver_exit);
 
 
 MODULE_LICENSE("GPL");
