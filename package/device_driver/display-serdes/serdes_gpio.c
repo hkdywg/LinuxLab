@@ -31,8 +31,8 @@ static int serdes_gpio_direction_out(struct gpio_chip *chip, unsigned int offset
     struct serdes *serdes = serdes_gpio->parent->parent;
     int ret;
 
-    if(serdes->chip_data->gpio_ops->direction_out)
-        ret = serdes->chip_data->gpio_ops->direction_out(serdes, offset, value);
+    if(serdes->chip_data->gpio_ops->direction_output)
+        ret = serdes->chip_data->gpio_ops->direction_output(serdes, offset, value);
 
     SERDES_DBG_MFD("%s: %s %s gpio = %d, val = %d\n", __func__, dev_name(serdes->dev),
                    serdes->chip_data->name, offset, value);
@@ -84,8 +84,7 @@ static int serdes_set_config(struct gpio_chip *chip, unsigned int offset,
     return ret;
 }
 
-static int serdes_gpio_to_irq(struct gpio_chip *chip, unsigned int offset,
-                             unsigned long config)
+static int serdes_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
 {
     struct serdes_gpio *serdes_gpio = gpiochip_get_data(chip);
     struct serdes *serdes = serdes_gpio->parent->parent;
@@ -133,8 +132,6 @@ static void serdes_gpio_dbg_show(struct seq_file *s, struct gpio_chip *chip)
 #else
 #define serdes_gpio_dbg_show NULL
 #endif
-
-
 
 static const struct gpio_chip serdes_gpio_chip = {
     .owner              = THIS_MODULE,

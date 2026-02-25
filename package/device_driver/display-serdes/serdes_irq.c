@@ -25,7 +25,7 @@ static irqreturn_t serdes_bridge_lock_irq_handler(int irq, void *arg)
     return IRQ_HANDLED;
 }
 
-static irqreturn_t serdes_bridge_lock_irq_handler(int irq, void *arg)
+static irqreturn_t serdes_bridge_err_irq_handler(int irq, void *arg)
 {
     struct serdes *serdes = arg;
     int ret;
@@ -53,7 +53,7 @@ int serdes_irq_init(struct serdes *serdes)
         return dev_err_probe(serdes->dev, PTR_ERR(serdes->lock_gpio),
                              "Failed to get serdes lock GPIO\n");
     if(serdes->lock_gpio) {
-        serdes->lock_gpio->label = devm_kasprintf(serdes->dev, GFP_KERNEL,
+        char *label = devm_kasprintf(serdes->dev, GFP_KERNEL,
                                     "lock-%s-%s", dev_name(serdes->dev),
                                     serdes->chip_data->name);
         serdes->lock_irq = gpiod_to_irq(serdes->lock_gpio);
@@ -67,7 +67,7 @@ int serdes_irq_init(struct serdes *serdes)
         ret = devm_request_threaded_irq(serdes->dev, serdes->lock_irq, NULL,
                                         serdes_bridge_lock_irq_handler,
                                         IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-                                        serdes->lock_gpio->label, serdes);
+                                        label, serdes);
         if(ret)
             return dev_err_probe(serdes->dev, ret,
                                  "Failed to request serdes lock IRQ\n");
@@ -79,7 +79,7 @@ int serdes_irq_init(struct serdes *serdes)
         return dev_err_probe(serdes->dev, PTR_ERR(serdes->err_gpio),
                              "Failed to get serdes err GPIO\n");
     if(serdes->err_gpio) {
-        serdes->err_gpio->label = devm_kasprintf(serdes->dev, GFP_KERNEL,
+        char *label = devm_kasprintf(serdes->dev, GFP_KERNEL,
                                     "err-%s-%s", dev_name(serdes->dev),
                                     serdes->chip_data->name);
         serdes->err_irq = gpiod_to_irq(serdes->err_gpio);
@@ -87,13 +87,13 @@ int serdes_irq_init(struct serdes *serdes)
             return serdes->err_irq;
 
         SERDES_DBG_MFD("%s %s lock_irq = %d, gpio = %d\n", __func__,
-                       serdes->chip_data->name, serdes->lock_irq,
-                       desc_to_gpio(serdes->lock_gpio));
+                       serdes->chip_data->name, serdes->err_irq,
+                       desc_to_gpio(serdes->err_gpio));
 
-        ret = devm_request_threaded_irq(serdes->dev, serdes->lock_irq, NULL,
+        ret = devm_request_threaded_irq(serdes->dev, serdes->err_irq, NULL,
                                         serdes_bridge_err_irq_handler,
                                         IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-                                        serdes->lock_gpio->label, serdes);
+                                        label, serdes);
         if(ret)
             return dev_err_probe(serdes->dev, ret,
                                  "Failed to request serdes err IRQ\n");

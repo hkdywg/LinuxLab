@@ -104,7 +104,7 @@ static int serdes_panel_split_get_modes(struct drm_panel *panel,
     mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
 
     drm_mode_set_name(mode);
-    drm_mode_probe_add(connector, mode);
+    drm_mode_probed_add(connector, mode);
 
     if(serdes->chip_data->panel_ops && serdes->chip_data->panel_ops->get_modes)
         serdes->chip_data->panel_ops->get_modes(serdes);
@@ -147,7 +147,7 @@ static int serdes_panel_split_parse_dt(struct serdes_panel_split *serdes_panel_s
     serdes_panel_split->height_mm = panel_size[0];
 
     serdes_panel_split->link_rate = link_rate_count_ssc[0];
-    serdes_panel_split->link_count = link_rate_count_ssc[1];
+    serdes_panel_split->lane_count = link_rate_count_ssc[1];
     serdes_panel_split->ssc = link_rate_count_ssc[2];
 
     if(of_find_property(dev->of_node, "panel-size", &len))  {
@@ -166,7 +166,7 @@ static int serdes_panel_split_parse_dt(struct serdes_panel_split *serdes_panel_s
                                     link_rate_count_ssc, len);
         if(!ret) {
             serdes_panel_split->link_rate = link_rate_count_ssc[0];
-            serdes_panel_split->link_count = link_rate_count_ssc[1];
+            serdes_panel_split->lane_count = link_rate_count_ssc[1];
             serdes_panel_split->ssc = link_rate_count_ssc[2];
         }
     }
@@ -246,7 +246,7 @@ static int serdes_panel_split_remove(struct platform_device *pdev)
     if(backlight)
         put_device(&backlight->dev);
 
-    drm_panel_remove(&serdes_panel_split->dev);
+    drm_panel_remove(&serdes_panel_split->panel);
 
     return 0;
 }
@@ -260,7 +260,7 @@ static const struct of_device_id serdes_panel_split_of_match[] = {
 };
 
 static struct platform_driver serdes_panel_split_driver = {
-    .drvier = {
+    .driver = {
         .name = "serdes-panel-split",
         .of_match_table = of_match_ptr(serdes_panel_split_of_match),
     },

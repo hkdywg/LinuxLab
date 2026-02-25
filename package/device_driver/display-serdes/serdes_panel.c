@@ -94,7 +94,7 @@ static int serdes_panel_get_modes(struct drm_panel *panel,
     struct serdes_panel *serdes_panel = to_serdes_panel(panel);
     struct serdes *serdes = serdes_panel->parent;
     struct drm_display_mode *mode;
-    u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
+    u32 bus_format = serdes_panel->bus_format;
     int ret = 1;
 
     connector->display_info.width_mm = serdes_panel->width_mm;
@@ -102,6 +102,10 @@ static int serdes_panel_get_modes(struct drm_panel *panel,
     drm_display_info_set_bus_formats(&connector->display_info, &bus_format, 1);
 
     mode = drm_mode_duplicate(connector->dev, &serdes_panel->mode);
+    if (!mode) {
+        dev_err(serdes->dev, "Failed to duplicate mode\n");
+        return 0;
+    }
     mode->width_mm = serdes_panel->width_mm;
     mode->height_mm = serdes_panel->height_mm;
     mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
@@ -132,9 +136,141 @@ static const struct drm_panel_funcs serdes_panel_funcs = {
     .prepare = serdes_panel_prepare,
     .unprepare = serdes_panel_unprepare,
     .enable = serdes_panel_enable,
-    .display = serdes_panel_disable,
+    .disable = serdes_panel_disable,
     .get_modes = serdes_panel_get_modes,
 };
+
+static void serdes_panel_timing_info(struct device *dev, struct display_timing *dt)
+{
+    /*
+     *
+     *				    Active Video
+     * Video  ______________________XXXXXXXXXXXXXXXXXXXXXX_____________________
+     *	  |<- sync ->|<- back ->|<----- active ----->|<- front ->|<- sync..
+     *	  |	     |	 porch  |		     |	 porch	 |
+     *
+     * HSync _|¯¯¯¯¯¯¯¯¯¯|___________________________________________|¯¯¯¯¯¯¯¯¯
+     *
+     * VSync ¯|__________|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|_________
+    struct display_timing {
+        struct timing_entry pixelclock;
+
+        struct timing_entry hactive;		
+        struct timing_entry hfront_porch;	
+        struct timing_entry hback_porch;	
+        struct timing_entry hsync_len;		
+
+        struct timing_entry vactive;		
+        struct timing_entry vfront_porch;	
+        struct timing_entry vback_porch;	
+        struct timing_entry vsync_len;		
+
+        enum display_flags flags;
+    };
+
+    enum display_flags {
+        DISPLAY_FLAGS_HSYNC_LOW		= BIT(0),
+        DISPLAY_FLAGS_HSYNC_HIGH	= BIT(1),
+        DISPLAY_FLAGS_VSYNC_LOW		= BIT(2),
+        DISPLAY_FLAGS_VSYNC_HIGH	= BIT(3),
+
+        DISPLAY_FLAGS_DE_LOW		= BIT(4),
+        DISPLAY_FLAGS_DE_HIGH		= BIT(5),
+        DISPLAY_FLAGS_PIXDATA_POSEDGE	= BIT(6),
+        DISPLAY_FLAGS_PIXDATA_NEGEDGE	= BIT(7),
+        DISPLAY_FLAGS_INTERLACED	= BIT(8),
+        DISPLAY_FLAGS_DOUBLESCAN	= BIT(9),
+        DISPLAY_FLAGS_DOUBLECLK		= BIT(10),
+        DISPLAY_FLAGS_SYNC_POSEDGE	= BIT(11),
+        DISPLAY_FLAGS_SYNC_NEGEDGE	= BIT(12),
+    };
+
+    struct timing_entry {
+        u32 min;
+        u32 typ;
+        u32 max;
+    };
+    */
+	/* timing info */
+	dev_info(dev, "Parsing display timing from device tree:\n"
+             "--------------------------------------------\n"
+             "Pixel Clock:           %u Hz\n"
+             "Horizontal Active:     %u px\n"
+             "Horizontal Front Porch:%u px\n"
+             "Horizontal Back Porch: %u px\n"
+             "Horizontal Sync Length: %u px\n"
+             "Vertical Active:       %u lines\n"
+             "Vertical Front Porch:  %u lines\n"
+             "Vertical Back Porch:   %u lines\n"
+             "Vertical Sync Length:  %u lines\n",
+             dt->pixelclock.typ,
+             dt->hactive.typ, dt->hfront_porch.typ, dt->hback_porch.typ, dt->hsync_len.typ,
+             dt->vactive.typ, dt->vfront_porch.typ, dt->vback_porch.typ, dt->vsync_len.typ);
+
+    /* HSYNC */
+    if (dt->flags & DISPLAY_FLAGS_HSYNC_HIGH)
+        dev_info(dev, "  HSYNC: active-high\n");
+    else if (dt->flags & DISPLAY_FLAGS_HSYNC_LOW)
+        dev_info(dev, "  HSYNC: active-low\n");
+
+    /* VSYNC */
+    if (dt->flags & DISPLAY_FLAGS_VSYNC_HIGH)
+        dev_info(dev, "  VSYNC: active-high\n");
+    else if (dt->flags & DISPLAY_FLAGS_VSYNC_LOW)
+        dev_info(dev, "  VSYNC: active-low\n");
+
+}
+
+static struct serdes_init_seq *serdes_of_get_init_seq(struct device *dev)
+{
+    struct device_node *np = dev->of_node;
+    struct serdes_init_seq *seq;
+    struct reg_sequence *reg_seq;
+    int len, count, i;
+    u32 *val;
+    int ret;
+
+    if (!of_find_property(np, "panel-init-sequence", &len))
+        return NULL;
+
+    count = len / sizeof(u32);
+    if (count % 2 != 0) {
+        dev_err(dev, "Invalid panel-init-sequence length\n");
+        return NULL;
+    }
+    count /= 2;
+
+    seq = devm_kzalloc(dev, sizeof(*seq), GFP_KERNEL);
+    if (!seq)
+        return NULL;
+
+    reg_seq = devm_kcalloc(dev, count, sizeof(*reg_seq), GFP_KERNEL);
+    if (!reg_seq)
+        return NULL;
+
+    val = kcalloc(count * 2, sizeof(u32), GFP_KERNEL);
+    if (!val)
+        return NULL;
+
+    ret = of_property_read_u32_array(np, "panel-init-sequence", val, count * 2);
+    if (ret) {
+        kfree(val);
+        return NULL;
+    }
+
+    for (i = 0; i < count; i++) {
+        reg_seq[i].reg = val[i * 2];
+        reg_seq[i].def = val[i * 2 + 1];
+        reg_seq[i].delay_us = 0;
+    }
+
+    kfree(val);
+
+    seq->reg_sequence = reg_seq;
+    seq->reg_seq_cnt = count;
+
+    return seq;
+}
 
 static int serdes_panel_parse_dt(struct serdes_panel *serdes_panel)
 {
@@ -142,7 +278,13 @@ static int serdes_panel_parse_dt(struct serdes_panel *serdes_panel)
     struct display_timing dt;
     struct videomode vm;
     int ret, len;
+    const char *mapping;
     unsigned int panel_size[2] = {320, 180};
+
+    serdes_panel->serdes_init_seq = serdes_of_get_init_seq(dev);
+    if (serdes_panel->serdes_init_seq)
+        dev_info(dev, "Found panel-init-sequence with %d items\n", 
+                 serdes_panel->serdes_init_seq->reg_seq_cnt);
 
     serdes_panel->width_mm = panel_size[0];
     serdes_panel->height_mm = panel_size[1];
@@ -161,13 +303,33 @@ static int serdes_panel_parse_dt(struct serdes_panel *serdes_panel)
         }
     }
 
-    dev_info(dev, "panel size %dx%d\n", serdes_panel->width_mm, serdes_panel->height_mm);
-
     ret = of_get_display_timing(dev->of_node, "panel-timing", &dt);
     if(ret < 0) {
         dev_err(dev, "%pOF:serdes no panel-timing node found\n", dev->of_node);
-        return ret;
+        return -ENODEV;
     }
+    serdes_panel_timing_info(dev, &dt);
+
+    ret = of_property_read_string(dev->of_node, "data-mapping", &mapping);
+    if(ret < 0 ) {
+        dev_err(dev, "%pOF: invalid of missing %s DT property\n", 
+                dev->of_node, "data-mapping");
+        return -ENODEV;
+    }
+
+    if (!strcmp(mapping, "jeida-18")) {
+        serdes_panel->bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG;
+    } else if (!strcmp(mapping, "jeida-24")) {
+        serdes_panel->bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA;
+    } else if (!strcmp(mapping, "vesa-24")) {
+        serdes_panel->bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG;
+    } else {
+        dev_err(dev, "%pOF: invalid or missing %s DT property\n",
+            dev->of_node, "data-mapping");
+        return -EINVAL;
+    }
+
+    serdes_panel->data_mirror = of_property_read_bool(dev->of_node, "data-mirror");
     
     videomode_from_timing(&dt, &vm);
     drm_display_mode_from_videomode(&vm, &serdes_panel->mode);
@@ -237,10 +399,10 @@ static int serdes_panel_remove(struct platform_device *pdev)
 }
 
 static const struct of_device_id serdes_panel_of_match[] = {
-    { .compatible =  "maxim,max96781-panel", },
-    { .compatible =  "ti,ds90uh981-panel", },
-    { .compatible =  "ti,ds90uh983-panel", },
-    { .compatible =  "aim,aim951x-panel", },
+    { .compatible =  "maxim,max96752-panel", },
+    { .compatible =  "ti,ds90uh928-panel",   },
+    { .compatible =  "ti,ds90uh968-panel",   },
+    { .compatible =  "aim,aim916x-panel",    },
     { }
 };
 

@@ -41,9 +41,9 @@ static struct mipi_dsi_device *serdes_attach_dsi(struct serdes_bridge *serdes_br
         return dsi;
     }
 
-    dsi->lane = 4;
+    dsi->lanes = 4;
     dsi->format = MIPI_DSI_FMT_RGB888;
-    dsi->mode_flags = MIPI_DST_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE;
+    dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE;
     SERDES_DBG_MFD("%s: %s dsi_mode MIPI_DSI_MODE_VIDEO_SYNC_PULSE 0x%lx",
                    __func__, serdes->chip_data->name, dsi->mode_flags);
 
@@ -56,6 +56,28 @@ static struct mipi_dsi_device *serdes_attach_dsi(struct serdes_bridge *serdes_br
 
     return dsi;
 }
+
+static int connector_get_modes(struct drm_connector *connector)
+{
+    struct serdes_bridge *serdes_bridge = container_of(connector, struct serdes_bridge, connector);
+
+    if(serdes_bridge->base_bridge.funcs->get_modes)
+        return serdes_bridge->base_bridge.funcs->get_modes(&serdes_bridge->base_bridge, connector);
+    else 
+        return 0;
+}
+
+static const struct drm_connector_helper_funcs serdes_bridge_conn_helper_funcs = {
+    .get_modes = connector_get_modes,
+};
+
+static const struct drm_connector_funcs serdes_bridge_conn_funcs = {
+    .atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
+    .atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+    .reset = drm_atomic_helper_connector_reset,
+    .fill_modes = drm_helper_probe_single_connector_modes,
+    .destroy = drm_connector_cleanup,
+};
 
 static int serdes_bridge_attach(struct drm_bridge *bridge,
                         enum drm_bridge_attach_flags flags)
@@ -84,21 +106,50 @@ static int serdes_bridge_attach(struct drm_bridge *bridge,
     if(serdes->chip_data->bridge_ops->attach)
         ret = serdes->chip_data->bridge_ops->attach(serdes);
 
+    if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR) {
+        return ret;
+    }
+
+    if (!bridge->encoder) {
+        dev_err(serdes_bridge->dev, "Missing encoder\n");
+        return -ENODEV;
+    }
+
+    if (!serdes_bridge->next_bridge) {
+        struct drm_connector *connector = &serdes_bridge->connector;
+
+        ret = drm_connector_init(bridge->dev, connector, &serdes_bridge_conn_funcs,
+                                 bridge->type);
+        if (ret) {
+            dev_err(serdes_bridge->dev, "Failed to initialize connector\n");
+            return ret;
+        }
+
+        drm_connector_helper_add(connector, &serdes_bridge_conn_helper_funcs);
+
+        ret = drm_connector_attach_encoder(connector, bridge->encoder);
+        if (ret) {
+            dev_err(serdes_bridge->dev, "Failed to attach connector to encoder\n");
+            drm_connector_cleanup(connector);
+            return ret;
+        }
+    }
+
     return ret;
 }
 
-static void serdes_bridge_datach(struct drm_bridge *bridge)
+static void serdes_bridge_detach(struct drm_bridge *bridge)
 {
 
 }
 
 static void serdes_detach_dsi(struct serdes_bridge *serdes_bridge)
 {
-    mipi_dsi_datach(serdes_bridge->dsi);
+    mipi_dsi_detach(serdes_bridge->dsi);
     mipi_dsi_device_unregister(serdes_bridge->dsi);
 }
 
-static void serde_bridge_disable(struct drm_bridge *bridge)
+static void serdes_bridge_disable(struct drm_bridge *bridge)
 {
     struct serdes_bridge *serdes_bridge = to_serdes_bridge(bridge);
     struct serdes *serdes = serdes_bridge->parent;
@@ -115,7 +166,7 @@ static void serde_bridge_disable(struct drm_bridge *bridge)
     SERDES_DBG_MFD("%s: ret = %d\n", __func__, ret);
 }
 
-static void serde_bridge_post_disable(struct drm_bridge *bridge)
+static void serdes_bridge_post_disable(struct drm_bridge *bridge)
 {
     struct serdes_bridge *serdes_bridge = to_serdes_bridge(bridge);
     struct serdes *serdes = serdes_bridge->parent;
@@ -132,7 +183,7 @@ static void serde_bridge_post_disable(struct drm_bridge *bridge)
     SERDES_DBG_MFD("%s: ret = %d\n", __func__, ret);
 }
 
-static void serde_bridge_enable(struct drm_bridge *bridge)
+static void serdes_bridge_enable(struct drm_bridge *bridge)
 {
     struct serdes_bridge *serdes_bridge = to_serdes_bridge(bridge);
     struct serdes *serdes = serdes_bridge->parent;
@@ -154,7 +205,7 @@ static void serde_bridge_enable(struct drm_bridge *bridge)
                     serdes->chip_data->name, ret);
 }
 
-static void serde_bridge_pre_enable(struct drm_bridge *bridge)
+static void serdes_bridge_pre_enable(struct drm_bridge *bridge)
 {
     struct serdes_bridge *serdes_bridge = to_serdes_bridge(bridge);
     struct serdes *serdes = serdes_bridge->parent;
@@ -206,32 +257,56 @@ static int serdes_bridge_get_modes(struct drm_bridge *bridge,
     struct serdes_bridge *serdes_bridge = to_serdes_bridge(bridge);
     struct serdes *serdes = serdes_bridge->parent;
     int ret = 0;
+    int num_modes = 0;
 
-    if(serdes->chip_data->bridge_ops->get_modes)
+    if(serdes->chip_data->bridge_ops->get_modes) {
         ret = serdes->chip_data->bridge_ops->get_modes(serdes);
+        if (ret > 0)
+            num_modes += ret;
+    }
 
-    if(serdes_bridge->next_bridge)
+    if(serdes_bridge->next_bridge) {
         ret = drm_bridge_get_modes(serdes_bridge->next_bridge, connector);
+        if (ret > 0)
+            num_modes += ret;
+    }
 
-    if(serdes_bridge->panel)
+    if(serdes_bridge->panel) {
         ret = drm_panel_get_modes(serdes_bridge->panel, connector);
+        if (ret > 0)
+            num_modes += ret;
+    }
 
     SERDES_DBG_MFD("%s:%s %s, node = %s\n", __func__, dev_name(serdes->dev),
             serdes->chip_data->name, serdes_bridge->dev->of_node->name);
+    
+    return num_modes;
+}
 
-    return ret;
+static void serdes_bridge_mode_set(struct drm_bridge *bridge,
+                                   const struct drm_display_mode *mode,
+                                   const struct drm_display_mode *adjusted_mode)
+{
+    struct serdes_bridge *serdes_bridge = to_serdes_bridge(bridge);
+    struct serdes *serdes = serdes_bridge->parent;
+
+    drm_mode_copy(&serdes_bridge->mode, adjusted_mode);
+
+    if (serdes->chip_data->bridge_ops->mode_set)
+        serdes->chip_data->bridge_ops->mode_set(serdes, mode, adjusted_mode);
 }
 
 static const struct drm_bridge_funcs serdes_bridge_funcs = {
     .attach = serdes_bridge_attach,
     .detach = serdes_bridge_detach,
+    .mode_set = serdes_bridge_mode_set,
     .disable = serdes_bridge_disable,
     .post_disable = serdes_bridge_post_disable,
     .pre_enable = serdes_bridge_pre_enable,
     .enable = serdes_bridge_enable,
     .detect = serdes_bridge_detect,
     .get_modes = serdes_bridge_get_modes,
-    .atomic_get_input_bus_fmts = drm_atomic_helper_bridge_propagete_bus_fmt,
+    .atomic_get_input_bus_fmts = drm_atomic_helper_bridge_propagate_bus_fmt,
     .atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
     .atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
     .atomic_reset = drm_atomic_helper_bridge_reset,
@@ -307,9 +382,9 @@ static int serdes_bridge_probe(struct platform_device *pdev)
     return 0;
 }
 
-static serdes_bridge_remove(struct platform_device *pdev)
+static int serdes_bridge_remove(struct platform_device *pdev)
 {
-    struct serdes_bridge *serdes_bridge = pltform_get_drvdata(pdev);
+    struct serdes_bridge *serdes_bridge = platform_get_drvdata(pdev);
 
     if(serdes_bridge->sel_mipi)
         serdes_detach_dsi(serdes_bridge);
@@ -346,8 +421,9 @@ static void __exit serdes_bridge_exit(void)
 {
     platform_driver_unregister(&serdes_bridge_driver);
 }
-module_exit(serdes_bridge_driver)
+module_exit(serdes_bridge_exit);
 
 MODULE_AUTHOR("weigenyin");
 MODULE_DESCRIPTION("display bridge interface for different serdes");
 MODULE_LICENSE("GPL");
+

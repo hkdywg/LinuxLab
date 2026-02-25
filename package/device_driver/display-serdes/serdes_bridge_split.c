@@ -9,12 +9,12 @@
 */
 #include "display_serdes_core.h"
 
-static struct serdes_bridge *to_serdes_bridge_split(struct drm_bridge *bridge)
+static struct serdes_bridge_split *to_serdes_bridge_split(struct drm_bridge *bridge)
 {
     return container_of(bridge, struct serdes_bridge_split, base_bridge);
 }
 
-static struct mipi_dsi_device *serdes_attach_dsi(struct serdes_bridge *serdes_bridge,
+static struct mipi_dsi_device *serdes_attach_dsi(struct serdes_bridge_split *serdes_bridge,
                                         struct device_node *remote_node)
 {
     struct mipi_dsi_device_info info = { "serdes", 0, NULL };
@@ -41,9 +41,9 @@ static struct mipi_dsi_device *serdes_attach_dsi(struct serdes_bridge *serdes_br
         return dsi;
     }
 
-    dsi->lane = 4;
+    dsi->lanes = 4;
     dsi->format = MIPI_DSI_FMT_RGB888;
-    dsi->mode_flags = MIPI_DST_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE;
+    dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE;
     SERDES_DBG_MFD("%s: %s dsi_mode MIPI_DSI_MODE_VIDEO_SYNC_PULSE 0x%lx",
                    __func__, serdes->chip_data->name, dsi->mode_flags);
 
@@ -87,18 +87,18 @@ static int serdes_bridge_split_attach(struct drm_bridge *bridge,
     return ret;
 }
 
-static void serdes_bridge_split_datach(struct drm_bridge *bridge)
+static void serdes_bridge_split_detach(struct drm_bridge *bridge)
 {
 
 }
 
-static void serdes_detach_dsi(struct serdes_bridge *serdes_bridge)
+static void serdes_detach_dsi(struct serdes_bridge_split *serdes_bridge)
 {
-    mipi_dsi_datach(serdes_bridge->dsi);
+    mipi_dsi_detach(serdes_bridge->dsi);
     mipi_dsi_device_unregister(serdes_bridge->dsi);
 }
 
-static void serde_bridge_split_disable(struct drm_bridge *bridge)
+static void serdes_bridge_split_disable(struct drm_bridge *bridge)
 {
     struct serdes_bridge_split *serdes_bridge_split = to_serdes_bridge_split(bridge);
     struct serdes *serdes = serdes_bridge_split->parent;
@@ -115,7 +115,7 @@ static void serde_bridge_split_disable(struct drm_bridge *bridge)
     SERDES_DBG_MFD("%s: ret = %d\n", __func__, ret);
 }
 
-static void serde_bridge_split_post_disable(struct drm_bridge *bridge)
+static void serdes_bridge_split_post_disable(struct drm_bridge *bridge)
 {
     struct serdes_bridge_split *serdes_bridge_split = to_serdes_bridge_split(bridge);
     struct serdes *serdes = serdes_bridge_split->parent;
@@ -123,8 +123,8 @@ static void serde_bridge_split_post_disable(struct drm_bridge *bridge)
 
     serdes_set_pinctrl_sleep(serdes);
 
-    if(serdes_bridge->panel)
-        drm_panel_unprepare(serdes_bridge->panel);
+    if(serdes_bridge_split->panel)
+        drm_panel_unprepare(serdes_bridge_split->panel);
 
     if(serdes->chip_data->bridge_ops->post_disable)
         ret = serdes->chip_data->bridge_ops->post_disable(serdes);
@@ -132,7 +132,7 @@ static void serde_bridge_split_post_disable(struct drm_bridge *bridge)
     SERDES_DBG_MFD("%s: ret = %d\n", __func__, ret);
 }
 
-static void serde_bridge_split_enable(struct drm_bridge *bridge)
+static void serdes_bridge_split_enable(struct drm_bridge *bridge)
 {
     struct serdes_bridge_split *serdes_bridge_split = to_serdes_bridge_split(bridge);
     struct serdes *serdes = serdes_bridge_split->parent;
@@ -154,7 +154,7 @@ static void serde_bridge_split_enable(struct drm_bridge *bridge)
                     serdes->chip_data->name, ret);
 }
 
-static void serde_bridge_split_pre_enable(struct drm_bridge *bridge)
+static void serdes_bridge_split_pre_enable(struct drm_bridge *bridge)
 {
     struct serdes_bridge_split *serdes_bridge_split = to_serdes_bridge_split(bridge);
     struct serdes *serdes = serdes_bridge_split->parent;
@@ -172,8 +172,8 @@ static void serde_bridge_split_pre_enable(struct drm_bridge *bridge)
     if(serdes->chip_data->bridge_ops->pre_enable)
         ret = serdes->chip_data->bridge_ops->pre_enable(serdes);
 
-    if(serdes_bridge->panel)
-        drm_panel_prepare(serdes_bridge->panel);
+    if(serdes_bridge_split->panel)
+        drm_panel_prepare(serdes_bridge_split->panel);
 
     serdes_set_pinctrl_default(serdes);
 
@@ -203,17 +203,17 @@ static enum drm_connector_status
 static int serdes_bridge_split_get_modes(struct drm_bridge *bridge,
                             struct drm_connector *connector)
 {
-    struct serdes_bridge_spit *serdes_bridge_split = to_serdes_bridge_split(bridge);
+    struct serdes_bridge_split *serdes_bridge_split = to_serdes_bridge_split(bridge);
     struct serdes *serdes = serdes_bridge_split->parent;
     int ret = 0;
 
     if(serdes->chip_data->bridge_ops->get_modes)
         ret = serdes->chip_data->bridge_ops->get_modes(serdes);
 
-    if(serdes_bridge->next_bridge)
+    if(serdes_bridge_split->next_bridge)
         ret = drm_bridge_get_modes(serdes_bridge_split->next_bridge, connector);
 
-    if(serdes_bridge->panel)
+    if(serdes_bridge_split->panel)
         ret = drm_panel_get_modes(serdes_bridge_split->panel, connector);
 
     SERDES_DBG_MFD("%s:%s %s, node = %s\n", __func__, dev_name(serdes->dev),
@@ -222,7 +222,7 @@ static int serdes_bridge_split_get_modes(struct drm_bridge *bridge,
     return ret;
 }
 
-static const struct drm_bridge_funcs serdes_bridge_funcs = {
+static const struct drm_bridge_funcs serdes_bridge_split_funcs = {
     .attach = serdes_bridge_split_attach,
     .detach = serdes_bridge_split_detach,
     .disable = serdes_bridge_split_disable,
@@ -231,7 +231,7 @@ static const struct drm_bridge_funcs serdes_bridge_funcs = {
     .enable = serdes_bridge_split_enable,
     .detect = serdes_bridge_split_detect,
     .get_modes = serdes_bridge_split_get_modes,
-    .atomic_get_input_bus_fmts = drm_atomic_helper_bridge_propagete_bus_fmt,
+    .atomic_get_input_bus_fmts = drm_atomic_helper_bridge_propagate_bus_fmt,
     .atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
     .atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
     .atomic_reset = drm_atomic_helper_bridge_reset,
@@ -253,7 +253,7 @@ static int serdes_bridge_split_probe(struct platform_device *pdev)
     serdes->serdes_bridge_split = serdes_bridge_split;
     serdes_bridge_split->dev = dev;
     serdes_bridge_split->parent = dev_get_drvdata(dev->parent);
-    platform_ser_drvdata(pdev, serdes_bridge_split);
+    platform_set_drvdata(pdev, serdes_bridge_split);
     serdes_bridge_split->regmap = dev_get_regmap(dev->parent, NULL);
     if(!serdes_bridge_split->regmap)
         return dev_err_probe(dev, -ENODEV, "Failed to get serdes regmap\n");
@@ -272,7 +272,7 @@ static int serdes_bridge_split_probe(struct platform_device *pdev)
     }
 
     serdes_bridge_split->base_bridge.funcs = &serdes_bridge_split_funcs;
-    serdrs_bridge_split->base_bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_MODES;
+    serdes_bridge_split->base_bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_MODES;
 
     if(serdes_bridge_split->sel_mipi) {
         serdes_bridge_split->base_bridge.type = DRM_MODE_CONNECTOR_DSI;
@@ -286,7 +286,7 @@ static int serdes_bridge_split_probe(struct platform_device *pdev)
     drm_bridge_add(&serdes_bridge_split->base_bridge);
 
     if(serdes_bridge_split->sel_mipi) {
-        serdes_bridge_split->dsi = serdes_atach_dsi(serdes_bridge_split,
+        serdes_bridge_split->dsi = serdes_attach_dsi(serdes_bridge_split,
                                 serdes_bridge_split->remote_node);
         if(IS_ERR(serdes_bridge_split->dsi)) {
             drm_bridge_remove(&serdes_bridge_split->base_bridge);

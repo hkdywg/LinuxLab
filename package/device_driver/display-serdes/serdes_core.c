@@ -7,50 +7,8 @@
 * Author: weigenyin <weigenyin@zjautomotive.com>
 *
 */
+#include "display_serdes_core.h"
 
-static const struct mfd_cell serdes_max96781_devs[] = {
-    {
-        .name = "serdes-pinctrl",
-        .of_compatible = "maxim,max96781-pinctrl",
-    },
-    {
-        .name = "serdes-bridge",
-        .of_compatible = "maxim,max96781-bridge",
-    },
-};
-
-static const struct mfd_cell serdes_ds90uh981_devs[] = {
-    {
-        .name = "serdes-pinctrl",
-        .of_compatible = "ti,ds90uh981-pinctrl",
-    },
-    {
-        .name = "serdes-bridge",
-        .of_compatible = "ti,ds90uh981-bridge",
-    },
-};
-
-static const struct mfd_cell serdes_ds90uh983_devs[] = {
-    {
-        .name = "serdes-pinctrl",
-        .of_compatible = "ti,ds90uh983-pinctrl",
-    },
-    {
-        .name = "serdes-bridge",
-        .of_compatible = "ti,ds90uh983-bridge",
-    },
-};
-
-static const struct mfd_cell serdes_aim951x_devs[] = {
-    {
-        .name = "serdes-pinctrl",
-        .of_compatible = "aim,aim951x-pinctrl",
-    },
-    {
-        .name = "serdes-bridge",
-        .of_compatible = "aim,aim951x-bridge",
-    },
-};
 
 int serdes_reg_read(struct serdes *serdes, unsigned int reg, unsigned int *val)
 {
@@ -110,7 +68,7 @@ int serdes_multi_reg_write(struct serdes *serdes, const struct reg_sequence *reg
 }
 EXPORT_SYMBOL_GPL(serdes_multi_reg_write);
 
-int serdes_bulk_write(struct serdes *serdes, unsigned int reg, int count, void *src)
+int serdes_bulk_write(struct serdes *serdes, unsigned int reg, int num_regs, void *src)
 {
     u16 *buf = src;
     int i, ret;
@@ -133,7 +91,7 @@ int serdes_bulk_write(struct serdes *serdes, unsigned int reg, int count, void *
 }
 EXPORT_SYMBOL_GPL(serdes_bulk_write);
 
-int serdes_set_bit(struct serdes *serdes, unsigned int reg, 
+int serdes_set_bits(struct serdes *serdes, unsigned int reg, 
             unsigned int mask, unsigned int val)
 {
     int ret;
@@ -144,41 +102,29 @@ int serdes_set_bit(struct serdes *serdes, unsigned int reg,
 
     return ret;
 }
-EXPORT_SYMBOL_GPL(serdes_set_bit);
+EXPORT_SYMBOL_GPL(serdes_set_bits);
 
 int serdes_device_init(struct serdes *serdes)
 {
     struct serdes_chip_data *chip_data = serdes->chip_data;
     const struct mfd_cell *serdes_devs = NULL;
-    int ret, mfd_num;
+    int ret, mfd_num = 0;
 
-    switch(chip_data->serdes_id) {
-    case MAXIM_ID_MAX96781:
-        serdes_devs = serdes_max96781_devs;
-        mfd_num = ARRAY_SIZE(serdes_max96781_devs);
-        break;
-    case TI_ID_DS90UH981:
-        serdes_devs = serdes_ds90uh981_devs;
-        mfd_num = ARRAY_SIZE(serdes_ds90uh981_devs);
-        break;
-    case TI_ID_DS90UH983:
-        serdes_devs = serdes_ds90uh983_devs;
-        mfd_num = ARRAY_SIZE(serdes_ds90uh983_devs);
-        break;
-    case AIM_ID_AIM951X:
-        serdes_devs = serdes_aim951x_devs;
-        mfd_num = ARRAY_SIZE(serdes_aim951x_devs);
-        break;
-    default:
-        dev_info(serdes->dev, "unknown device\n");
-        break;
+    if (chip_data->mfd_cells) {
+        serdes_devs = chip_data->mfd_cells;
+        mfd_num = chip_data->num_cells;
+    } else {
+        dev_err(serdes->dev, "Not set chip_datat mfd cells, please check\n");        
+        return -EINVAL;
     }
 
-    ret = devm_mfd_add_devices(serdes->dev, PLATFORM_DEVID_AUTO, serdes_devs,
-                        mfd_num, NULL, 0, NULL);
-    if(ret != 0) {
-        dev_err(serdes->dev, "Failed to add serdes children\n");
-        return ret;
+    if (serdes_devs && mfd_num > 0) {
+        ret = devm_mfd_add_devices(serdes->dev, PLATFORM_DEVID_AUTO, serdes_devs,
+                            mfd_num, NULL, 0, NULL);
+        if(ret != 0) {
+            dev_err(serdes->dev, "Failed to add serdes children\n");
+            return ret;
+        }
     }
 
     return 0;
@@ -190,9 +136,11 @@ int serdes_set_pinctrl_default(struct serdes *serdes)
     int ret = 0;
 
     if((!IS_ERR(serdes->pinctrl_node)) && (!IS_ERR(serdes->pins_init))) {
-        ret = pinctrl_select_state(serdes->pinctrl_node, serdes->pins_init);
-        if(ret)
-            dev_err(serdes->dev, "could not set init pins\n");
+        if(serdes->pinctrl_node && serdes->pins_init) {
+            ret = pinctrl_select_state(serdes->pinctrl_node, serdes->pins_init);
+            if(ret)
+                dev_err(serdes->dev, "could not set init pins\n");
+        }
         SERDES_DBG_MFD("%s: name = %s init\n", __func__, dev_name(serdes->dev));
     }
 
@@ -205,9 +153,11 @@ int serdes_set_pinctrl_sleep(struct serdes *serdes)
     int ret = 0;
 
     if((!IS_ERR(serdes->pinctrl_node)) && (!IS_ERR(serdes->pins_sleep))) {
-        ret = pinctrl_select_state(serdes->pinctrl_node, serdes->pins_sleep);
-        if(ret)
-            dev_err(serdes->dev, "could not set init pins\n");
+        if(serdes->pinctrl_node && serdes->pins_sleep) {
+            ret = pinctrl_select_state(serdes->pinctrl_node, serdes->pins_sleep);
+            if(ret)
+                dev_err(serdes->dev, "could not set init pins\n");
+        }
         SERDES_DBG_MFD("%s: name = %s init\n", __func__, dev_name(serdes->dev));
     }
 
@@ -252,9 +202,11 @@ void serdes_device_poweroff(struct serdes *serdes)
     int ret = 0;
 
     if((!IS_ERR(serdes->pinctrl_node)) && (!IS_ERR(serdes->pins_sleep))) {
-        ret = pinctrl_select_state(serdes->pinctrl_node, serdes->pins_sleep);
-        if(ret) 
-            dev_err(serdes->dev, "could not set sleep pins\n");
+        if(serdes->pinctrl_node && serdes->pins_sleep) {
+            ret = pinctrl_select_state(serdes->pinctrl_node, serdes->pins_sleep);
+            if(ret) 
+                dev_err(serdes->dev, "could not set sleep pins\n");
+        }
     }
 
     if(!IS_ERR(serdes->vpower)) {

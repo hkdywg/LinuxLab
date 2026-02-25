@@ -1,6 +1,6 @@
 /*
-* maxim_max96781.h
-*   register define for max96781	
+* ti_ds90ub981.h
+*   register define for ds90ub981	
 *
 * @copyright Copyright (c) 2022 Jiangsu New Vision Automotive Electronics Co.，Ltd. All rights reserved.
 *
@@ -8,10 +8,15 @@
 *
 */
 
-#ifndef __SERDES_MAX96781_H_
-#define __SERDES_MAX96781_H_
+#ifndef __SERDES_DS90UB981_H_
+#define __SERDES_DS90UB981_H_
 
 #include <linux/bitfield.h>
+
+/* Hardware Specifications */
+#define SPEC_MIN_VCO_FREQ_HZ    3499000000ULL
+#define SPEC_MAX_VCO_FREQ_HZ    7001000000ULL
+#define SPEC_MAX_DENOMINATOR    16777206ULL
 
 #define GPIO_A_REG(gpio)    (0x0200 + ((gpio) * 8))
 #define GPIO_B_REG(gpio)    (0x0201 + ((gpio) * 8))
@@ -22,7 +27,7 @@
 #define GPIO_G_REG(gpio)    (0x0206 + ((gpio) * 8))
 
 /* 000h */
-#define DEVICE_ADDR_REG     0x00
+#define DEVICE_ADDR_REG     0x00 
 #define DEV_ADDR            GENMASK(7, 1)
 #define CFG_BLOCK           BIT(0)
 
@@ -127,33 +132,33 @@
 /* 7074h */
 #define MAX_LINK_RATE       GENMASK(7, 0)
 
-enum max96781_gpio_list {
-    MAX96781_MFP0 = 0,
-    MAX96781_MFP1,
-    MAX96781_MFP2,
-    MAX96781_MFP3,
-    MAX96781_MFP4,
-    MAX96781_MFP5,
-    MAX96781_MFP6,
-    MAX96781_MFP7,
-    MAX96781_MFP8,
-    MAX96781_MFP9,
-    MAX96781_MFP10,
-    MAX96781_MFP11,
-    MAX96781_MFP12,
-    MAX96781_MFP13,
-    MAX96781_MFP14,
-    MAX96781_MFP15,
-    MAX96781_MFP16,
-    MAX96781_MFP17,
-    MAX96781_MFP18,
-    MAX96781_MFP19,
-    MAX96781_MFP20,
-    MAX96781_MFP21,
-    MAX96781_MFP22,
-    MAX96781_MFP23,
-    MAX96781_MFP24,
-    MAX96781_MFP25,
+enum ds90ub981_gpio_list {
+    DS90UH981_MFP0 = 0,
+    DS90UH981_MFP1,
+    DS90UH981_MFP2,
+    DS90UH981_MFP3,
+    DS90UH981_MFP4,
+    DS90UH981_MFP5,
+    DS90UH981_MFP6,
+    DS90UH981_MFP7,
+    DS90UH981_MFP8,
+    DS90UH981_MFP9,
+    DS90UH981_MFP10,
+    DS90UH981_MFP11,
+    DS90UH981_MFP12,
+    DS90UH981_MFP13,
+    DS90UH981_MFP14,
+    DS90UH981_MFP15,
+    DS90UH981_MFP16,
+    DS90UH981_MFP17,
+    DS90UH981_MFP18,
+    DS90UH981_MFP19,
+    DS90UH981_MFP20,
+    DS90UH981_MFP21,
+    DS90UH981_MFP22,
+    DS90UH981_MFP23,
+    DS90UH981_MFP24,
+    DS90UH981_MFP25,
 };
 
 #endif

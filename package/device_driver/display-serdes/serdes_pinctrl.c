@@ -39,14 +39,14 @@ static const struct mfd_cell serdes_gpio_aim951x_devs[] = {
 static int serdes_pinmux_set_mux(struct pinctrl_dev *pctldev,
                         unsigned int function, unsigned int group)
 {
-    struct serdes_pinctrl *pinctl = pinctrl_dev_get_drvdata(pctldev);
+    struct serdes_pinctrl *pinctrl = pinctrl_dev_get_drvdata(pctldev);
     struct serdes *serdes = pinctrl->parent;
     int ret = 0;
 
     if(serdes->chip_data->pinctrl_ops->set_mux)
         ret = serdes->chip_data->pinctrl_ops->set_mux(serdes, function, group);
 
-    SERDES_DBD_MFD("%s: %s function = %d, group = %d\n", __func__,
+    SERDES_DBG_MFD("%s: %s function = %d, group = %d\n", __func__,
                 serdes->chip_data->name, function, group);
 
     return ret;
@@ -59,8 +59,8 @@ static int serdes_pinconf_get(struct pinctrl_dev *pctldev,
     struct serdes *serdes = pinctrl->parent;
     int ret = 0;
 
-    if(serdes->chip_data->pinctl_ops->pin_config_get)
-        ret = serdes->chip_data->pinctl_ops->pin_config_get(serdes,
+    if(serdes->chip_data->pinctrl_ops->pin_config_get)
+        ret = serdes->chip_data->pinctrl_ops->pin_config_get(serdes,
                                         pin - pinctrl->pin_base,
                                         config);
     SERDES_DBG_MFD("%s: %s pin = %d, config = %d\n", __func__,
@@ -79,14 +79,14 @@ static int serdes_pinconf_set(struct pinctrl_dev *pctldev,
     struct serdes *serdes = pinctrl->parent;
     int ret = 0;
 
-    if(serdes->chip_data->pinctl_ops->pin_config_set)
-        ret = serdes->chip_data->pinctl_ops->pin_config_get(serdes,
+    if(serdes->chip_data->pinctrl_ops->pin_config_set)
+        ret = serdes->chip_data->pinctrl_ops->pin_config_set(serdes,
                                         pin - pinctrl->pin_base,
                                         configs, num_configs);
-    SERDES_DBG_MFD("%s: %s pin = %d, config = %d\n", __func__,
+    SERDES_DBG_MFD("%s: %s pin = %d, configs = %d\n", __func__,
                 serdes->chip_data->name,
                 pin - pinctrl->pin_base,
-                pinconf_to_config_param(*config));
+                pinconf_to_config_param(*configs));
 
     return ret;
 }
@@ -101,19 +101,19 @@ static int serdes_pinctrl_gpio_init(struct serdes *serdes)
 
     switch(chip_data->serdes_id) {
     case MAXIM_ID_MAX96781:
-        serdevs = serdes_gpio_max96781_devs;
+        serdes_devs = serdes_gpio_max96781_devs;
         mfd_num = ARRAY_SIZE(serdes_gpio_max96781_devs);
         break;
     case TI_ID_DS90UH981:
-        serdevs = serdes_gpio_ds90uh981_devs;
+        serdes_devs = serdes_gpio_ds90uh981_devs;
         mfd_num = ARRAY_SIZE(serdes_gpio_ds90uh981_devs);
         break;
     case TI_ID_DS90UH983:
-        serdevs = serdes_gpio_ds90uh983_devs;
+        serdes_devs = serdes_gpio_ds90uh983_devs;
         mfd_num = ARRAY_SIZE(serdes_gpio_ds90uh983_devs);
         break;
     case AIM_ID_AIM951X:
-        serdevs = serdes_gpio_aim951x_devs;
+        serdes_devs = serdes_gpio_aim951x_devs;
         mfd_num = ARRAY_SIZE(serdes_gpio_aim951x_devs);
         break;
     default:
@@ -123,8 +123,8 @@ static int serdes_pinctrl_gpio_init(struct serdes *serdes)
 
     ret = devm_mfd_add_devices(pinctrl->dev, PLATFORM_DEVID_AUTO, serdes_devs,
                                mfd_num, NULL, 0, NULL);
-    if(!ret)
-        dev_err(pinctl->dev, "Failed to add serdes pinctrl devs\n");
+    if(ret != 0)
+        dev_err(pinctrl->dev, "Failed to add serdes children\n");
 
     return ret;
 }
@@ -134,10 +134,10 @@ static const struct pinconf_ops serdes_pinconf_ops = {
     .pin_config_set = serdes_pinconf_set,
 };
 
-static const struct pinmux_ops = serdes_pinmux_ops = {
+static const struct pinmux_ops serdes_pinmux_ops = {
     .get_functions_count = pinmux_generic_get_function_count,
     .get_function_name = pinmux_generic_get_function_name,
-    .get_function_groups = pinctrl_generic_get_function_groups,
+    .get_function_groups = pinmux_generic_get_function_groups,
     .set_mux = serdes_pinmux_set_mux,
 };
 
@@ -187,11 +187,11 @@ static int serdes_pinctrl_probe(struct platform_device *pdev)
     pinctrl_desc->name = dev_name(dev);
     pinctrl_desc->owner = THIS_MODULE;
     pinctrl_desc->pctlops = &serdes_pinctrl_ops;
-    pinctrl_desc->pmxops = &serdesc_pinmux_ops;
-    pinctrl_desc->confops = &serdesc_pinconf_ops;
+    pinctrl_desc->pmxops = &serdes_pinmux_ops;
+    pinctrl_desc->confops = &serdes_pinconf_ops;
 
     pinctrl_desc->npins = pinctrl_info->num_pins;
-    serdes_pinctrl->pdesc = devm_kcalloc(dev, pinctrl_info->numpins,
+    serdes_pinctrl->pdesc = devm_kcalloc(dev, pinctrl_info->num_pins,
                                          sizeof(*serdes_pinctrl->pdesc), GFP_KERNEL);
     pinctrl_desc->pins = serdes_pinctrl->pdesc;
     if(!serdes_pinctrl->pdesc)
@@ -254,7 +254,7 @@ static int serdes_pinctrl_probe(struct platform_device *pdev)
         const struct function_desc *func = &pinctrl_info->functions[i];
 
         ret  = pinmux_generic_add_function(serdes_pinctrl->pctl, func->name,
-                        func->group_name, func->num_group_names, func->data);
+                        func->group_names, func->num_group_names, func->data);
         if(ret < 0) {
             dev_err(dev, "Failed to register serdes function %s\n", func->name);
             return ret;
