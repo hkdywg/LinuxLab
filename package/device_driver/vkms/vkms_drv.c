@@ -261,25 +261,20 @@ static int vkms_probe(struct platform_device *pdev)
 
     platform_set_drvdata(pdev, vkms);
 
-    drm_dev_init(&vkms->drm, &vkms_driver, &pdev->dev);
+    devm_drm_dev_init(&pdev->dev, &vkms->drm, &vkms_driver);
     vkms->drm.irq_enabled = true;
     ret = drm_vblank_init(&vkms->drm, 1);
     if (ret)
-        goto err_vblank_init;
+        return ret;
 
     vkms_modeset_init(vkms);
     ret = drm_dev_register(&vkms->drm, 0);
     if (ret)
-        goto err_drm_dev_register;
+        return ret;
 
     drm_fbdev_generic_setup(&vkms->drm, 32);
 
     return 0;
-
-err_drm_dev_register:
-err_vblank_init:
-    drm_dev_put(&vkms->drm);
-    return ret;
 }
 
 static int vkms_remove(struct platform_device *pdev)
