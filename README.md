@@ -60,17 +60,6 @@ sudo apt-get install -y lib32z1 lib32z1-de libc6:i386
 
 ---
 
-## ⚙️ Git 配置
-
-如果是首次使用 Git，请先配置用户信息：
-
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-```
-
----
-
 ## 🚀 快速开始
 
 ### 1. 克隆代码仓库
