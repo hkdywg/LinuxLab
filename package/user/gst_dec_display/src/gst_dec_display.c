@@ -1,3 +1,5 @@
+/* @copyright Copyright (c) 2022 Jiangsu New Vision Automotive Electronics Co.，Ltd. All rights reserved.*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -92,6 +94,8 @@ static bool rtsp_server_ready(const char *url)
     g_object_set(src,
         "location", url,
         "latency", 50,
+        "drop-on-latency", TRUE,
+        "buffer-mode", 4,    /* BUFFER_LIVE - minimal buffering */
         NULL);
 
     g_signal_connect(src, "pad-added", G_CALLBACK(pad_added_cb), sink);
@@ -172,24 +176,13 @@ static void on_rtsp_pad_added(GstElement *src, GstPad *pad, gpointer data)
         return;
     }
 
-    GstCaps *caps = gst_pad_get_current_caps(pad);
-    if (!caps)
-        caps = gst_pad_query_caps(pad, NULL);
-
-    if (caps && gst_caps_is_fixed(caps)) {
-        const GstStructure *str = gst_caps_get_structure(caps, 0);
-        const gchar *name = gst_structure_get_name(str);
-
-        if (g_str_has_prefix(name, "application/x-rtp")) {
-            if (gst_pad_link(pad, sinkpad) == GST_PAD_LINK_OK) {
-                g_print("Linked RTSP src pad to depayloader\n");
-            } else {
-                g_printerr("Failed to link RTSP src pad to depayloader\n");
-            }
-        }
+    /* Simplified pad linking for lower latency */
+    if (gst_pad_link(pad, sinkpad) == GST_PAD_LINK_OK) {
+        g_debug("Linked RTSP src pad to depayloader\n");
+    } else {
+        g_printerr("Failed to link RTSP src pad to depayloader\n");
     }
 
-    if (caps) gst_caps_unref(caps);
     gst_object_unref(sinkpad);
 }
 #endif
@@ -430,6 +423,17 @@ bool config_gst_elements(struct _Params *params, struct gst_eles *elements) {
     if(params->is_rtsp) {
         /* Set rtsp url*/
 		g_object_set(G_OBJECT(elements->source), "location", params->rtsp_url, NULL);
+
+		/* Low latency settings for RTSP */
+		g_object_set(G_OBJECT(elements->source),
+					 "latency", 30,       /* Buffer 30ms */
+					 "drop-on-latency", TRUE,  /* Drop late frames */
+					 NULL);
+
+		/* Set rtspsrc buffer mode to minimize latency */
+		g_object_set(G_OBJECT(elements->source),
+					 "buffer-mode", 4,    /* BUFFER_LIVE - minimal buffering */
+					 NULL);
     } else {
         /* Set filesrc Path */
         g_object_set(G_OBJECT(elements->source), "location", params->location, NULL);
@@ -438,11 +442,17 @@ bool config_gst_elements(struct _Params *params, struct gst_eles *elements) {
     /*Config the kmssink */
     if(!params->use_wayland) {
         if(params->plane_id)
-            g_object_set(elements->sink, "connector-id", params->connector_id, 
+            g_object_set(elements->sink, "connector-id", params->connector_id,
                 "plane-id", params->plane_id, "fullscreen", TRUE, NULL);
         else
             g_object_set(elements->sink, "connector-id", params->connector_id,
                          "fullscreen", TRUE, NULL);
+
+        /* Low latency setting for kmssink */
+        g_object_set(elements->sink, "sync", FALSE, NULL);
+    } else {
+        /* Low latency setting for waylandsink */
+        g_object_set(elements->sink, "sync", FALSE, NULL);
     }	
 
     return true;
