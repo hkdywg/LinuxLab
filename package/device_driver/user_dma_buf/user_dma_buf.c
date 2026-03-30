@@ -29,17 +29,69 @@
 #include <linux/string.h>
 #include <linux/platform_device.h>
 #include <linux/uaccess.h>
+#include <linux/property.h>
 
 #include <linux/of_reserved_mem.h>
 #include <linux/dma-buf.h>
 #include <linux/dma-direct.h>
 #include <linux/dma-map-ops.h>
 #include <linux/iommu.h>
+#include <linux/ioctl.h>
 
 #define DRIVER_NAME         "u-dma-buf"
 #define DEVICE_NAME_FORMAT  "udmabuf%d"
 #define DEVICE_MAX_NUM      256
 
+/*
+ * info_enable module parameter
+ */
+static int info_enable = 1;
+module_param(info_enable, int , S_IRUGO);
+MODULE_PARAM_DESC(info_enable, "udmabuf install/uninstall information enable");
+#define DMA_INFO_ENABLE     (info_enable & 0x02)
+
+/*
+ * dma_mask_bit module parameter
+ */
+static int dma_mask_bit = 32;
+module_param(dma_mask_bit, int , S_IRUGO);
+MODULE_PARAM_DESC(dma_mask_bit, "udmabuf dma mask bit(default=32)");
+
+/*
+ * bind module parameter
+ */
+static char *bind = NULL;
+module_param(bind, charp, S_IRUGO);
+MODULE_PARAM_DESC(bind, "bind device name. exp pci/0000:00:20:0");
+
+/*
+ * quirk_mmap_mode module parameter
+ */
+#define QUIRK_MMAP_MODE_UNDEFINED   0
+#define QUIRK_MMAP_MODE_ALWAYS_OFF  1
+#define QUIRK_MMAP_MODE_ALWAYS_ON   2
+#define QUIRK_MMAP_MODE_AUTO        3
+#define QUIRK_MMAP_MODE_PAGE        4
+#define QUIRK_MMAP_MODE_PARAM_DESC_USAGE    "(1:off,2:on,3:auto,4:page)"
+#define QUIRK_MMAP_MODE_PARAM_DESC_DEFAULT  "(default=3)"
+static int quirk_mmap_mode = QUIRK_MMAP_MODE_AUTO;
+module_param(quirk_mmap_mode, int, S_IRUGO);
+MODULE_PARAM_DESC(quirk_mmap_mode, "udmabuf default quirk mmap mode" QUIRK_MMAP_MODE_PARAM_DESC_USAGE QUIRK_MMAP_MODE_PARAM_DESC_DEFAULT);
+
+/*
+ * udmabuf device entry structure
+ */
+struct udmabuf_device_entry {
+    struct device *dev;
+    struct device *parent;
+    void (*prep_remove)(struct device *dev);
+    void (*post_remove)(struct device *dev);
+    struct list_head list;
+};
+
+/*
+ * udmabuf object structure
+ */
 struct udmabuf_object {
     struct device *sys_dev;
     struct device *dma_dev;
@@ -68,6 +120,139 @@ struct udmabuf_object {
     bool debug_export;
 };
 
+/*
+ * udmabuf export entry structure
+ */
+struct udmabuf_export_entry {
+    struct udmabuf_object *object;
+    struct udmabuf_object object_data;
+    struct dma_buf *dma_buf;
+    int fd;
+    bool force_sync;
+    u64 offset;
+    size_t size;
+    struct list_head list;
+};
+
+
+#define UDMABUF_VMA_DEBUG(obj,bit) ((obj->debug_vma & (1<<bit)) != 0)
+
+/*
+ * sync_mode(synchronous mode) value
+ */
+#define SYNC_MODE_INVALID           (0x00)
+#define SYNC_MODE_NOCHACHED         (0x01)
+#define SYNC_MODE_WRITECOMBINE      (0x02)
+#define SYNC_MODE_DMACHOHERENT      (0x03)
+#define SYNC_MODE_MASK              (0x03)
+#define SYNC_MODE_MIN               (0x01)
+#define SYNC_MODE_MAX               (0x03)
+#define SYNC_ALWAYS                 (0x04)
+
+/*
+ * sync command
+ */
+#define SYNC_COMMAND_DIR_MASK       (0x000000000000000C)
+#define SYNC_COMMAND_DIR_SHIFT      (2)
+#define SYNC_COMMAND_SIZE_MASK      (0x00000000FFFFFFF0)
+#define SYNC_COMMAND_SIZE_SHIFT     (0)
+#define SYNC_COMMAND_OFFSET_MASK    (0xFFFFFFFF00000000)
+#define SYNC_COMMAND_OFFSET_SHIFT   (32)
+#define SYNC_COMMAND_ARGMENT_MASK   (0xFFFFFFFFFFFFFFFE)
+
+/**
+ * DOC: Udmabuf System Class Device File Description.
+ *
+ * This section define the device file created in system class when udmabuf is 
+ * loaded into the kernel.
+ *
+ * The device file created in system class is as follows.
+ *
+ * * /sys/class/u-dma-buf/<device-name>/driver_version
+ * * /sys/class/u-dma-buf/<device-name>/phys_addr
+ * * /sys/class/u-dma-buf/<device-name>/size
+ * * /sys/class/u-dma-buf/<device-name>/sync_mode
+ * * /sys/class/u-dma-buf/<device-name>/sync_offset
+ * * /sys/class/u-dma-buf/<device-name>/sync_size
+ * * /sys/class/u-dma-buf/<device-name>/sync_direction
+ * * /sys/class/u-dma-buf/<device-name>/sync_owner
+ * * /sys/class/u-dma-buf/<device-name>/sync_for_cpu
+ * * /sys/class/u-dma-buf/<device-name>/sync_for_device
+ * * /sys/class/u-dma-buf/<device-name>/dma_coherent
+ * * /sys/class/u-dma-buf/<device-name>/quirk_mmap_mode
+ * * /sys/class/u-dma-buf/<device-name>/ioctl_version
+ * * 
+ */
+
+static int udmabuf_sync_command_arguments(struct udmabuf_object *obj, u64 command, dma_addr_t *phys_addr,
+                                        size_t *size, enum dma_data_direction *direction)
+{
+    u64 sync_offset;
+    size_t sync_size;
+    int sync_direction;
+
+    if ((command & SYNC_COMMAND_ARGMENT_MASK) != 0) {
+        sync_offset     = (u64   )((command & SYNC_COMMAND_OFFSET_MASK) >> SYNC_COMMAND_OFFSET_SHIFT);
+        sync_size       = (size_t)((command & SYNC_COMMAND_SIZE_MASK) >> SYNC_COMMAND_SIZE_SHIFT);
+        sync_direction  = (int   )((command & SYNC_COMMAND_DIR_MASK) >> SYNC_COMMAND_DIR_SHIFT);
+    } else {
+        sync_offset = obj->sync_offset;
+        sync_size = obj->sync_size;
+        sync_direction = obj->sync_direction;
+    }
+
+    if (sync_offset + sync_size > obj->size)
+        return -EINVAL;
+
+    switch (sync_direction) {
+    case 1: *direction = DMA_TO_DEVICE; break;
+    case 2: *direction = DMA_FROM_DEVICE; break;
+    default: *direction = DMA_BIDIRECTIONAL; break;
+    }
+
+    *phys_addr = obj->phys_addr + sync_offset;
+    *size = sync_size;
+
+    return 0;
+}
+
+static int udmabuf_sync_for_cpu(struct udmabuf_object *obj)
+{
+    int ret = 0;
+
+    if (obj->sync_for_cpu) {
+        dma_addr_t phys_addr;
+        size_t size;
+        enum dma_data_direction direction;
+        ret = udmabuf_sync_command_arguments(obj, obj->sync_for_cpu, &phys_addr, &size, &direction);
+        if (ret == 0) {
+            dma_sync_single_for_cpu(obj->dma_dev, phys_addr, size, direction);
+            obj->sync_for_cpu = 0;
+            obj->sync_owner = 0;
+        }
+    }
+
+    return ret;
+}
+
+static int udmabuf_sync_for_device(struct udmabuf_object *obj)
+{
+    int ret = 0;
+
+    if (obj->sync_for_device) {
+        dma_addr_t phys_addr;
+        size_t size;
+        enum dma_data_direction direction;
+        ret = udmabuf_sync_command_arguments(obj, obj->sync_for_cpu, &phys_addr, &size, &direction);
+        if (ret == 0) {
+            dma_sync_single_for_device(obj->dma_dev, phys_addr, size, direction);
+            obj->sync_for_device = 0;
+            obj->sync_owner = 1;
+        }
+    }
+
+    return ret;
+}
 
 static struct class *udmabuf_sys_class = NULL;
 static bool udmabuf_platform_driver_registered = false;
@@ -188,6 +373,59 @@ static inline void udmabuf_sys_class_set_attribute(void)
     udmabuf_sys_class->dev_groups = udmabuf_attr_groups;
 }
 
+static void udmabuf_mmap_vma_open(struct vm_area_struct *vma)
+{
+    struct udmabuf_object *obj = vma->vm_private_data;
+    if (UDMABUF_VMA_DEBUG(obj, 0))
+        dev_info(obj->dma_dev, "%s(virt_addr = 0x%lx, offset = 0x%lx, flags = 0x%lx)\n",
+                __func__, vma->vm_start, vma->vm_pgoff << PAGE_SHIFT, vma->vm_flags);
+}
+
+static void udmabuf_mmap_vma_close(struct vm_area_struct *vma)
+{
+    struct udmabuf_object *obj = vma->vm_private_data;
+    if (UDMABUF_VMA_DEBUG(obj, 0))
+        dev_info(obj->dma_dev, "%s(virt_addr = 0x%lx, offset = 0x%lx, flags = 0x%lx)\n",
+                __func__, vma->vm_start, vma->vm_pgoff << PAGE_SHIFT, vma->vm_flags);
+}
+
+static vm_fault_t udmabuf_mmap_vma_fault(struct vm_fault *vmf)
+{
+    struct vm_area_struct *vma = vmf->vma;
+    struct udmabuf_object *obj = vma->vm_private_data;
+    unsigned long offset = vmf->pgoff << PAGE_SHIFT;
+    unsigned long phys_addr = obj->phys_addr + offset;
+    unsigned long page_frame_num = phys_addr >> PAGE_SHIFT;
+    unsigned long request_size = 1UL << PAGE_SHIFT;
+    unsigned long available_size = obj->alloc_size - offset;
+    unsigned long virt_addr = vmf->address;
+
+    if (UDMABUF_VMA_DEBUG(obj, 1))
+        dev_info(obj->dma_dev, "vma_fault(virt_addr = %pad, phys_addr = %pad)\n",
+                 &virt_addr, &phys_addr);
+
+    if (request_size > available_size)
+        return VM_FAULT_SIGBUS;
+
+    if (!pfn_valid(page_frame_num))
+        return VM_FAULT_SIGBUS;
+
+    if (obj->pages != NULL) {
+        if (vmf->pgoff >= obj->pagecount) 
+            return VM_FAULT_SIGBUS;
+        return vmf_insert_page(vma, virt_addr, obj->pages[vmf->pgoff]);
+    }
+
+    return vmf_insert_pfn(vma, virt_addr, page_frame_num);
+}
+
+static const struct vm_operations_struct udmabuf_mmap_vm_ops = {
+    .open = udmabuf_mmap_vma_open,
+    .close = udmabuf_mmap_vma_close,
+    .fault = udmabuf_mmap_vma_fault,
+};
+
+
 #define DEFINE_UDMABUF_STATIC_DEVICE_PARAM(__num)                           \
     static ulong udmabuf ## __num = 0;                                      \
     module_param(udmabuf ## __num, ulong, S_IRUGO);                         \
@@ -263,6 +501,458 @@ static inline int udmabuf_set_quirk_mmap_mode(struct udmabuf_object *obj, int va
      return 0;
 }
                                                         
+static bool udmabuf_quirk_mmap_enable(struct udmabuf_object *obj)
+{
+    if (!obj)
+        return true;
+
+    if (obj->quirk_mmap_mode == QUIRK_MMAP_MODE_PAGE)
+        return true;
+    if (obj->quirk_mmap_mode == QUIRK_MMAP_MODE_ALWAYS_OFF)
+        return false;
+    if (obj->quirk_mmap_mode == QUIRK_MMAP_MODE_ALWAYS_ON)
+        return true;
+    if (obj->quirk_mmap_mode == QUIRK_MMAP_MODE_AUTO)
+        return !IS_DMA_COHERENT(obj->dma_dev);
+
+    return true;
+}
+
+static inline void vm_flags_mod(struct vm_area_struct *vma, vm_flags_t set, vm_flags_t clear)
+{
+    vma->vma_flags |= (set);
+    vma->vma_flags &= ~(clear);
+}
+
+static int udmabuf_object_mmap(struct udmabuf_object *obj, struct vm_area_struct *vma, bool force_sync)
+{
+    if (vma->vm_pgoff + vma_pages(vma) > (obj->alloc_size >> PAGE_SHIFT))
+        return -EINVAL;
+
+    if ((force_sync == true) || (obj->sync_mode & SYNC_ALWAYS) != 0) {
+        switch (obj->sync_mode & SYNC_MODE_MASK) {
+        case SYNC_MODE_NONCACHED:
+            vma->vm_page_prot = _PGPROT_NONCACHED(vma->vm_page_prot);
+            break;
+        case SYNC_MODE_WRITECOMBINE:
+            vma->vm_page_prot = _PGPROT_WRITECOMBINE(vma->vm_page_prot);
+            break;
+        case SYNC_MODE_DMACOHERENT:
+            vma->vm_page_prot  = _PGPROT_DMACOHERENT(vma->vm_page_prot);
+            break;
+        default:
+            break;
+        }
+    }
+
+    vm_flags_mod(vma, (VM_IO | VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP), 0);
+
+    if (udmabuf_quirk_mmap_enable(obj)) {
+        unsigned long page_frame_num = (obj->phys_addr >> PAGE_SHIFT) + vma->vm_pgoff;
+        if (obj->pages != NULL) {
+            vm_flags_mod(vma, VM_MIXEDMAP, (VM_PFNMAP | VM_IO | VM_DONTEXPAND));
+            vma->vm_ops = &udmabuf_mmap_vm_ops;
+            vma->vm_private_data = obj;
+            udmabuf_mmap_vma_open(vma);
+            return 0;
+        }
+        if (pfn_valid(page_frame_num)) {
+            vma->vm_ops = &udmabuf_mmap_vm_ops;
+            vma->vm_private_data = obj;
+            udmabuf_mmap_vma_open(vma);
+            return 0;
+        }
+    }
+
+    return dma_mmap_coherent(obj->dma_dev, vma, obj->virt_addr, obj->phys_addr, obj->alloc_size);
+}
+
+static struct sg_table *udmabuf_export_dma_buf_map(struct dma_buf_attachment *attachment,
+                                                enum dma_data_direction direction)
+{
+    struct dma_buf *dma_buf = attachment->dmabuf;
+    struct udmabuf_export_entry *entry;
+    struct udmabuf_object *obj;
+    unsigned int done  = 0;
+    const unsigned int DONE_ALLOC_SG_TABLE = (1 << 0);
+    const unsigned int DONE_GET_SG_TABLE = (1 << 1);
+    const unsigned int DONE_MAP_SG_TABLE = (1 << 2);
+    struct sg_table *sg_table;
+    int ret;
+
+    if (dma_buf == NULL)
+        return ERR_PTR(-ENODEV);
+
+    if ((entry = dma_buf->priv) == NULL)
+        return ERR_PTR(-ENODEV);
+
+    obj = &entry->object_data;
+
+    if (UDMABUF_EXPORT_DEBUG(obj))
+        dev_info(obj->sys_dev, "%s(fd=%d) start.\n", __func__, entry->fd);
+
+    sg_table = kzalloc(sizeof(*sg_table), GFP_KERNEL);
+    if (IS_ERR_OR_NULL(sg_table)) {
+        dev_err(obj->sys_dev, "%s(fd=%d): kzalloc failed. return=%d\n", __func__, entry->fd, PTR_ERR(sg_table));
+        goto failed;
+    }
+    done |= DONE_ALLOC_SG_TABLE;
+
+    ret = dma_get_sgtable(obj->dma_dev, sg_table, obj->virt_addr, obj->phys_addr, obj->alloc_size);
+    if (ret) {
+        dev_err(obj->sys_dev, "%s(fd=%d): dma_get_sgtable failed. return=%d\n", __func__, entry->fd, ret);
+        goto failed;
+    }
+    done |= DONE_GET_SG_TABLE;
+
+    ret = dma_map_sgtable(attachment->dev, sg_table, direction, 0);
+    if (ret) {
+        dev_err(obj->sys_dev, "%s(fd=%d): dma_map_sgtable failed. return=%d\n", __func__, entry->fd, ret);
+        goto failed;
+    }
+    done |= DONE_MAP_SG_TABLE;
+
+    return  sg_table;
+
+failed:
+    if (done & DONE_MAP_SG_TABLE) { dma_unmap_sgtable(attachment->dev, sg_table, direction, 0); }
+    if (done & DONE_GET_SG_TABLE) { sg_free_table(sg_table); }
+    if (done & DONE_ALLOC_SG_TABLE) { kfree(sg_table); }
+    
+    return ERR_PTR(ret);
+}
+
+static void udmabuf_export_dma_buf_unmap(struct dma_buf_attachment *attachment,
+                        struct sg_table *sg_table, enum dma_data_direction direction)
+{
+    struct dma_buf *dma_buf = attachment->dmabuf;
+
+    if (obj == NULL || (entry = dma_buf->priv) == NULL || sg_table == NULL)
+        return;
+
+    dma_unmap_sgtable(attachment->dev, sg_table, direction, 0);
+    sg_free_table(sg_table);
+    kfree(sg_table);
+}
+
+static void udmabuf_export_release(struct dma_buf *dma_buf)
+{
+    struct udmabuf_export_entry *entry = dma_buf->priv;
+    struct udmabuf_object *obj;
+
+    if (entry == NULL || (obj = entry->object) == NULL)
+        return;
+
+    mutex_lock(&obj->export_dma_buf_list_sem);
+    list_del(&entry->list);
+    mutex_unlock(&obj->export_dma_buf_list_sem);
+    kfree(entry);
+}
+
+static int udmabuf_export_mmap(struct dma_buf *dma_buf, struct vm_area_struct *vma)
+{
+    struct udmabuf_export_entry *entry = dma_buf->priv;
+    struct udmabuf_object *obj;
+
+    if (entry == NULL)
+        return -ENODEV;
+
+    ret = udmabuf_object_mmap(obj, vma, entry->force_sync);
+    if (ret) {
+        dev_err(obj->sys_dev, "%s(fd=%d): udmabuf_object_mmap failed. return=%d\n", __func__, entry->fd, ret);
+        return ret;
+    }
+}
+
+static int udmabuf_export_begin_cpu(struct dma_buf *dma_buf, enum dma_data_direction direction)
+{
+    struct udmabuf_export_entry *entry = dma_buf->priv;
+    struct udmabuf_object *obj;
+
+    if (entry == NULL)
+        return -ENODEV;
+
+    obj = &entry->object_data;
+
+    obj->sync_for_cpu = 1;
+    obj->sync_offset = 0;
+    obj->sync_size = obj->alloc_size;
+    obj->sync_direction = direction;
+    udmabuf_sync_for_cpu(obj);
+
+    return 0;
+}
+
+static int udmabuf_export_end_cpu(struct dma_buf *dma_buf, enum dma_data_direction direction)
+{
+    struct udmabuf_export_entry *entry = dma_buf->priv;
+    struct udmabuf_object *obj;
+
+    if (entry == NULL)
+        return -ENODEV;
+
+    obj = &entry->object_data;
+
+    obj->sync_for_device = 1;
+    obj->sync_offset = 0;
+    obj->sync_size = obj->alloc_size;
+    obj->sync_direction = direction;
+    udmabuf_sync_for_device(obj);
+
+    return 0;
+}
+
+static void *udmabuf_export_kmap(struct dma_buf *dma_buf, unsigned long page)
+{
+    return NULL;
+}
+
+static const struct dma_buf_ops udmabuf_export_ops = {
+    .map                = udmabuf_export_kmap,
+    .map_dma_buf        = udmabuf_export_dma_buf_map,
+    .unmap_dma_buf      = udmabuf_export_dma_buf_unmap,
+    .release            = udmabuf_export_release,
+    .mmap               = udmabuf_export_begin_cpu,
+    .begin_cpu_access   = udmabuf_export_begin_cpu,
+    .end_cpu_access     = udmabuf_export_end_cpu,
+};
+
+static struct udmabuf_export_entry *udmabuf_export_create_entry(struct udmabuf_object *obj,
+                                    u64 offset, size_t size, unsigned long fd_flags)
+{
+    DEFINE_DMA_BUF_EXPORT_INFO(export_info);
+    struct udmabuf_export_entry *entry;
+    bool force_sync;
+    unsigned long export_fd_flags, dmabuf_fd_flags;
+    int ret;
+
+    if ((offset & (PAGE_SIZE-1)) != 0) {
+        dev_err(obj->sys_dev, "%s offset is not page allignment\n", __func__);
+        ret = -EINVAL;
+        goto failed;
+    }
+
+    if ((size & (PAGE_SIZE-1)) != 0) {
+        dev_err(obj->sys_dev, "%s size is not page allignment\n", __func__);
+        ret = -EINVAL;
+        goto failed;
+    }
+
+    if (offset + size > obj->size) {
+        dev_err(obj->sys_dev, "%s offset+size is over buffer size\n", __func__);
+        ret = -EINVAL;
+        goto failed;
+    }
+
+    if ((fd_flags & ~(O_CLOEXEC | O_SYNC | O_ACCMODE)) != 0) {
+        dev_err(obj->sys_dev, "%s invalid fd_flags\n", __func__);
+        ret = -EINVAL;
+        goto failed;
+    }
+    force_sync = ((fd_flags & O_SYNC) != 0);
+    export_fd_flags = ((fd_flags & ~O_SYNC));
+    dmabuf_fd_flags = ((fd_flags & ~O_SYNC));
+
+    entry = kzalloc(sizeof(*entry), GFP_KERNEL);
+    if (IS_ERR_OR_NULL(entry)) {
+        ret = PTR_ERR(entry);
+        entry = NULL;
+        dev_err(obj->sys_dev, "%s kzalloc failed. return=%d\n", __func__, ret);
+        goto failed;
+    }
+    entry->object = obj;
+    entry->offset = offset;
+    entry->size = size;
+
+    entry->object_data.sys_dev = obj->sys_dev;
+    entry->object_data.dma_dev = obj->dma_dev;
+    entry->object_data.phys_addr = obj->phys_addr + offset;
+    entry->object_data.virt_addr = obj->virt_addr + offset;
+    entry->object_data.size = size;
+    entry->object_data.alloc_size = size;
+    entry->object_data.sync_mode = obj->sync_mode;
+    entry->object_data.sync_offset = 0;
+    entry->object_data.sync_size = 0;
+    entry->object_data.sync_direction = 0;
+    entry->force_sync = force_sync;
+    entry->object_data.qurik_mmap_mode = obj->quirk_mmap_mode;
+    if (obj->pages != NULL) {
+        entry->object_data.pagecount = size >> PAGE_SHIFT;
+        entry->object_data.pages = &obj->pages[offset>>PAGE_SHIFT];
+    }
+    entry->object_data.debug_vma = obj->debug_vma;
+    entry->object_data.debug_export = obj->debug_export;
+
+    export_info.ops = &udmabuf_export_ops;
+    export_info.size = size;
+    export_info.priv = (void *)entry;
+    export_info.flags = export_fd_flags;
+    export_info.exp_name = dev_name(obj->sys_dev);
+
+    entry->dma_buf = dma_buf_export(&export_info);
+    if (IS_ERR(entry->dma_buf)) {
+        dev_err(obj->sys_dev, "%s: dma_buf_export failed. return=%d\n", __func__, PTR_ERR(entry->dma_buf));
+        entry->dma_buf = NULL;
+        goto failed;
+    }
+
+    entry->fd = dma_buf_fd(entry->dma_buf, dmabuf_fd_flags);
+    if (entry->fd < 0) {
+        dev_err(obj->sys_dev, "%s: dma_buf_fd failed. return=%d\n", __func__, entry->fd);
+        entry->fd = 0;
+        goto failed;
+    }
+    
+    mutex_lock(&obj->export_dma_buf_list_sem);
+    list_add_tail(&entry->list, &obj->export_dma_buf_list);
+    mutex_unlock(&obj->export_dma_buf_list_sem);
+
+    return entry;
+
+failed:
+    if (entry != NULL) {
+        if (entry->dma_buf != NULL)
+            dma_buf_put(entry->dma_buf);
+        kfree(entry);
+    }
+    return ERR_PTR(ret);
+}
+
+static int udmabuf_device_file_open(struct inode *inode, struct file *file)
+{
+    struct udmabuf_object *obj;
+
+    obj = container_of(inode->i_cdev, struct udmabuf_object, cdev);
+    file->private_data = obj;
+    obj->is_open = 1;
+
+    return 0;
+}
+
+static int udmabuf_device_file_release(struct inode *inode, struct file *file)
+{
+    struct udmabuf_object *obj = file->private_data;
+
+    obj->is_open = 0;
+
+    return 0;
+}
+
+static int udmabuf_device_file_mmap(struct file *file, struct vm_area_struct *vma)
+{
+    struct udmabuf_object *obj = file->private_data;
+    bool force_sync = ((file->f_flags & O_SYNC) != 0);
+
+    return udmabuf_object_mmap(obj, vma, force_sync);
+}
+
+static ssize_t udmabuf_device_file_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
+{
+    struct udmabuf_object *obj = file->private_data;
+    int ret;
+    size_t xfer_size, remain_size;
+    dma_addr_t phys_addr;
+    void *virt_addr;
+    bool need_sync;
+
+    if (mutex_lock_interruptible(&obj->sem))
+        return -ERESTARTSYS;
+
+    if (*pos >= obj->size) {
+        ret = 0;
+        goto return_unlock;
+    }
+
+    phys_addr = obj->phys_addr + *pos;
+    virt_addr = obj->virt_addr + *pos;
+    xfer_size = (*pos + count >= obj->size) ? obj->size - *pos : count;
+    need_sync = (((file->f_flags & O_SYNC) != 0) || ((obj->sync_mode & SYNC_ALWAYS) != 0));
+
+    if (need_sync == true)
+        dma_sync_single_for_cpu(obj->dma_dev, phys_addr, xfer_size, DMA_FROM_DEVICE);
+
+    if ((remain_size = copy_to_user(buf, virt_addr, xfer_size)) != 0) {
+        ret = 0;
+        goto return_unlock;
+    }
+
+    if (need_sync == true)
+        dma_sync_single_for_device(obj->dma_dev, phys_addr, xfer_size, DMA_FROM_DEVICE);
+
+    *pos += xfer_size;
+    ret = xfer_size;
+
+return_unlock:
+    mutex_unlock(&obj->sem);
+    return ret;
+}
+
+static ssize_t udmabuf_device_file_write(struct file *file, const char __char *buf, size_t count, loff_t *pos)
+{
+    struct udmabuf_object *obj = file->private_data;
+    int ret;
+    size_t xfer_size, remain_size;
+    dma_addr_t phys_addr;
+    void *virt_addr;
+    bool need_sync;
+
+    if (mutex_lock_interruptible(&obj->sem))
+        return -ERESTARTSYS;
+
+    if (*pos >= obj->size) {
+        ret = 0;
+        goto return_unlock;
+    }
+
+    phys_addr = obj->phys_addr + *pos;
+    virt_addr = obj->virt_addr + *pos;
+    xfer_size = (*pos + count >= obj->size) ? obj->size - *pos : count;
+    need_sync = (((file->f_flags & O_SYNC) != 0) || ((obj->sync_mode & SYNC_ALWAYS) != 0));
+
+    if (need_sync == true)
+        dma_sync_single_for_cpu(obj->dma_dev, phys_addr, xfer_size, DMA_TO_DEVICE);
+
+    if ((remain_size = copy_from_user(virt_addr, buf, xfer_size)) != 0) {
+        ret = 0;
+        goto return_unlock;
+    }
+
+    if (need_sync == true)
+        dma_sync_single_for_device(obj->dma_dev, phys_addr, xfer_size, DMA_TO_DEVICE);
+
+    *pos += xfer_size;
+    ret = xfer_size;
+
+return_unlock:
+    mutex_unlock(&obj->sem);
+    return ret;
+}
+
+static loff_t udmabuf_device_file_llseek(struct file *file, loff_t offset, int whence)
+{
+    struct udmabuf_object *obj = file->private_data;
+    loff_t new_pos;
+
+    switch (whence) {
+    case 0:
+        new_pos = offset;
+        break;
+    case 1:
+        new_pos = file->f_pos + offset;
+        break;
+    case 2:
+        new_pos = file->size + offset;
+        break;
+    default:
+        return -EINVAL;
+    }
+    if (new_pos < 0) return -EINVAL;
+    if (new_pos > obj->size) return -EINVAL;
+    file->f_pos = new_pos;
+
+    return new_pos;
+}
+
 
 static struct udmabuf_object *udmabuf_object_create(const char *name, struct device *parent, int minor)
 {
