@@ -9,7 +9,6 @@
  * */
 #include <linux/cdev.h>
 #include <linux/clk.h>
-#include <linux/dma-mapping.h>
 #include <linux/fs.h>
 #include <linux/idr.h>
 #include <linux/init.h>
@@ -30,24 +29,28 @@
 #include <linux/platform_device.h>
 #include <linux/uaccess.h>
 #include <linux/property.h>
+#include <linux/dma-mapping.h>
+#include <linux/dma-noncoherent.h>
 
+#include <linux/of_device.h>
 #include <linux/of_reserved_mem.h>
 #include <linux/dma-buf.h>
 #include <linux/dma-direct.h>
-#include <linux/dma-map-ops.h>
 #include <linux/iommu.h>
 #include <linux/ioctl.h>
 
 #define DRIVER_NAME         "u-dma-buf"
 #define DEVICE_NAME_FORMAT  "udmabuf%d"
+#define DRIVER_VERSION      "V1.0.0"
 #define DEVICE_MAX_NUM      256
+
 
 /*
  * info_enable module parameter
  */
 static int info_enable = 1;
 module_param(info_enable, int , S_IRUGO);
-MODULE_PARAM_DESC(info_enable, "udmabuf install/uninstall information enable");
+MODULE_PARM_DESC(info_enable, "udmabuf install/uninstall information enable");
 #define DMA_INFO_ENABLE     (info_enable & 0x02)
 
 /*
@@ -55,14 +58,14 @@ MODULE_PARAM_DESC(info_enable, "udmabuf install/uninstall information enable");
  */
 static int dma_mask_bit = 32;
 module_param(dma_mask_bit, int , S_IRUGO);
-MODULE_PARAM_DESC(dma_mask_bit, "udmabuf dma mask bit(default=32)");
+MODULE_PARM_DESC(dma_mask_bit, "udmabuf dma mask bit(default=32)");
 
 /*
  * bind module parameter
  */
 static char *bind = NULL;
 module_param(bind, charp, S_IRUGO);
-MODULE_PARAM_DESC(bind, "bind device name. exp pci/0000:00:20:0");
+MODULE_PARM_DESC(bind, "bind device name. exp pci/0000:00:20:0");
 
 /*
  * quirk_mmap_mode module parameter
@@ -76,7 +79,7 @@ MODULE_PARAM_DESC(bind, "bind device name. exp pci/0000:00:20:0");
 #define QUIRK_MMAP_MODE_PARAM_DESC_DEFAULT  "(default=3)"
 static int quirk_mmap_mode = QUIRK_MMAP_MODE_AUTO;
 module_param(quirk_mmap_mode, int, S_IRUGO);
-MODULE_PARAM_DESC(quirk_mmap_mode, "udmabuf default quirk mmap mode" QUIRK_MMAP_MODE_PARAM_DESC_USAGE QUIRK_MMAP_MODE_PARAM_DESC_DEFAULT);
+MODULE_PARM_DESC(quirk_mmap_mode, "udmabuf default quirk mmap mode" QUIRK_MMAP_MODE_PARAM_DESC_USAGE QUIRK_MMAP_MODE_PARAM_DESC_DEFAULT);
 
 /*
  * udmabuf device entry structure
@@ -96,7 +99,7 @@ struct udmabuf_object {
     struct device *sys_dev;
     struct device *dma_dev;
     struct cdev cdev;
-    dev_t device_num;
+    dev_t device_number;
     struct mutex sem;
     bool is_open;
     size_t size;
@@ -141,7 +144,7 @@ struct udmabuf_export_entry {
  * sync_mode(synchronous mode) value
  */
 #define SYNC_MODE_INVALID           (0x00)
-#define SYNC_MODE_NOCHACHED         (0x01)
+#define SYNC_MODE_NONCACHED         (0x01)
 #define SYNC_MODE_WRITECOMBINE      (0x02)
 #define SYNC_MODE_DMACHOHERENT      (0x03)
 #define SYNC_MODE_MASK              (0x03)
@@ -306,8 +309,8 @@ static inline int NO_ACTION(struct udmabuf_object *obj)
     return 0;
 }
 
-DEF_ATTR_SHOW(size,           , "%zu\n"     ,    obj->size,                    );
-DEF_ATTR_SHOW(phys_addr,      , "%pad\n"    ,    obj->phys_addr,               );
+DEF_ATTR_SHOW(size            , "%zu\n"     ,    obj->size                     );
+DEF_ATTR_SHOW(phys_addr       , "0x%llx\n"  ,    obj->phys_addr                );
 DEF_ATTR_SHOW(sync_mode       , "%d\n"      ,    obj->sync_mode                );
 DEF_ATTR_SHOW(sync_offset     , "0x%llx\n"  ,    obj->sync_offset              );
 DEF_ATTR_SHOW(sync_size       , "%zu\n"     ,    obj->sync_size                );
@@ -316,7 +319,7 @@ DEF_ATTR_SHOW(sync_owner      , "%d\n"      ,    obj->sync_owner               )
 DEF_ATTR_SHOW(sync_for_cpu    , "%llu\n"    ,    obj->sync_for_cpu             );
 DEF_ATTR_SHOW(sync_for_device , "%llu\n"    ,    obj->sync_for_device          );
 DEF_ATTR_SHOW(quirk_mmap_mode , "%d\n"      ,    obj->quirk_mmap_mode          );
-DEF_ATTR_SHOW(dma_coherent    , "%d\n"      ,    IS_DMA_COHERENT(obj->dma_dev) );
+DEF_ATTR_SHOW(dma_coherent    , "%d\n"      ,    dev_is_dma_coherent(obj->dma_dev) );
 DEF_ATTR_SHOW(debug_vma       , "%d\n"      ,    obj->debug_vma                );
 DEF_ATTR_SHOW(debug_export    , "%d\n"      ,    obj->debug_export             );
 
@@ -348,7 +351,7 @@ static struct device_attribute udmabuf_device_attrs[] = {
     __ATTR_NULL,
 };
 
-#define udmabuf_device_attrs_size (sizeof(udmabuf_device_attrs/sizeof(udmabuf_device_attrs[0])))
+#define udmabuf_device_attrs_size (sizeof(udmabuf_device_attrs)/sizeof(udmabuf_device_attrs[0]))
 
 static struct attribute *udmabuf_attrs[udmabuf_device_attrs_size] = {
     NULL
@@ -425,6 +428,49 @@ static const struct vm_operations_struct udmabuf_mmap_vm_ops = {
     .fault = udmabuf_mmap_vma_fault,
 };
 
+typedef struct {
+    char *name;
+    int id;
+    unsigned int size;
+    char *bind_id;
+} udmabuf_static_device_param;
+
+
+static int udmabuf_static_device_create(udmabuf_static_device_param *param)
+{
+    int ret;
+    char *name = param->name;
+    int id = param->id;
+    unsigned int size = param->size;
+    char *bind_id = (param->bind_id) ? param->bind_id : bind;
+    u64 option = 0;
+    struct device *parent = NULL;
+
+    if (bind_id != NULL) {
+        struct bus_type *bus_type = NULL;
+        char *device_name = NULL;
+        //ret = udmabuf_static_parse_bind(bind_id, &bus_type, &device_name);
+        if (ret) {
+            pr_err(DRIVER_NAME ": bind error: %s is not support bus\n", bind_id);
+            return ret;
+        }
+        parent = bus_find_device_by_name(bus_type, NULL, device_name);
+        if (IS_ERR_OR_NULL(parent)) {
+            ret = (parent == NULL) ? -EINVAL : PTR_ERR(parent);
+            pr_err(DRIVER_NAME ": bind error: device(%s) not found in bus(%s)\n", device_name, bus_type->name);
+            return ret;
+        }
+    }
+/*
+    if (parent) {
+        ret = udmabuf_child_device_create(name, id, size, option, parent);
+        put_device(parent);
+    } else {
+        ret = udmabuf_platform_device_create(name, id, size, option);
+    }
+*/
+    return 0;
+}
 
 #define DEFINE_UDMABUF_STATIC_DEVICE_PARAM(__num)                           \
     static ulong udmabuf ## __num = 0;                                      \
@@ -432,7 +478,7 @@ static const struct vm_operations_struct udmabuf_mmap_vm_ops = {
     MODULE_PARM_DESC(udmabuf ## __num, DRIVER_NAME #__num " buffer size");  \
     static char *udmabuf ## __num ## _bind = NULL;                          \
     module_param(udmabuf ## __num ## _bind, charp, S_IRUGO);                \
-    MODULE_PARM_DESC(udmabuf ## __num ## _bind, DRIVER_NAME #__num,         \
+    MODULE_PARM_DESC(udmabuf ## __num ## _bind, DRIVER_NAME #__num          \
             " bind device name. exp pci/0000:00:20:0");
 
 #define CALL_UDMABUF_STATIC_DEVICE_RESERVE_MINOR_NUMBER(__num)              \
@@ -460,6 +506,15 @@ static inline type udmabuf_get_option_ ## name(u64 option)  \
     const u64 mask = ((1UL << ((hi) - (lo) + 1)) - 1);      \
     return (type)((option >> (lo)) & mask);                 \
 }
+
+DEFINE_UDMABUF_STATIC_DEVICE_PARAM(0);
+DEFINE_UDMABUF_STATIC_DEVICE_PARAM(1);
+DEFINE_UDMABUF_STATIC_DEVICE_PARAM(2);
+DEFINE_UDMABUF_STATIC_DEVICE_PARAM(3);
+DEFINE_UDMABUF_STATIC_DEVICE_PARAM(4);
+DEFINE_UDMABUF_STATIC_DEVICE_PARAM(5);
+DEFINE_UDMABUF_STATIC_DEVICE_PARAM(6);
+DEFINE_UDMABUF_STATIC_DEVICE_PARAM(7);
 
 DEFINE_UDMABUF_OPTION(dma_mask_size   , u64,  0, 7 )
 DEFINE_UDMABUF_OPTION(quirk_mmap_mode , int, 10, 12)
@@ -513,15 +568,15 @@ static bool udmabuf_quirk_mmap_enable(struct udmabuf_object *obj)
     if (obj->quirk_mmap_mode == QUIRK_MMAP_MODE_ALWAYS_ON)
         return true;
     if (obj->quirk_mmap_mode == QUIRK_MMAP_MODE_AUTO)
-        return !IS_DMA_COHERENT(obj->dma_dev);
+        return !dev_is_dma_coherent(obj->dma_dev);
 
     return true;
 }
 
 static inline void vm_flags_mod(struct vm_area_struct *vma, vm_flags_t set, vm_flags_t clear)
 {
-    vma->vma_flags |= (set);
-    vma->vma_flags &= ~(clear);
+    vma->vm_flags |= (set);
+    vma->vm_flags &= ~(clear);
 }
 
 static int udmabuf_object_mmap(struct udmabuf_object *obj, struct vm_area_struct *vma, bool force_sync)
@@ -532,13 +587,13 @@ static int udmabuf_object_mmap(struct udmabuf_object *obj, struct vm_area_struct
     if ((force_sync == true) || (obj->sync_mode & SYNC_ALWAYS) != 0) {
         switch (obj->sync_mode & SYNC_MODE_MASK) {
         case SYNC_MODE_NONCACHED:
-            vma->vm_page_prot = _PGPROT_NONCACHED(vma->vm_page_prot);
+            vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
             break;
         case SYNC_MODE_WRITECOMBINE:
-            vma->vm_page_prot = _PGPROT_WRITECOMBINE(vma->vm_page_prot);
+            vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
             break;
-        case SYNC_MODE_DMACOHERENT:
-            vma->vm_page_prot  = _PGPROT_DMACOHERENT(vma->vm_page_prot);
+        case SYNC_MODE_DMACHOHERENT:
+            vma->vm_page_prot  = pgprot_writecombine(vma->vm_page_prot);
             break;
         default:
             break;
@@ -588,12 +643,9 @@ static struct sg_table *udmabuf_export_dma_buf_map(struct dma_buf_attachment *at
 
     obj = &entry->object_data;
 
-    if (UDMABUF_EXPORT_DEBUG(obj))
-        dev_info(obj->sys_dev, "%s(fd=%d) start.\n", __func__, entry->fd);
-
     sg_table = kzalloc(sizeof(*sg_table), GFP_KERNEL);
     if (IS_ERR_OR_NULL(sg_table)) {
-        dev_err(obj->sys_dev, "%s(fd=%d): kzalloc failed. return=%d\n", __func__, entry->fd, PTR_ERR(sg_table));
+        dev_err(obj->sys_dev, "%s(fd=%d): kzalloc failed. return=%ld\n", __func__, entry->fd, PTR_ERR(sg_table));
         goto failed;
     }
     done |= DONE_ALLOC_SG_TABLE;
@@ -605,17 +657,18 @@ static struct sg_table *udmabuf_export_dma_buf_map(struct dma_buf_attachment *at
     }
     done |= DONE_GET_SG_TABLE;
 
-    ret = dma_map_sgtable(attachment->dev, sg_table, direction, 0);
+    ret = dma_map_sg_attrs(attachment->dev, sg_table->sgl, sg_table->orig_nents, direction, 0);
     if (ret) {
         dev_err(obj->sys_dev, "%s(fd=%d): dma_map_sgtable failed. return=%d\n", __func__, entry->fd, ret);
         goto failed;
     }
+    sg_table->nents = ret;
     done |= DONE_MAP_SG_TABLE;
 
     return  sg_table;
 
 failed:
-    if (done & DONE_MAP_SG_TABLE) { dma_unmap_sgtable(attachment->dev, sg_table, direction, 0); }
+    if (done & DONE_MAP_SG_TABLE) { dma_unmap_sg_attrs(attachment->dev, sg_table->sgl, sg_table->orig_nents, direction, 0); }
     if (done & DONE_GET_SG_TABLE) { sg_free_table(sg_table); }
     if (done & DONE_ALLOC_SG_TABLE) { kfree(sg_table); }
     
@@ -627,10 +680,10 @@ static void udmabuf_export_dma_buf_unmap(struct dma_buf_attachment *attachment,
 {
     struct dma_buf *dma_buf = attachment->dmabuf;
 
-    if (obj == NULL || (entry = dma_buf->priv) == NULL || sg_table == NULL)
+    if (dma_buf->priv == NULL || sg_table == NULL)
         return;
 
-    dma_unmap_sgtable(attachment->dev, sg_table, direction, 0);
+    dma_unmap_sg_attrs(attachment->dev, sg_table->sgl, sg_table->orig_nents, direction, 0);
     sg_free_table(sg_table);
     kfree(sg_table);
 }
@@ -653,15 +706,20 @@ static int udmabuf_export_mmap(struct dma_buf *dma_buf, struct vm_area_struct *v
 {
     struct udmabuf_export_entry *entry = dma_buf->priv;
     struct udmabuf_object *obj;
+    int ret;
 
     if (entry == NULL)
         return -ENODEV;
+
+    obj = &entry->object_data;
 
     ret = udmabuf_object_mmap(obj, vma, entry->force_sync);
     if (ret) {
         dev_err(obj->sys_dev, "%s(fd=%d): udmabuf_object_mmap failed. return=%d\n", __func__, entry->fd, ret);
         return ret;
     }
+
+    return 0;
 }
 
 static int udmabuf_export_begin_cpu(struct dma_buf *dma_buf, enum dma_data_direction direction)
@@ -712,7 +770,7 @@ static const struct dma_buf_ops udmabuf_export_ops = {
     .map_dma_buf        = udmabuf_export_dma_buf_map,
     .unmap_dma_buf      = udmabuf_export_dma_buf_unmap,
     .release            = udmabuf_export_release,
-    .mmap               = udmabuf_export_begin_cpu,
+    .mmap               = udmabuf_export_mmap,
     .begin_cpu_access   = udmabuf_export_begin_cpu,
     .end_cpu_access     = udmabuf_export_end_cpu,
 };
@@ -775,7 +833,7 @@ static struct udmabuf_export_entry *udmabuf_export_create_entry(struct udmabuf_o
     entry->object_data.sync_size = 0;
     entry->object_data.sync_direction = 0;
     entry->force_sync = force_sync;
-    entry->object_data.qurik_mmap_mode = obj->quirk_mmap_mode;
+    entry->object_data.quirk_mmap_mode = obj->quirk_mmap_mode;
     if (obj->pages != NULL) {
         entry->object_data.pagecount = size >> PAGE_SHIFT;
         entry->object_data.pages = &obj->pages[offset>>PAGE_SHIFT];
@@ -791,7 +849,7 @@ static struct udmabuf_export_entry *udmabuf_export_create_entry(struct udmabuf_o
 
     entry->dma_buf = dma_buf_export(&export_info);
     if (IS_ERR(entry->dma_buf)) {
-        dev_err(obj->sys_dev, "%s: dma_buf_export failed. return=%d\n", __func__, PTR_ERR(entry->dma_buf));
+        dev_err(obj->sys_dev, "%s: dma_buf_export failed. return=%ld\n", __func__, PTR_ERR(entry->dma_buf));
         entry->dma_buf = NULL;
         goto failed;
     }
@@ -887,7 +945,7 @@ return_unlock:
     return ret;
 }
 
-static ssize_t udmabuf_device_file_write(struct file *file, const char __char *buf, size_t count, loff_t *pos)
+static ssize_t udmabuf_device_file_write(struct file *file, const char __user *buf, size_t count, loff_t *pos)
 {
     struct udmabuf_object *obj = file->private_data;
     int ret;
@@ -941,7 +999,7 @@ static loff_t udmabuf_device_file_llseek(struct file *file, loff_t offset, int w
         new_pos = file->f_pos + offset;
         break;
     case 2:
-        new_pos = file->size + offset;
+        new_pos = obj->size + offset;
         break;
     default:
         return -EINVAL;
@@ -953,110 +1011,6 @@ static loff_t udmabuf_device_file_llseek(struct file *file, loff_t offset, int w
     return new_pos;
 }
 
-
-static struct udmabuf_object *udmabuf_object_create(const char *name, struct device *parent, int minor)
-{
-    struct udmabuf_object *obj = NULL;
-    unsigned int done = 0;
-    const unsigned int DONE_ALLOC_MINOR   = (1 << 0);
-    const unsigned int DONE_CHRDEV_ADD    = (1 << 1);
-    const unsigned int DONE_DEVICE_CREATE = (1 << 3);
-    const unsigned int DONE_SET_DMA_DEV   = (1 << 4);
-    int ret;
-
-    if ((0 <= minor) && (minor < DEVICE_MAX_NUM)) {
-        if (ida_simple_get(&udmabuf_device_ida, minor, minor+1, GFP_KERNEL) < 0) {
-            pr_err(DRIVER_NAME ": couldn't allocat minor number(=%d).\n", minor);
-            goto failed;
-        } 
-    } else if (minor < 0) {
-        if ((minor = ida_simple_get(&udmabuf_device_ida, 0, DEVICE_MAX_NUM, GFP_KERNEL)) < 0) {
-            pr_err(DRIVER_NAME ": couldn't allocat new minor number, return = %d.\n", minor);
-            goto failed;
-        }
-    } else {
-        pr_err(DRIVER_NAME ": invalid minor number(=%d), valid range is 0 to %d\n", minor, DEVICE_MAX_NUM-1);
-        goto failed;
-    }
-    done |= DONE_ALLOC_MINOR;
-
-    obj = kzalloc(sizeof(*obj), GFP_KERNEL);
-    if (IS_ERR_OR_NULL(obj)) {
-        ret = PTR_ERR(obj);
-        obj = NULL;
-        pr_err(DRIVER_NAME ": kzalloc failed, return %d\n", ret);
-        goto failed;
-    }
-    obj->device_number = MKDEV(MAJOR(udmabuf_device_num), minor);
-
-    if (name == NULL)
-        obj->sys_dev = device_create(udmabuf_sys_class, parent, obj->device_number,
-                            (void *)obj, DEVICE_NAME_FORMAT, MINOR(obj->device_number));
-    else
-        obj->sys_dev = device_create(udmabuf_sys_class, parent, obj->device_number,
-                            (void *)obj, "%s", name);
-    if (IS_ERR_OR_NULL(obj->sys_dev)) {
-        obj->sys_dev = NULL;
-        pr_err(DRIVER_NAME ": device_create failed, return = %d\n", PTR_ERR(obj->sys_dev));
-        goto failed;
-    }
-    done |= DONE_DEVICE_CREATE;
-
-    cdev_init(&obj->cdev, &udmabuf_device_file_ops);
-    obj->cdev.owner = THIS_MODULE;
-    if (cdev_add(&obj->cdev, obj->device_number, 1) != 0) {
-        dev_err(obj->sys_dev, "cdev_add failed.\n");
-        goto failed;
-    }
-    done |= DONE_CHRDEV_ADD;
-
-    if (parent != NULL)
-        obj->dma_dev = get_device(parent);
-    else
-        obj->dma_dev = get_device(obj->sys_dev);
-
-    if (obj->dma_dev->dma_mask == NULL)
-        obj->dma_dev->dma_mask = &obj->dma_dev->coherent_dma_mask;
-
-    if (*obj->dma_dev->dma_mask == 0) {
-        if (dma_set_mask_and_coherent(obj->dma_dev, DMA_BIT_MASK(dma_mask_bit)) != 0) {
-            dev_warn(obj->sys_dev, "dma_set_mask_and_coherent(DMA_BIT_MASK(%d)) failed.\n", dma_mask_bit);
-            *obj->dma_dev->dma_mask = DMA_BIT_MASK(dma_mask_bit);
-            obj->dma_dev->coherent_dma_mask = DMA_BIT_MASK(dma_mask_bit);
-        }
-    }
-    done |= DONE_SET_DMA_DEV;
-
-    obj->size = 0;
-    obj->alloc_size = 0;
-    obj->sync_mode = SYNC_MODE_NONCACHED;
-    obj->sync_offset = 0;
-    obj->sync_size = 0;
-    obj->sync_direction = 0;
-    obj->sync_owner = 0;
-    obj->sync_for_cpu = 0;
-    obj->sync_for_device = 0;
-    obj->of_reserved_mem = 0;
-    obj->quirk_mmap_mode = quirk_mmap_mode;
-    obj->pagecount = 0;
-    obj->pages = NULL;
-    INIT_LIST_HEAD(&obj->export_dma_buf_list);
-    mutex_init(&obj->export_dma_buf_list_sem);
-    obj->debug_vma = 0;
-    obj->debug_export = 0;
-    mutex_init(&obj->sem);
-
-    return obj;
-
-failed:
-    if (done & DONE_SET_DMA_DEV) put_device(obj->dma_dev);
-    if (done & DONE_CHRDEV_ADD) cdev_del(&obj->cdev);
-    if (done & DONE_DEVICE_CREATE) device_destroy(udmabuf_sys_class, obj->device_number);
-    if (done & DONE_ALLOC_MINOR) ida_simple_remove(&udmabuf_device_ida, minor);
-    if (obj != NULL) kfree(obj);
-    return NULL;
-
-}
 
 #define DEFINE_U_DMA_BUF_IOCTL_FLAGS(name,type,lo,hi)                   \
 static const int U_DMA_BUF_IOCTL_FLAGS_ ## name ## _SHIFT = (lo);       \
@@ -1144,7 +1098,6 @@ static long udmabuf_device_file_ioctl(struct file *file, unsigned int cmd, unsig
     switch (cmd) {
     case U_DMA_BUF_IOCTL_GET_DRV_INFO: {
         u_dma_buf_ioctl_drv_info drv_info = {0};
-        SET_U_DMA_BUF_IOCTL_FLAGS_IOCTL_VERION       (&drv_info, 2);
         SET_U_DMA_BUF_IOCTL_FLAGS_IN_KERNEL_FUNCTIONS(&drv_info, 1);
         SET_U_DMA_BUF_IOCTL_FLAGS_USE_OF_DMA_CONFIG  (&drv_info, 1);
         SET_U_DMA_BUF_IOCTL_FLAGS_USE_OF_RESERVED_MEM(&drv_info, 1);
@@ -1194,8 +1147,8 @@ static long udmabuf_device_file_ioctl(struct file *file, unsigned int cmd, unsig
             dma_mask_bit = dma_mask_bit << 1;
         }
         SET_U_DMA_BUF_IOCTL_FLAGS_DMA_MASK    (&dev_info, dma_mask_size);
-        SET_U_DMA_BUF_IOCTL_FLAGS_DMA_COHERENT(&dev_info, IS_DMA_COHERENT(obj->dma_dev));
-        SET_U_DMA_BUF_IOCTL_FLAGS_MMAP_MDOE   (&dev_info, obj->quirk_mmap_mode);
+        SET_U_DMA_BUF_IOCTL_FLAGS_DMA_COHERENT(&dev_info, dev_is_dma_coherent(obj->dma_dev));
+        SET_U_DMA_BUF_IOCTL_FLAGS_MMAP_MODE   (&dev_info, obj->quirk_mmap_mode);
         dev_info.size = (uint64_t)(obj->size);
         dev_info.addr = (uint64_t)(obj->phys_addr);
         if (copy_to_user(argp, &dev_info, sizeof(dev_info)) != 0)
@@ -1222,9 +1175,9 @@ static long udmabuf_device_file_ioctl(struct file *file, unsigned int cmd, unsig
         if (copy_from_user(&sync_args, argp, sizeof(sync_args)) != 0)
             ret = -EFAULT;
         else {
-            int sync_command = GET_U_DMA_IOCTL_FLAGS_SYNC_CMD (&sync_args);
-            int sync_direction = GET_U_DMA_IOCTL_FLAGS_SYNC_CMD (&sync_args);
-            int sync_mode = GET_U_DMA_IOCTL_FLAGS_SYNC_CMD (&sync_args);
+            int sync_command = GET_U_DMA_BUF_IOCTL_FLAGS_SYNC_CMD (&sync_args);
+            int sync_direction = GET_U_DMA_BUF_IOCTL_FLAGS_SYNC_CMD (&sync_args);
+            int sync_mode = GET_U_DMA_BUF_IOCTL_FLAGS_SYNC_CMD (&sync_args);
             u64 sync_offset = (u64)(sync_args.offset);
             size_t sync_size = (size_t)(sync_args.size);
             switch (sync_direction) {
@@ -1314,8 +1267,6 @@ static const struct file_operations udmabuf_device_file_ops = {
     .unlocked_ioctl = udmabuf_device_file_ioctl,
 };
 
-static DEFINE_IDA(udmabuf_device_ida);
-
 
 static void udmabuf_static_device_reserve_minor_number_all(void)
 {
@@ -1343,6 +1294,111 @@ static int udmabuf_static_device_create_all(void)
     return status;
 }
 
+static struct udmabuf_object *udmabuf_object_create(const char *name, struct device *parent, int minor)
+{
+    struct udmabuf_object *obj = NULL;
+    unsigned int done = 0;
+    const unsigned int DONE_ALLOC_MINOR   = (1 << 0);
+    const unsigned int DONE_CHRDEV_ADD    = (1 << 1);
+    const unsigned int DONE_DEVICE_CREATE = (1 << 3);
+    const unsigned int DONE_SET_DMA_DEV   = (1 << 4);
+    int ret;
+
+    if ((0 <= minor) && (minor < DEVICE_MAX_NUM)) {
+        if (ida_simple_get(&udmabuf_device_ida, minor, minor+1, GFP_KERNEL) < 0) {
+            pr_err(DRIVER_NAME ": couldn't allocat minor number(=%d).\n", minor);
+            goto failed;
+        } 
+    } else if (minor < 0) {
+        if ((minor = ida_simple_get(&udmabuf_device_ida, 0, DEVICE_MAX_NUM, GFP_KERNEL)) < 0) {
+            pr_err(DRIVER_NAME ": couldn't allocat new minor number, return = %d.\n", minor);
+            goto failed;
+        }
+    } else {
+        pr_err(DRIVER_NAME ": invalid minor number(=%d), valid range is 0 to %d\n", minor, DEVICE_MAX_NUM-1);
+        goto failed;
+    }
+    done |= DONE_ALLOC_MINOR;
+
+    obj = kzalloc(sizeof(*obj), GFP_KERNEL);
+    if (IS_ERR_OR_NULL(obj)) {
+        ret = PTR_ERR(obj);
+        obj = NULL;
+        pr_err(DRIVER_NAME ": kzalloc failed, return %d\n", ret);
+        goto failed;
+    }
+    obj->device_number = MKDEV(MAJOR(udmabuf_device_number), minor);
+
+    if (name == NULL)
+        obj->sys_dev = device_create(udmabuf_sys_class, parent, obj->device_number,
+                            (void *)obj, DEVICE_NAME_FORMAT, MINOR(obj->device_number));
+    else
+        obj->sys_dev = device_create(udmabuf_sys_class, parent, obj->device_number,
+                            (void *)obj, "%s", name);
+    if (IS_ERR_OR_NULL(obj->sys_dev)) {
+        obj->sys_dev = NULL;
+        pr_err(DRIVER_NAME ": device_create failed, return = %ld\n", PTR_ERR(obj->sys_dev));
+        goto failed;
+    }
+    done |= DONE_DEVICE_CREATE;
+
+    cdev_init(&obj->cdev, &udmabuf_device_file_ops);
+    obj->cdev.owner = THIS_MODULE;
+    if (cdev_add(&obj->cdev, obj->device_number, 1) != 0) {
+        dev_err(obj->sys_dev, "cdev_add failed.\n");
+        goto failed;
+    }
+    done |= DONE_CHRDEV_ADD;
+
+    if (parent != NULL)
+        obj->dma_dev = get_device(parent);
+    else
+        obj->dma_dev = get_device(obj->sys_dev);
+
+    if (obj->dma_dev->dma_mask == NULL)
+        obj->dma_dev->dma_mask = &obj->dma_dev->coherent_dma_mask;
+
+    if (*obj->dma_dev->dma_mask == 0) {
+        if (dma_set_mask_and_coherent(obj->dma_dev, DMA_BIT_MASK(dma_mask_bit)) != 0) {
+            dev_warn(obj->sys_dev, "dma_set_mask_and_coherent(DMA_BIT_MASK(%d)) failed.\n", dma_mask_bit);
+            *obj->dma_dev->dma_mask = DMA_BIT_MASK(dma_mask_bit);
+            obj->dma_dev->coherent_dma_mask = DMA_BIT_MASK(dma_mask_bit);
+        }
+    }
+    done |= DONE_SET_DMA_DEV;
+
+    obj->size = 0;
+    obj->alloc_size = 0;
+    obj->sync_mode = SYNC_MODE_NONCACHED;
+    obj->sync_offset = 0;
+    obj->sync_size = 0;
+    obj->sync_direction = 0;
+    obj->sync_owner = 0;
+    obj->sync_for_cpu = 0;
+    obj->sync_for_device = 0;
+    obj->of_reserved_mem = 0;
+    obj->quirk_mmap_mode = quirk_mmap_mode;
+    obj->pagecount = 0;
+    obj->pages = NULL;
+    INIT_LIST_HEAD(&obj->export_dma_buf_list);
+    mutex_init(&obj->export_dma_buf_list_sem);
+    obj->debug_vma = 0;
+    obj->debug_export = 0;
+    mutex_init(&obj->sem);
+
+    return obj;
+
+failed:
+    if (done & DONE_SET_DMA_DEV) put_device(obj->dma_dev);
+    if (done & DONE_CHRDEV_ADD) cdev_del(&obj->cdev);
+    if (done & DONE_DEVICE_CREATE) device_destroy(udmabuf_sys_class, obj->device_number);
+    if (done & DONE_ALLOC_MINOR) ida_simple_remove(&udmabuf_device_ida, minor);
+    if (obj != NULL) kfree(obj);
+    return NULL;
+
+}
+
+
 static int udmabuf_object_setup(struct udmabuf_object *obj)
 {
     if (!obj)
@@ -1352,7 +1408,7 @@ static int udmabuf_object_setup(struct udmabuf_object *obj)
 
     obj->virt_addr = dma_alloc_coherent(obj->dma_dev, obj->alloc_size, &obj->phys_addr, GFP_KERNEL);
     if (IS_ERR_OR_NULL(obj->virt_addr)) {
-        dev_err(obj->sys_dev, "dma_alloc_coherent(size = %zu) failed. return(%d\n)", obj->alloc_size, PTR_ERR(obj->virt_addr));
+        dev_err(obj->sys_dev, "dma_alloc_coherent(size = %zu) failed. return(%ld\n)", obj->alloc_size, PTR_ERR(obj->virt_addr));
         obj->virt_addr = NULL;
         return (PTR_ERR(obj->virt_addr) == 0) ? -ENOMEM : PTR_ERR(obj->virt_addr); 
     }
@@ -1370,9 +1426,9 @@ static int udmabuf_object_setup(struct udmabuf_object *obj)
 
         phys_pages = pfn_to_page(page_frame_num);
         obj->pagecount = obj->alloc_size >> PAGE_SHIFT;
-        obj->pages = kmalloc_array(obj->pagecount, sizeof(struct *page), GFP_KERNEL);
+        obj->pages = kmalloc_array(obj->pagecount, sizeof(struct page), GFP_KERNEL);
         if (IS_ERR_OR_NULL(obj->pages)) {
-            dev_warn(obj->sys_dev, "allocate pages(pagecount=%lu) failed. return(%d\n)", 
+            dev_warn(obj->sys_dev, "allocate pages(pagecount=%lu) failed. return(%ld\n)", 
                      (unsigned long)obj->pagecount, PTR_ERR(obj->pages));
             obj->pagecount = 0;
             obj->pages = NULL;
@@ -1430,7 +1486,7 @@ static int udmabuf_platform_device_remove(struct device *dev, struct udmabuf_obj
         if (ret != 0) {
             dev_set_drvdata(dev, NULL);
             if (of_reserved_mem)
-                of_reserved_mem_release(dev);
+                of_reserved_mem_device_release(dev);
         }
     } else {
         ret = -ENODEV;
@@ -1442,7 +1498,7 @@ static int udmabuf_platform_device_remove(struct device *dev, struct udmabuf_obj
 static int udmabuf_platform_device_probe(struct device *dev)
 {
     int ret, minor_number;
-    u32 u32_vaule;
+    u32 u32_value;
     u64 u64_value;
     size_t size;
     struct udmabuf_object *obj = NULL;
@@ -1451,7 +1507,7 @@ static int udmabuf_platform_device_probe(struct device *dev)
 
     if (device_property_read_u64(dev, "size", &u64_value) == 0) {
         size = u64_value;
-    } else if ((ret = of_property_read_ulong(dev->of_node, "size", &u64_value)) == 0) {
+    } else if ((ret = of_property_read_u64(dev->of_node, "size", &u64_value)) == 0) {
         size = u64_value;
     } else {
         dev_err(dev, "invalid property size. status = %d\n", ret);
@@ -1460,14 +1516,14 @@ static int udmabuf_platform_device_probe(struct device *dev)
     }
 
     if (size <= 0) {
-        dev_err(dev, "invalid size, size = %d\n", size);
+        dev_err(dev, "invalid size, size = %ld\n", size);
         ret = -ENODEV;
         goto failed;
     }
     
     if (device_property_read_u32(dev, "minor-number", &u32_value) == 0) {
         minor_number = u32_value;
-    } else if ((ret = of_property_read_ulong(dev->of_node, "minor-number", &u64_value)) == 0) {
+    } else if ((ret = of_property_read_u64(dev->of_node, "minor-number", &u64_value)) == 0) {
         minor_number = u32_value;
     } else {
         minor_number = -1;
@@ -1503,8 +1559,8 @@ static int udmabuf_platform_device_probe(struct device *dev)
         if (ret != 0) {
             dev_info(dev, "dma_set_mask_and_coherent(dev, DMA_BIT_MASK(%d)) failed. return = %d\n", u32_value, ret);
             ret = 0;
-            *dev->dma_mask = DMA_BIT_MASK(u32_mask);
-            dev->coherent_dma_mask = DMA_BIT_MASK(u32_mask);
+            *dev->dma_mask = DMA_BIT_MASK(u32_value);
+            dev->coherent_dma_mask = DMA_BIT_MASK(u32_value);
         }
     }
 
@@ -1561,17 +1617,17 @@ static int udmabuf_platform_device_probe(struct device *dev)
         obj->sync_direction = (int)u32_value;
     }
 
-    if (of_property_read_ulong(dev->of_node, "sync-offset", &u64_value) == 0) {
+    if (of_property_read_u64(dev->of_node, "sync-offset", &u64_value) == 0) {
         if (u64_value >= obj->size) {
-            dev_err(dev, "invalid sync-offset property value = %d\n", u64_value);
+            dev_err(dev, "invalid sync-offset property value = %lld\n", u64_value);
             goto failed_with_unlock;
         }
         obj->sync_offset = (int)u64_value;
     }
 
-    if (of_property_read_ulong(dev->of_node, "sync-size", &u64_value) == 0) {
+    if (of_property_read_u64(dev->of_node, "sync-size", &u64_value) == 0) {
         if (obj->sync_offset + u64_value > obj->size) {
-            dev_err(dev, "invalid sync-size property value = %d\n", u64_value);
+            dev_err(dev, "invalid sync-size property value = %lld\n", u64_value);
             goto failed_with_unlock;
         }
         obj->sync_size = obj->size;
@@ -1584,9 +1640,6 @@ static int udmabuf_platform_device_probe(struct device *dev)
     }
 
     mutex_unlock(&obj->sem);
-
-    if (info_enable)
-        udmabuf_object_info(obj);
 
     return 0;
 
@@ -1705,14 +1758,14 @@ static int __init u_dma_buf_init(void)
     INIT_LIST_HEAD(&udmabuf_device_list);
     mutex_init(&udmabuf_device_list_sem);
 
-    ret = alloc_chrdev_region(&udmabuf_device_num, 0, DEVICE_MAX_NUM, DRIVER_NAME);
+    ret = alloc_chrdev_region(&udmabuf_device_number, 0, DEVICE_MAX_NUM, DRIVER_NAME);
     if (ret != 0) {
         pr_err(DRIVER_NAME ": couldn't allocate device major number, ret = %d\n", ret);
         udmabuf_device_number = 0;
         goto failed;
     }
 
-    udmabuf_sys_class = class_create(DRIVER_NAME);
+    udmabuf_sys_class = class_create(THIS_MODULE, DRIVER_NAME);
     if (IS_ERR_OR_NULL(udmabuf_sys_class)) {
         ret = PTR_ERR(udmabuf_sys_class);
         udmabuf_sys_class = NULL;
