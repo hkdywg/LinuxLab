@@ -1058,6 +1058,265 @@ failed:
 
 }
 
+#define DEFINE_U_DMA_BUF_IOCTL_FLAGS(name,type,lo,hi)                   \
+static const int U_DMA_BUF_IOCTL_FLAGS_ ## name ## _SHIFT = (lo);       \
+static const uint64_t U_DMA_BUF_IOCTL_FLAGS_ ## name ## _MASK = (((uint64_t)1UL << ((hi)-(lo)+1))-1);   \
+static inline void SET_U_DMA_BUF_IOCTL_FLAGS_ ## name(type *p, int value)   \
+{                                                                       \
+    const int shift = U_DMA_BUF_IOCTL_FLAGS_ ## name ## _SHIFT;         \
+    const uint64_t mask = U_DMA_BUF_IOCTL_FLAGS_ ## name ## _MASK;      \
+    p->flags &= ~(mask << shift);                                       \
+    p->flags |= ((value & mask) << shift);                              \
+}                                                                       \
+static inline int GET_U_DMA_BUF_IOCTL_FLAGS_ ## name(type *p)           \
+{                                                                       \
+    const int shift = U_DMA_BUF_IOCTL_FLAGS_ ## name ## _SHIFT;         \
+    const uint64_t mask = U_DMA_BUF_IOCTL_FLAGS_ ## name ## _MASK;      \
+    return (int)((p->flags >> shift) & mask);                           \
+}
+
+typedef struct {
+    uint64_t flags;
+    char version[16];
+} u_dma_buf_ioctl_drv_info;
+
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(IOCTL_VERSION,         u_dma_buf_ioctl_drv_info,  0,  7)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(IN_KERNEL_FUNCTIONS,   u_dma_buf_ioctl_drv_info,  8,  8)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(USE_OF_DMA_CONFIG,     u_dma_buf_ioctl_drv_info, 12, 12)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(USE_OF_RESERVED_MEM,   u_dma_buf_ioctl_drv_info, 13, 13)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(USE_QUIRK_MMAP,        u_dma_buf_ioctl_drv_info, 16, 16)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(USE_QUIRK_MMAP_PAGE,   u_dma_buf_ioctl_drv_info, 17, 17)
+
+typedef struct {
+    uint64_t flags;
+    uint64_t size;
+    uint64_t addr;
+} u_dma_buf_ioctl_dev_info;
+
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(DMA_MASK,      u_dma_buf_ioctl_dev_info,  0,  7)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(DMA_COHERENT,  u_dma_buf_ioctl_dev_info,  9,  9)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(MMAP_MODE,     u_dma_buf_ioctl_dev_info, 10, 12)
+
+typedef struct {
+    uint64_t flags;
+    uint64_t size;
+    uint64_t offset;
+} u_dma_buf_ioctl_sync_args;
+
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(SYNC_CMD,      u_dma_buf_ioctl_sync_args,  0,  1)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(SYNC_DIR,      u_dma_buf_ioctl_sync_args,  2,  3)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(SYNC_MODE,     u_dma_buf_ioctl_sync_args,  8, 15)
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(SYNC_OWNER,    u_dma_buf_ioctl_sync_args, 16, 16)
+
+enum {
+    U_DMA_BUF_IOCTL_FLAGS_SYNC_CMD_FOR_CPU = 1,
+    U_DMA_BUF_IOCTL_FLAGS_SYNC_CMD_FOR_DEVICE = 3
+};
+
+typedef struct {
+    uint64_t flags;
+    uint64_t size;
+    uint64_t offset;
+    uint64_t addr;
+    int fd;
+} u_dma_buf_ioctl_export_args;
+
+DEFINE_U_DMA_BUF_IOCTL_FLAGS(EXPORT_FD_FLAGS,  u_dma_buf_ioctl_export_args, 0, 31)
+
+#define U_DMA_BUF_IOCTL_MAGIC               'U'
+#define U_DMA_BUF_IOCTL_GET_DRV_INFO        _IOR (U_DMA_BUF_IOCTL_MAGIC, 1, u_dma_buf_ioctl_drv_info)
+#define U_DMA_BUF_IOCTL_GET_SIZE            _IOR (U_DMA_BUF_IOCTL_MAGIC, 2, uint64_t)
+#define U_DMA_BUF_IOCTL_GET_DMA_ADDR        _IOR (U_DMA_BUF_IOCTL_MAGIC, 3, uint64_t)
+#define U_DMA_BUF_IOCTL_GET_SYNC_OWNER      _IOR (U_DMA_BUF_IOCTL_MAGIC, 4, uint32_t)
+#define U_DMA_BUF_IOCTL_SET_SYNC_FOR_CPU    _IOR (U_DMA_BUF_IOCTL_MAGIC, 5, uint64_t)
+#define U_DMA_BUF_IOCTL_SET_SYNC_FOR_DEVICE _IOR (U_DMA_BUF_IOCTL_MAGIC, 6, uint64_t)
+#define U_DMA_BUF_IOCTL_GET_DEV_INFO        _IOR (U_DMA_BUF_IOCTL_MAGIC, 7, u_dma_buf_ioctl_dev_info)
+#define U_DMA_BUF_IOCTL_GET_SYNC            _IOR (U_DMA_BUF_IOCTL_MAGIC, 8, u_dma_buf_ioctl_sync_args)
+#define U_DMA_BUF_IOCTL_SET_SYNC            _IOR (U_DMA_BUF_IOCTL_MAGIC, 9, u_dma_buf_ioctl_sync_args)
+#define U_DMA_BUF_IOCTL_EXPORT              _IOR (U_DMA_BUF_IOCTL_MAGIC,10, u_dma_buf_ioctl_export_args)
+
+static long udmabuf_device_file_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+{
+    struct udmabuf_object *obj = file->private_data;
+    void __user *argp = (void __user*)arg;
+    int ret;
+    
+    switch (cmd) {
+    case U_DMA_BUF_IOCTL_GET_DRV_INFO: {
+        u_dma_buf_ioctl_drv_info drv_info = {0};
+        SET_U_DMA_BUF_IOCTL_FLAGS_IOCTL_VERION       (&drv_info, 2);
+        SET_U_DMA_BUF_IOCTL_FLAGS_IN_KERNEL_FUNCTIONS(&drv_info, 1);
+        SET_U_DMA_BUF_IOCTL_FLAGS_USE_OF_DMA_CONFIG  (&drv_info, 1);
+        SET_U_DMA_BUF_IOCTL_FLAGS_USE_OF_RESERVED_MEM(&drv_info, 1);
+        SET_U_DMA_BUF_IOCTL_FLAGS_USE_QUIRK_MMAP     (&drv_info, 1);
+        SET_U_DMA_BUF_IOCTL_FLAGS_USE_QUIRK_MMAP_PAGE(&drv_info, 1);
+        if (strscpy(&drv_info.version[0], DRIVER_VERSION, sizeof(drv_info.version)) < 0)
+            ret = -EFAULT;
+        else if (copy_to_user(argp, &drv_info, sizeof(drv_info)) != 0)
+            ret = -EFAULT;
+        else 
+            ret = 0;
+        break;
+        } 
+    case U_DMA_BUF_IOCTL_GET_SIZE: {
+        uint64_t size = (uint64_t)obj->size;
+        if (copy_to_user(argp, &size, sizeof(size)) != 0)
+            ret = -EFAULT;
+        else
+            ret = 0;
+        break;
+        }
+    case U_DMA_BUF_IOCTL_GET_DMA_ADDR: {
+        uint64_t dma_addr = (uint64_t)obj->phys_addr;
+        if (copy_to_user(argp, &dma_addr, sizeof(dma_addr)) != 0)
+            ret = -EFAULT;
+        else 
+            ret = 0;
+        break;
+        }
+    case U_DMA_BUF_IOCTL_GET_SYNC_OWNER: {
+        uint32_t sync_owner = (uint32_t)obj->sync_owner;
+        if (copy_to_user(argp, &sync_owner, sizeof(sync_owner)) != 0)
+            ret = -EFAULT;
+        else
+            ret = 0;
+        break;
+        }
+    case U_DMA_BUF_IOCTL_GET_DEV_INFO: {
+        u_dma_buf_ioctl_dev_info dev_info = {0};
+        u64 dma_mask = (obj->dma_dev->dma_mask != NULL) ? *obj->dma_dev->dma_mask : 0;
+        int dma_mask_size = 0;
+        u64 dma_mask_bit = ((u64)1UL << dma_mask_size);
+        while (dma_mask_size < 64) {
+            if ((dma_mask & dma_mask_bit) == 0)
+                break;
+            dma_mask_size++;
+            dma_mask_bit = dma_mask_bit << 1;
+        }
+        SET_U_DMA_BUF_IOCTL_FLAGS_DMA_MASK    (&dev_info, dma_mask_size);
+        SET_U_DMA_BUF_IOCTL_FLAGS_DMA_COHERENT(&dev_info, IS_DMA_COHERENT(obj->dma_dev));
+        SET_U_DMA_BUF_IOCTL_FLAGS_MMAP_MDOE   (&dev_info, obj->quirk_mmap_mode);
+        dev_info.size = (uint64_t)(obj->size);
+        dev_info.addr = (uint64_t)(obj->phys_addr);
+        if (copy_to_user(argp, &dev_info, sizeof(dev_info)) != 0)
+            ret = -EFAULT;
+        else
+            ret = 0;
+        break;
+        }
+    case U_DMA_BUF_IOCTL_GET_SYNC: {
+        u_dma_buf_ioctl_sync_args sync_args = {0};
+        SET_U_DMA_BUF_IOCTL_FLAGS_SYNC_DIR  (&sync_args, obj->sync_direction);
+        SET_U_DMA_BUF_IOCTL_FLAGS_SYNC_MODE (&sync_args, obj->sync_mode);
+        SET_U_DMA_BUF_IOCTL_FLAGS_SYNC_OWNER(&sync_args, obj->sync_owner);
+        sync_args.size = (uint64_t)obj->sync_size;
+        sync_args.offset = (uint64_t)obj->sync_offset;
+        if (copy_to_user(argp, &sync_args, sizeof(sync_args)) != 0)
+            ret = -EFAULT;
+        else
+            ret = 0;
+        break;
+        }
+    case U_DMA_BUF_IOCTL_SET_SYNC: {
+        u_dma_buf_ioctl_sync_args sync_args;
+        if (copy_from_user(&sync_args, argp, sizeof(sync_args)) != 0)
+            ret = -EFAULT;
+        else {
+            int sync_command = GET_U_DMA_IOCTL_FLAGS_SYNC_CMD (&sync_args);
+            int sync_direction = GET_U_DMA_IOCTL_FLAGS_SYNC_CMD (&sync_args);
+            int sync_mode = GET_U_DMA_IOCTL_FLAGS_SYNC_CMD (&sync_args);
+            u64 sync_offset = (u64)(sync_args.offset);
+            size_t sync_size = (size_t)(sync_args.size);
+            switch (sync_direction) {
+            case 0: obj->sync_direction = 0; break;
+            case 1: obj->sync_direction = 1; break;
+            case 2: obj->sync_direction = 2; break;
+            default: break;
+            }
+            if (sync_mode > 0) { obj->sync_mode = sync_mode; }
+            if (sync_offset >= 0) { obj->sync_offset = sync_offset; }
+            if (sync_size > 0) { obj->sync_size = sync_size; }
+            switch (sync_command) {
+            case U_DMA_BUF_IOCTL_FLAGS_SYNC_CMD_FOR_CPU:
+                obj->sync_for_cpu = 1;
+                ret = udmabuf_sync_for_cpu(obj);
+                break;
+            case U_DMA_BUF_IOCTL_FLAGS_SYNC_CMD_FOR_DEVICE:
+                obj->sync_for_device = 1;
+                ret = udmabuf_sync_for_device(obj);
+                break;
+            default:
+                ret = 0;
+                break;
+            }
+        }
+        break;
+        }
+    case U_DMA_BUF_IOCTL_SET_SYNC_FOR_CPU: {
+        u64 sync_args;
+        if (copy_from_user(&sync_args, argp, sizeof(sync_args)) != 0)
+            ret = -EFAULT;
+        else {
+            obj->sync_for_cpu = sync_args;
+            ret = udmabuf_sync_for_cpu(obj);
+        }
+        break;
+    }
+    case U_DMA_BUF_IOCTL_SET_SYNC_FOR_DEVICE: {
+        u64 sync_args;
+        if (copy_from_user(&sync_args, argp, sizeof(sync_args)) != 0)
+            ret = -EFAULT;
+        else {
+            obj->sync_for_cpu = sync_args;
+            ret = udmabuf_sync_for_device(obj);
+        }
+        break;
+    }
+    case U_DMA_BUF_IOCTL_EXPORT: {
+        u_dma_buf_ioctl_export_args export_args;
+        struct udmabuf_export_entry *export_entry = ERR_PTR(-EINVAL);
+        if (copy_to_user(&export_args, argp, sizeof(export_args)) != 0) {
+            ret = -EFAULT;
+            break;
+        } else {
+            u64 offset = (u64)(export_args.offset);
+            size_t size = (size_t)(export_args.size);
+            u32 fd_flags = GET_U_DMA_BUF_IOCTL_FLAGS_EXPORT_FD_FLAGS(&export_args);
+            export_entry = udmabuf_export_create_entry(obj, offset, size, fd_flags);
+        }
+        if (IS_ERR_OR_NULL(export_entry)) {
+            ret = PTR_ERR(export_entry);
+            export_entry = NULL;
+            break;
+        }
+        export_args.fd = export_entry->fd;
+        export_args.addr = export_entry->object_data.phys_addr;
+        if (copy_to_user(argp, &export_args, sizeof(export_args)) != 0)
+            ret = -EFAULT;
+        else
+            ret = 0;
+        break;
+    }
+    default:
+         ret = -ENOTTY;
+    }
+    return (long)ret;
+}
+
+static const struct file_operations udmabuf_device_file_ops = {
+    .owner          = THIS_MODULE,
+    .open           = udmabuf_device_file_open,
+    .release        = udmabuf_device_file_release,
+    .mmap           = udmabuf_device_file_mmap,
+    .read           = udmabuf_device_file_read,
+    .write          = udmabuf_device_file_write,
+    .llseek         = udmabuf_device_file_llseek,
+    .unlocked_ioctl = udmabuf_device_file_ioctl,
+};
+
+static DEFINE_IDA(udmabuf_device_ida);
+
+
 static void udmabuf_static_device_reserve_minor_number_all(void)
 {
     CALL_UDMABUF_STATIC_DEVICE_RESERVE_MINOR_NUMBER(0);
