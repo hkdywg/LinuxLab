@@ -264,7 +264,7 @@ static DEFINE_IDA(udmabuf_device_ida);
 static dev_t udmabuf_device_number = 0;
 static struct list_head udmabuf_device_list;
 static struct mutex udmabuf_device_list_sem;
-#define ida_simple_get(ida, start, end, gfp) ida_alloc_range(ida, start, (end) -1 , gfp)
+
 #define ida_simple_remove(ida, id)           ida_free(ida, id)
 
 #define DEF_ATTR_SHOW(__attr_name, __format, __value) \
@@ -1679,9 +1679,9 @@ static struct udmabuf_device_entry *udmabuf_device_list_create_entry(struct devi
     }
 
     props = (name != NULL) ? &props_list[0] : &props_list[1];
-    ret = device_create_software_node(dev, props, NULL);
+    ret = device_add_properties(dev, props);
     if (ret != 0) {
-        pr_err(DRIVER_NAME ": device_create_managed_software_node failed. return=%d\n", ret);
+        pr_err(DRIVER_NAME ": device_add_properties failed. return=%d\n", ret);
         goto failed;
     }
 
