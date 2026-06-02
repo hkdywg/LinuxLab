@@ -4,8 +4,8 @@
 pub fn composite_type_verify() {
     //slice_verify();
     //tuple_verify();
-    //struct_verify();
-    enum_verify();
+    struct_verify();
+    //enum_verify();
 }
 
 pub fn slice_verify() {
@@ -57,6 +57,25 @@ struct User {
     sign_in_count: u64,
 }
 
+impl User {
+    fn new(active: bool, user_name: String, email: String, sign: u64) -> User {
+        User {
+            active: active,
+            user_name: user_name,
+            email: email,
+            sign_in_count: sign,
+        }
+    }
+
+    fn get_user_name(&self) -> &str {
+        &self.user_name
+    }
+
+    fn is_active(&self) -> bool {
+        self.active == true
+    }
+}
+
 pub fn struct_verify() {
     let mut user_1: User = User {
         email: String::from("example@gmail.com"),
@@ -81,6 +100,10 @@ pub fn struct_verify() {
 
     struct Color(i32, i32, i32);
     let black = Color(0, 0, 0);
+
+    let user_4 = User {user_name: "coco".to_string(), email: "demo@gmail.com".to_string(), 
+                      active: true, sign_in_count: 1};
+    println!("user {} is {}", user_4.get_user_name(), user_4.is_active());
 }
 
 fn build_user(email: String, user_name: String) -> User {
