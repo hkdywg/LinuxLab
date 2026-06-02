@@ -1,3 +1,6 @@
+#[allow(unused_variables)]
+#[allow(dead_code)]
+
 pub fn base_bind() {
     let mut tmp_var = 5;
     println!("Hello, world! {}", tmp_var);

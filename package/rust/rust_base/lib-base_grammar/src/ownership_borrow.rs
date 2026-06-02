@@ -2,6 +2,9 @@
 //!2.一个值只能被一个变量所拥有，或者说一个值只能拥有一个所有者
 //!3.当所有者(变量)离开作用域范围时，这个值将会丢弃(drop)
 
+#[allow(unused_variables)]
+#[allow(dead_code)]
+
 pub fn ownership_verify() {
     let mut s1 = String::from("hello");
     s1.push_str(", world!");
@@ -22,6 +25,7 @@ fn takes_ownership_str(some_string: &str) {
     println!("{}", some_string);        
 }
 
+#[allow(dead_code)]
 fn takes_ownership_string(some_string: String) {
     println!("{}", some_string);        
 } // some_string移除作用域，并调用drop方法，占用的内存被释放
