@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "lib-base_grammar",
+    "app",
+]
+resolver = "2"
