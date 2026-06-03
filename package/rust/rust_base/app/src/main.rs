@@ -9,6 +9,7 @@ fn main() {
 
     //lib_base_grammar::ownership_verify();
     //lib_base_grammar::borrowing_verify();
-    lib_base_grammar::composite_type_verify();
+    //lib_base_grammar::composite_type_verify();
     //lib_base_grammar::option_match_verify();
+    lib_base_grammar::generics_trait_verify();
 }
