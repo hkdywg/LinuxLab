@@ -1,0 +1,36 @@
+##
+## benchmark/n_bench/make.inc
+##
+## History:
+##    2024/04/15 - [yinwg] Created file
+##
+## Copyright (C) 2016, JiangSu New Vision Automotive CO.,LTD.
+## 
+## All rights reserved. This software is New Vision property. Duplication
+## or disclosure without New Vision written authorization is prohibited.
+##
+
+LOCAL_PATH	:= $(call my-dir)
+
+###
+include $(CLEAR_VARS)
+
+LOCAL_TARGET	:= nbench
+LOCAL_SRCS	:= $(LOCAL_PATH)/emfloat.c \
+			$(LOCAL_PATH)/misc.c \
+			$(LOCAL_PATH)/nbench0.c \
+			$(LOCAL_PATH)/nbench1.c \
+			$(LOCAL_PATH)/sysspec.c \
+			$(LOCAL_PATH)/hardware.c
+LOCAL_CFLAGS	:=-DLINUX -s -static -Wall -O3
+LOCAL_LDFLAGS	:=-lm
+
+include $(BUILD_APP)
+
+.PHONY: $(LOCAL_TARGET)
+
+$(LOCAL_TARGET): $(LOCAL_MODULE)
+	@echo "Build $@ Done."
+
+$(call add-target-into-build, $(LOCAL_TARGET))
+

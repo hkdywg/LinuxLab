@@ -1,0 +1,2 @@
+# using HAVE_LIB_MPFR
+CONFIG_LDFLAGS += -lmpfr

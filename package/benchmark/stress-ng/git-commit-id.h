@@ -1,0 +1,1 @@
+#define STRESS_GIT_COMMIT_ID ""
